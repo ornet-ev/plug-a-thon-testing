@@ -1,0 +1,9 @@
+[versions]
+somda-plugins = "1.5.0"
+mdib-dsl = "1.5.0-SNAPSHOT+76" # + = latest greatest
+
+[libraries]
+org-somda-mdib-dsl = { module = "org.somda.dsl.biceps:mdib-dsl", version.ref = "mdib-dsl"}
+
+[plugins]
+org-somda-repository-collection = { id = "org.somda.repository_collection", version.ref = "somda-plugins" }
