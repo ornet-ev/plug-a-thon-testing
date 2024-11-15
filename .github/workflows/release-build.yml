@@ -52,7 +52,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           name: "Release ${{ github.ref_name }}"
-          makeLatest: false
-          draft: true
+          makeLatest: true
           body: "📋 [Detailed changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/CHANGELOG.md)"
           artifacts: "plug-a-thon-mdibs/*"
