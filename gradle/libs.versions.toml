@@ -1,6 +1,6 @@
 [versions]
-somda-plugins = "1.5.0"
-mdib-dsl = "1.5.0-SNAPSHOT+79"
+somda-plugins = "1.6.0"
+mdib-dsl = "1.5.0-SNAPSHOT+84"
 
 [libraries]
 org-somda-mdib-dsl = { module = "org.somda.dsl.biceps:mdib-dsl", version.ref = "mdib-dsl"}
