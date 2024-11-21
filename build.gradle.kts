@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.ornet"
-version = "0.0.0-SNAPSHOT"
+version = "2.1.1"
 
 val jdkVersion: JvmTarget = JvmTarget.JVM_17
 

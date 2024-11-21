@@ -120,6 +120,8 @@ val PAT_MDIB_V2 = mdib("PlugathonMdibV2") {
                 type(SET_NUMERIC_METRIC_VALUE) {
                     conceptDescription(EN_US) { "Sets the value of the targeted Numeric Metric" }
                 }
+
+                safetyClassification(SafetyClassification.MED_A)
             }
 
             setStringOperation(
@@ -129,6 +131,8 @@ val PAT_MDIB_V2 = mdib("PlugathonMdibV2") {
                 type(SET_ENUM_STRING_METRIC_VALUE) {
                     conceptDescription(EN_US) { "Sets the value of the targeted Enum String Metric" }
                 }
+
+                safetyClassification(SafetyClassification.MED_A)
             }
 
             activateOperation(
@@ -153,6 +157,8 @@ val PAT_MDIB_V2 = mdib("PlugathonMdibV2") {
                                 "the operation target."
                     }
                 }
+
+                safetyClassification(SafetyClassification.MED_A)
 
                 argument(
                     name = ACTIVATE_OPERATION_ARGUMENT_1,
