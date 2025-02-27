@@ -8,6 +8,12 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-02-27
+
+### Added
+
+- Fourth waveform that is updated twice per second (see handle `rtsa_metric_3.channel_1.vmd_0.mds_0`)
+
 ## [2.1.1] - 2024-11-21
 
 ### Fixed
