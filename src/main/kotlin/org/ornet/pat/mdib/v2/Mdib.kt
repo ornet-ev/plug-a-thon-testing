@@ -32,6 +32,7 @@ import org.ornet.pat.mdib.v2.resource.SET_PATIENT_CONTEXT
 import org.ornet.pat.mdib.v2.resource.WAVEFORM_METRIC_1
 import org.ornet.pat.mdib.v2.resource.WAVEFORM_METRIC_2
 import org.ornet.pat.mdib.v2.resource.WAVEFORM_METRIC_3
+import org.ornet.pat.mdib.v2.resource.WAVEFORM_METRIC_4
 import org.ornet.pat.mdib.v2.resource.XSD_ANY_URI
 import org.ornet.pat.mdib.v2.resource.XSD_DECIMAL
 import org.ornet.pat.mdib.v2.resource.XSD_STRING
@@ -357,8 +358,23 @@ val PAT_MDIB_V2 = mdib("PlugathonMdibV2") {
                         conceptDescription(EN_US) { "Dimensionless" }
                     }
                 ) {
-                    type(WAVEFORM_METRIC_3) {
+                    type(WAVEFORM_METRIC_4) {
                         conceptDescription(EN_US) { "Waveform metric 3" }
+                    }
+                }
+
+                realTimeSampleArrayMetric(
+                    handle = Handles.RTSA_METRIC_3_CHANNEL_1_VMD_0_MDS_0,
+                    metricCategory = MetricCategory.MEASUREMENT,
+                    metricAvailability = MetricAvailability.CONTINUOUS,
+                    resolution = decimal("1"),
+                    samplePeriod = 500.milliseconds,
+                    unit = codedValue(MDC_DIM_DIMLESS) {
+                        conceptDescription(EN_US) { "Dimensionless" }
+                    }
+                ) {
+                    type(WAVEFORM_METRIC_3) {
+                        conceptDescription(EN_US) { "Waveform metric 4" }
                     }
                 }
             }

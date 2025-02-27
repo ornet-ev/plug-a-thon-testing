@@ -29,6 +29,7 @@ object Handles {
     val RTSA_METRIC_0_CHANNEL_1_VMD_0_MDS_0 = handle("rtsa_metric_0.channel_1.vmd_0.mds_0")
     val RTSA_METRIC_1_CHANNEL_1_VMD_0_MDS_0 = handle("rtsa_metric_1.channel_1.vmd_0.mds_0")
     val RTSA_METRIC_2_CHANNEL_1_VMD_0_MDS_0 = handle("rtsa_metric_2.channel_1.vmd_0.mds_0")
+    val RTSA_METRIC_3_CHANNEL_1_VMD_0_MDS_0 = handle("rtsa_metric_3.channel_1.vmd_0.mds_0")
     val VMD_1_MDS_0 = handle("vmd_1.mds_0")
     val SCO_VMD1_MDS_0 = handle("sco.vmd1.mds_0")
     val SET_METRIC_0_SCO_VMD_1_MDS_0 = handle("set_metric_0.sco.vmd_1.mds_0")
