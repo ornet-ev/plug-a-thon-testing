@@ -8,5 +8,5 @@ pluginManagement {
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
 }
-rootProject.name = "plug-a-thon-mdibs"
+rootProject.name = "plug-a-thon-testing"
 
