@@ -1,0 +1,195 @@
+== Test Specification
+
+=== Definitions
+
+[#term_discovery_proxy]
+=== Discovery Proxy
+
+A discovery proxy as specified in https://profiles.ihe.net/DEV/SDPi/index.html#_discovery_proxy[SDPi].
+
+[#term_reference_consumer]
+==== Reference Consumer
+
+The service consumer implementation of a SOMDS Consumer as specified in https://profiles.ihe.net/DEV/SDPi/index.html#vol1_clause_sdpi_p_somds_consumer[SDPi] that adheres to this test specification.
+
+[#term_reference_provider]
+==== Reference Provider
+
+The service provider implementation of a SOMDS Provider as specified in https://profiles.ihe.net/DEV/SDPi/index.html#vol1_clause_sdpi_p_somds_provider[SDPi] that adheres to this test specification.
+
+=== Test Profiles
+
+==== Device Discovery
+
+[cols="1,3,3"]
+|===
+|Test ID|Required preconditions|Expected behavior
+
+|1a
+a|- Network supports UDP multicast
+|The <<term_reference_provider>> sends Hello messages in ad-hoc mode
+
+|1b
+a|- Network supports UDP multicast
+|The <<term_reference_provider>> answers to Probe and Resolve messages in ad-hoc mode
+
+|1c
+a|- A <<term_discovery_proxy>> is running and known to the <<term_reference_provider>>
+|The <<term_reference_provider>> sends Hello messages in managed mode by using the <<term_discovery_proxy>>
+
+|1d
+a|- A <<term_discovery_proxy>> is running and known to the <<term_reference_provider>>
+|The <<term_reference_provider>> answers to Probe and Resolve messages in managed mode by using the <<term_discovery_proxy>>
+|===
+
+==== BICEPS Services Discovery and binding
+
+[cols="1,3,3"]
+|===
+|Test ID|Required preconditions|Expected behavior
+
+|2a
+a|
+|The <<term_reference_provider>> answers to TransferGet
+
+|2b
+a|- The <<term_reference_consumer>> established at least one subscription to the <<term_reference_provider>>
+|The <<term_reference_consumer>> renews at least one subscription once during the test phase; the <<term_reference_provider>> grants subscriptions of at most 15 seconds (this allows for the <<term_reference_consumer>> to verify if auto-renew works)
+|===
+
+==== Request Response
+
+[cols="1,3,3"]
+|===
+|Test ID|Required preconditions|Expected behavior
+
+|3a
+a|
+|The <<term_reference_provider>> answers to GetMdib
+
+|3b
+a|
+|The <<term_reference_provider>> answers to GetContextStates with at least one location context state
+|===
+
+==== State Reports
+
+[cols="1,3,3"]
+|===
+|Test ID|Required preconditions|Expected behavior
+
+|4a
+a|
+|The <<term_reference_provider>> produces at least 5 numeric metric updates in 30 seconds
+
+|4b
+a|
+|The <<term_reference_provider>> produces at least 5 string metric updates (StringMetric or EnumStringMetric) in 30 seconds
+
+|4c
+a|
+|The <<term_reference_provider>> produces at least 5 alert condition updates (AlertCondition or LimitAlertCondition) in 30 seconds
+
+|4d
+a|
+|The <<term_reference_provider>> produces at least 5 alert signal updates in 30 seconds
+
+|4e
+a|
+|The <<term_reference_provider>> provides alert system self checks in accordance to the periodicity defined in the MDIB (at least every 10 seconds)
+
+|4f
+a|- The network delay is capable of exchanging 10 messages per second in addition to the other updates
+|The <<term_reference_provider>> provides 3 waveforms (RealTimeSampleArrayMetric) x 10 messages per second x 100 samples per message
+
+|4g
+a|
+a|The <<term_reference_provider>> The Reference Provider provides changes for the following components:
+
+- At least 5 Clock or Battery object updates in 30 seconds (Component report)
+- At least 5 MDS or VMD updates in 30 seconds (Component report)
+
+|4h
+a|
+a|The <<term_reference_provider>> The Reference Provider provides changes for the following operational states:
+
+- At least 5 Operation updates in 30 seconds; enable/disable operations; some different than the ones mentioned above (Operational State Report)
+
+|4i
+a|
+a|The <<term_reference_provider>> provides 1 waveform (RealTimeSampleArrayMetric) x 2 messages per second x 50 samples per message (reduced amount of messages per second to cover slow networks)
+|===
+
+==== Description Modifications
+
+[cols="1,3,3"]
+|===
+|Test ID|Required preconditions|Expected behavior
+
+|4a
+a|
+a|The <<term_reference_provider>> produces at least 1 update every 10 seconds comprising
+
+- Update alert condition concept description of Type: change at least the content of the first localized text of one alert condition
+- Update alert condition cause-remedy information: change at least the content of the first localized text of either cause or remedy texts of one alert condition
+- Update Unit of measure (metrics): change at least the code of the unit of measure of one metric
+
+
+|4b
+a|
+a|The <<term_reference_provider>> produces at least 1 insertion followed by a deletion every 10 seconds comprising
+
+- Insert a VMD including Channels including metrics (inserted VMDs/Channels/Metrics are required to have a new handle assigned on each insertion such that containment tree entries are not recycled). (Tests for the handling of re-insertion of previously inserted objects should be tested additionally)
+- Remove the VMD
+|===
+
+==== Operation Invocation
+
+[cols="1,3,3"]
+|===
+|Test ID|Required preconditions|Expected behavior
+
+|[.line-through]#6a#
+a|
+a|
+
+|6b
+a|
+a|The <<term_reference_consumer>> invokes SetContextState:
+
+- Payload: 1 patient context
+- Context state is added to the MDIB including context association and validation
+- If there is an associated context already, the <<term_reference_provider>> disassociates that context
+- Handle and version information is generated by the <<term_reference_provider>>
+- In order to avoid infinite growth of patient contexts, older contexts are allowed to be removed from the MDIB (when ContextAssociation is `No`)
+- The <<term_reference_provider>> successfully concludes the invocation
+
+|6c
+a|
+a|The <<term_reference_consumer>> invokes SetValue:
+
+- The <<term_reference_provider>> immediately responds with `Fin`
+- The <<term_reference_provider>> sends `Fin` as a report in addition to the response
+
+|6d
+a|
+a|The <<term_reference_consumer>> invokes SetString:
+
+- The <<term_reference_provider>> initiates a transaction that sends `Wait`, `Start` and `Fin`
+
+|6e
+a|
+a|The <<term_reference_consumer>> invokes SetMetricStates:
+
+- Payload: 2 metric states (settings; consider alert limits)
+- The <<term_reference_provider>> immediately responds with `Fin`
+- Action: The <<term_reference_provider>> alters values of given metrics
+
+|6f
+a|
+a|The <<term_reference_provider>> invokes Activate:
+
+- Payload: 3 arguments
+- The <<term_reference_provider>> immediately responds with `Fin`
+- Action: The <<term_reference_provider>> accepts 3 arguments, concatenates them and writes them to the operation target's metric value
+|===

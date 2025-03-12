@@ -1,0 +1,5 @@
+== Reference Provider/Consumer Specification
+
+include::test_specification.adoc[leveloffset=+1]
+
+include::utilized_nomenclature.adoc[leveloffset=+1]
