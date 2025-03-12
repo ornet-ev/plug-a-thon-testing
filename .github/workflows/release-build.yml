@@ -53,5 +53,5 @@ jobs:
         with:
           name: "Release ${{ github.ref_name }}"
           makeLatest: true
-          body: "📋 [Detailed changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/CHANGELOG.md)"
+          body: "📋 [Documentation and Changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/README.adoc)"
           artifacts: "plug-a-thon-mdibs/*"
