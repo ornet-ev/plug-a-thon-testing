@@ -9,7 +9,7 @@ import org.ornet.pat.mdib.v2.resource.ENUM_VALUE_ON
 import org.ornet.pat.mdib.v2.resource.ENUM_VALUE_STANDBY
 import org.ornet.pat.mdib.v2.resource.EN_US
 import org.ornet.pat.mdib.v2.resource.Handles
-import org.ornet.pat.mdib.v2.resource.METRIC_TARGETTED_BY_ACTIVATE_OPERATION_2
+import org.ornet.pat.mdib.v2.resource.METRIC_TARGETED_BY_ACTIVATE_OPERATION_2
 import org.ornet.pat.mdib.v2.resource.SAMPLE_ALERT_CONDITION_1
 import org.ornet.pat.mdib.v2.resource.SAMPLE_ALERT_CONDITION_2
 import org.ornet.pat.mdib.v2.resource.SAMPLE_CHANNEL_1
@@ -285,7 +285,7 @@ val PAT_MDIB_V2 = mdib("PlugathonMdibV2") {
                         conceptDescription(EN_US) { "Dimensionless" }
                     }
                 ) {
-                    type(METRIC_TARGETTED_BY_ACTIVATE_OPERATION_2) {
+                    type(METRIC_TARGETED_BY_ACTIVATE_OPERATION_2) {
                         conceptDescription(EN_US) { "Operation target of the activate operation" }
                     }
                 }
