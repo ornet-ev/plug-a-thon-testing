@@ -1,6 +1,6 @@
 [versions]
 somda-repository-collection = "2.0.0"
-mdib-dsl = "1.5.0-SNAPSHOT+85"
+mdib-dsl = "1.5.0-SNAPSHOT+97"
 
 [libraries]
 org-somda-mdib-dsl = { module = "org.somda.dsl.biceps:mdib-dsl", version.ref = "mdib-dsl"}

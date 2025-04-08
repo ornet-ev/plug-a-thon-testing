@@ -8,6 +8,12 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+## [2.2.1] - 2025-04-08
+
+### Fixed
+
+- IEEE public codes now contain a valid coding system URI. ([#1](https://github.com/ornet-ev/plug-a-thon-testing/issues/1))
+
 ## [2.2.0] - 2025-02-27
 
 ### Added
