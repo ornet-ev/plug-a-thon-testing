@@ -126,7 +126,7 @@ a|The <<term_reference_provider>> provides 1 waveform (RealTimeSampleArrayMetric
 |===
 |Test ID|Required preconditions|Expected behavior
 
-|4a
+|5a
 a|
 a|The <<term_reference_provider>> produces at least 1 update every 10 seconds comprising
 
@@ -135,7 +135,7 @@ a|The <<term_reference_provider>> produces at least 1 update every 10 seconds co
 - Update Unit of measure (metrics): change at least the code of the unit of measure of one metric
 
 
-|4b
+|5b
 a|
 a|The <<term_reference_provider>> produces at least 1 insertion followed by a deletion every 10 seconds comprising
 
