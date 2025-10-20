@@ -192,7 +192,7 @@ a|The <<term_reference_consumer>> invokes SetMetricStates:
 
 |6f
 a|
-a|The <<term_reference_provider>> invokes Activate:
+a|The <<term_reference_consumer>> invokes Activate:
 
 - Payload: 3 arguments
 - The <<term_reference_provider>> immediately responds with `Fin`
