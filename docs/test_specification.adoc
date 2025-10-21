@@ -96,7 +96,9 @@ a|
 
 |4e
 a|
-|The <<term_reference_provider>> provides alert system self checks in accordance to the periodicity defined in the MDIB (at most every 10 seconds)
+a|The <<term_reference_provider>> provides alert system self checks in accordance to the periodicity defined in the MDIB (at most every 10 seconds)
+
+NOTE: This only applies to alert systems providing a self check period.
 
 |4f
 a|- The network delay is capable of exchanging 10 messages per second in addition to the other updates
