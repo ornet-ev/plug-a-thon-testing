@@ -13,6 +13,7 @@ Each section shall contain a list of action items of the following format: `<bri
 - Fix subject in test 6f (was provider, changed to consumer). ([#13](https://github.com/ornet-ev/plug-a-thon-testing/issues/13))
 - Add clarification notes to test 5b. ([#14](https://github.com/ornet-ev/plug-a-thon-testing/issues/14))
 - Add clarification note to test 4e. ([#9](https://github.com/ornet-ev/plug-a-thon-testing/issues/9))
+- Change _at least_ to _at most_ in test 4e. ([#8](https://github.com/ornet-ev/plug-a-thon-testing/issues/8))
 
 ## [2.2.1] - 2025-04-08
 
