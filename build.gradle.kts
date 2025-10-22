@@ -4,6 +4,7 @@ plugins {
     java
     application
     kotlin("jvm") version "2.0.10"
+    kotlin("plugin.serialization") version "2.2.20"
     alias(libs.plugins.org.somda.repository.collection)
 }
 
@@ -17,7 +18,11 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.org.somda.mdib.dsl)
+    implementation(libs.org.somda.mdib.dsl.biceps)
+    implementation(libs.org.somda.mdib.dsl.ieee.nomenclature)
+    implementation(libs.de.sven.jacobs.lorem.ipsum)
+    implementation(libs.com.akuleshov7.ktoml.core)
+    implementation(libs.com.akuleshov7.ktoml.file)
 }
 
 java {
