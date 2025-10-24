@@ -51,7 +51,7 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                     }
 
                     // add reference to resulting mdib
-                    c.type?.conceptDescriptionRef(nextRef)
+                    c.type?.conceptDescriptionRef(nextRef, 1.toBigInteger())
                 }
             }
         }
