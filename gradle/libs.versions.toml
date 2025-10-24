@@ -1,6 +1,6 @@
 [versions]
 somda-repository-collection = "2.2.0"
-mdib-dsl-biceps = "0.3.0"
+mdib-dsl-biceps = "0.4.0-SNAPSHOT"
 mdib-dsl-ieee-nomenclature = "1.2.0"
 lorem-ipsum = "1.0"
 ktoml = "0.7.1"

@@ -15,6 +15,10 @@ val jdkVersion: JvmTarget = JvmTarget.JVM_17
 
 repositories {
     mavenCentral()
+    // snapshots
+    maven {
+        url = uri("https://central.sonatype.com/repository/maven-snapshots")
+    }
 }
 
 dependencies {
