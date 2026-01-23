@@ -15,7 +15,7 @@ val jdkVersion: JvmTarget = JvmTarget.JVM_17
 
 repositories {
     mavenCentral()
-    // snapshots
+    // ieee nomenclature releases/snapshots
     maven {
         url = uri("https://central.sonatype.com/repository/maven-snapshots")
     }
@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.de.sven.jacobs.lorem.ipsum)
     implementation(libs.com.akuleshov7.ktoml.core)
     implementation(libs.com.akuleshov7.ktoml.file)
+    implementation(libs.serialization.json)
 }
 
 java {

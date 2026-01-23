@@ -1,9 +1,10 @@
 [versions]
 somda-repository-collection = "2.2.0"
 mdib-dsl-biceps = "0.4.0-SNAPSHOT"
-mdib-dsl-ieee-nomenclature = "1.2.0"
+mdib-dsl-ieee-nomenclature = "2.0.0"
 lorem-ipsum = "1.0"
 ktoml = "0.7.1"
+serialization-json = "1.6.1"
 
 [libraries]
 org-somda-mdib-dsl-biceps = { module = "org.somda.dsl.biceps:mdib-dsl", version.ref = "mdib-dsl-biceps" }
@@ -12,6 +13,8 @@ de-sven-jacobs-lorem-ipsum = { module = "de.sven-jacobs:loremipsum", version.ref
 
 com-akuleshov7-ktoml-core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml"}
 com-akuleshov7-ktoml-file = { module = "com.akuleshov7:ktoml-file", version.ref = "ktoml"}
+
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization-json" }
 
 [plugins]
 org-somda-repository-collection = { id = "org.somda.repository_collection", version.ref = "somda-repository-collection" }
