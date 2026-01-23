@@ -8,6 +8,8 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-01-23
+
 ### Fixed
 
 - Fix subject in test 6f (was provider, changed to consumer). ([#13](https://github.com/ornet-ev/plug-a-thon-testing/issues/13))
