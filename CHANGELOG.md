@@ -15,6 +15,11 @@ Each section shall contain a list of action items of the following format: `<bri
 - Add clarification note to test 4e. ([#9](https://github.com/ornet-ev/plug-a-thon-testing/issues/9))
 - Change _at least_ to _at most_ in test 4e. ([#8](https://github.com/ornet-ev/plug-a-thon-testing/issues/8))
 
+### Added
+
+- Localized text references to the MDIB. ([#18](https://github.com/ornet-ev/plug-a-thon-testing/issues/18))
+- Generation of JSON and TOML files containing localized texts. ([#18](https://github.com/ornet-ev/plug-a-thon-testing/issues/18)) 
+
 ## [2.2.1] - 2025-04-08
 
 ### Fixed
