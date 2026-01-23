@@ -5,6 +5,7 @@ import com.akuleshov7.ktoml.TomlIndentation
 import com.akuleshov7.ktoml.TomlOutputConfig
 import de.svenjacobs.loremipsum.LoremIpsum
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.somda.dsl.biceps.Mdib
 import org.somda.dsl.biceps.MdibPostProcessor
 import org.somda.dsl.biceps.base.LocalizedTextWidth
@@ -16,6 +17,10 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
     override val name: String = "LocalizationServiceHandler"
 
     private var refCount = 0
+
+    private val json = Json {
+        prettyPrint = true
+    }
 
     override fun run(
         mdib: Mdib,
@@ -34,10 +39,10 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                     // add text from mdib to localization list
                     LocalizedText(
                         language = lt.lang ?: "",
-                        value = lt.value ?: "",
+                        value = lt.value,
                         ref = nextRef,
                         width = lt.textWidth?.name?.lowercase() ?: LocalizedTextWidth.M.name.lowercase(),
-                        lines = lt.value?.split("\n")?.size ?: 1,
+                        lines = lt.value.split("\n").size,
                         version = lt.version?.toLong() ?: 0L
                     ).also { localizedText ->
                         // add a "german" translation
@@ -45,6 +50,12 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                         localizedTexts.add(
                             localizedText.copy(
                                 language = "de",
+                                value = LoremIpsum().getWords(localizedText.value.split(" ").count()),
+                            )
+                        )
+                        localizedTexts.add(
+                            localizedText.copy(
+                                language = "fr",
                                 value = LoremIpsum().getWords(localizedText.value.split(" ").count()),
                             )
                         )
@@ -73,7 +84,15 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
             directory.mkdirs()
             File(
                 directory,
-                mdib.name + FILE_NAME_SUFFIX + FILE_EXTENSION_SUFFIX
+                mdib.name + FILE_NAME_SUFFIX + FILE_EXTENSION_SUFFIX_TOML
+            ).writeText(it)
+        }
+
+        json.encodeToString(localizedTexts).also {
+            directory.mkdirs()
+            File(
+                directory,
+                mdib.name + FILE_NAME_SUFFIX + FILE_EXTENSION_SUFFIX_JSON
             ).writeText(it)
         }
     }
@@ -82,6 +101,7 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
 
     private companion object {
         const val FILE_NAME_SUFFIX = "LocalizedTextsV1"
-        const val FILE_EXTENSION_SUFFIX = ".toml"
+        const val FILE_EXTENSION_SUFFIX_TOML = ".toml"
+        const val FILE_EXTENSION_SUFFIX_JSON = ".json"
     }
 }
