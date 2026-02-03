@@ -11,6 +11,7 @@ Each section shall contain a list of action items of the following format: `<bri
 ### Added
 
 - Non-latin pseudo translations (chinese, greek) to localization database. ([#27](https://github.com/ornet-ev/plug-a-thon-testing/issues/27))
+- Correct text width based on grapheme counting. ([#29](https://github.com/ornet-ev/plug-a-thon-testing/issues/29))
 
 ## [2.3.0] - 2026-01-23
 

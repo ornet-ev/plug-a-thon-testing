@@ -11,7 +11,7 @@ plugins {
 group = "org.ornet"
 version = "2.3.0"
 
-val jdkVersion: JvmTarget = JvmTarget.JVM_17
+val jdkVersion: JvmTarget = JvmTarget.JVM_21
 
 repositories {
     mavenCentral()

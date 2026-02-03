@@ -18,4 +18,3 @@ data class LocalizedText(
     val lines: Int,
     val version: Long,
 )
-
