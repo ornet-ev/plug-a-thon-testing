@@ -4,29 +4,28 @@ package org.ornet.pat.localization.db.v2
 // class inspired by de.svenjacobs.loremipsum.LoremIpsum
 class LoremIpsum(private val characterSet: CharacterSet = CharacterSet.LATIN) {
     fun getWords(amount: Int = characterSet.size, startIndex: Int = 0): String {
-        if (startIndex >= 0 && startIndex < characterSet.size) {
-            var word = startIndex
-            val lorem = StringBuilder()
-
-            for (i in 0 until amount) {
-                if (word == characterSet.size) {
-                    word = 0
-                }
-
-                lorem.append(characterSet.words[word])
-                if (i < amount - 1) {
-                    lorem.append(characterSet.wordSeparator)
-                }
-
-                ++word
-            }
-
-            return lorem.toString()
+        if (!(startIndex >= 0 && startIndex < characterSet.size)) {
+            throw IndexOutOfBoundsException("startIndex must be >= 0 and < ${characterSet.size}")
         }
 
-        throw IndexOutOfBoundsException("startIndex must be >= 0 and < ${characterSet.size}")
-    }
+        var word = startIndex
+        val lorem = StringBuilder()
 
+        for (i in 0 until amount) {
+            if (word == characterSet.size) {
+                word = 0
+            }
+
+            lorem.append(characterSet.words[word])
+            if (i < amount - 1) {
+                lorem.append(characterSet.wordSeparator)
+            }
+
+            ++word
+        }
+
+        return lorem.toString()
+    }
 
     fun getParagraphs(amount: Int = characterSet.size): String {
         val lorem = StringBuilder()
