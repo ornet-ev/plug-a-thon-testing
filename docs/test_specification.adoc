@@ -17,6 +17,11 @@ The service consumer implementation of a SOMDS Consumer as specified in https://
 
 The service provider implementation of a SOMDS Provider as specified in https://profiles.ihe.net/DEV/SDPi/index.html#vol1_clause_sdpi_p_somds_provider[SDPi] that adheres to this test specification.
 
+[#Localized_Text_Database]
+==== Localized Text Database
+
+A test file that is shared between <<Reference_Consumer>>s and <<Reference_Provider>>s to verify certain properties of the texte provided by the <<Reference_Provider>>s localization service.
+
 === Test Profiles
 
 ==== Device Discovery
@@ -209,15 +214,26 @@ a|The <<Reference_Consumer>> invokes Activate:
 
 |7a
 a|
-a|
+a|The <<Reference_Consumer>> requests GetSupportedLanguages
+
+- The <<Reference_Provider>> answers with GetSupportedLanguagesResponse containing all languages currently provided by the <<Localized_Text_Database>> (V2: `en-US`, `de`, `el-GR`, `zh-CN`)
 
 |7b
-a|
-a|
+a|Test 7a succeeded, list of languages is available
+a|For each language, the <<Reference_Consumer>> requests GetLocalizedText containing the language.
+
+- The <<Reference_Provider>> answers with GetLocalizedTextResponse containing all texts of the given language and version.
+- The <<Reference_Consumer>> consumer verifies that the result set is not empty.
+
+NOTE: As the <<Reference_Provider>> is allowed to change localized texts, the actual result set is unknown und cannot be verified against the <<Localized_Text_Database>>.
 
 |7c
-a|
-a|
+a|Test 7a succeeded, list of languages is available
+a|For each language, the <<Reference_Consumer>> requests GetLocalizedText containing the language and a version of 1.
+
+- The <<Reference_Provider>> answers with GetLocalizedTextResponse containing at least all texts from the <<Localized_Text_Database>> corresponding to the requested language and version.
+
+NOTE: Requesting the latest version can result in a different answer as the <<Reference_Provider>> may change texts at any time.
 
 |7d
 a|
