@@ -7,7 +7,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.somda.dsl.biceps.Mdib
 import org.somda.dsl.biceps.MdibPostProcessor
-import org.somda.dsl.biceps.base.LocalizedTextWidth
 import org.somda.dsl.biceps.base.tree.ComponentTree
 import org.somda.dsl.biceps.base.tree.Descriptor
 import java.io.File
@@ -40,6 +39,12 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
             when (val c = node.component) {
                 is Descriptor<*> -> if (c.type?.conceptDescriptions?.isNotEmpty() == true) {
                     val lt = c.type!!.conceptDescriptions.first()
+                    lt.lang?.also { lang ->
+                        if (lt.textWidth == null) {
+                            lt.textWidth(textWidthForText(lang, lt.value))
+                        }
+                    }
+
                     val nextRef = nextTextReference()
 
                     // add text from mdib to localization list
@@ -47,32 +52,36 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                         language = lt.lang ?: "",
                         value = lt.value,
                         ref = nextRef,
-                        width = lt.textWidth?.name?.lowercase() ?: LocalizedTextWidth.M.name.lowercase(),
-                        lines = lt.value.split("\n").size,
+                        width = lt.textWidth?.serialize() ?: "",
+                        lines = lineCount(lt.value),
                         version = lt.version?.toLong() ?: 0L
                     ).also { localizedText ->
-                        // add a "german" translation
                         localizedTexts.add(localizedText)
+
+                        // latin "translation"
                         localizedTexts.add(
-                            localizedText.copy(
-                                language = "de",
-                                value = LoremIpsum().getWords(localizedText.value.split(" ").count()),
+                            createTranslation(
+                                localizedText,
+                                LoremIpsum.CharacterSet.LATIN,
+                                "de"
                             )
                         )
+
+                        // greek
                         localizedTexts.add(
-                            localizedText.copy(
-                                language = "el-GR",
-                                value = LoremIpsum(LoremIpsum.CharacterSet.GREEK).getWords(
-                                    localizedText.value.split(" ").count()
-                                ),
+                            createTranslation(
+                                localizedText,
+                                LoremIpsum.CharacterSet.GREEK,
+                                "el-GR"
                             )
                         )
+
+                        // chinese
                         localizedTexts.add(
-                            localizedText.copy(
-                                language = "zh_CN",
-                                value = LoremIpsum(LoremIpsum.CharacterSet.CHINESE).getWords(
-                                    localizedText.value.split(" ").count()
-                                ),
+                            createTranslation(
+                                localizedText,
+                                LoremIpsum.CharacterSet.CHINESE,
+                                "zh_CN"
                             )
                         )
                     }
@@ -106,6 +115,21 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                 mdib.name + FILE_NAME_SUFFIX + FILE_EXTENSION_SUFFIX_JSON
             ).writeText(it)
         }
+    }
+
+    private fun createTranslation(
+        base: LocalizedText,
+        characterSet: LoremIpsum.CharacterSet,
+        lang: String,
+    ): LocalizedText {
+        val amount = base.value.split(" ").count()
+        val text = LoremIpsum(characterSet).getWords(amount)
+        return base.copy(
+            language = lang,
+            value = text,
+            width = textWidthForText(lang, text).serialize(),
+            lines = lineCount(text),
+        )
     }
 
     private fun nextTextReference(): String = "text_ref_${refCount++}"
