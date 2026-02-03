@@ -17,6 +17,13 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
 
     private var refCount = 0
 
+    private val toml = Toml(
+        outputConfig = TomlOutputConfig(
+            // indentation symbols for serialization, default 4 spaces
+            indentation = TomlIndentation.NONE,
+        )
+    )
+
     private val json = Json {
         prettyPrint = true
     }
@@ -84,12 +91,7 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
         }
 
         // write localized texts to toml
-        Toml(
-            outputConfig = TomlOutputConfig(
-                // indentation symbols for serialization, default 4 spaces
-                indentation = TomlIndentation.NONE,
-            )
-        ).encodeToString(LocalizedTextModel(localizedTexts)).also {
+        toml.encodeToString(LocalizedTextModel(localizedTexts)).also {
             directory.mkdirs()
             File(
                 directory,
