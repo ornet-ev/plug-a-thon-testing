@@ -24,7 +24,6 @@ repositories {
 dependencies {
     implementation(libs.org.somda.mdib.dsl.biceps)
     implementation(libs.org.somda.mdib.dsl.ieee.nomenclature)
-    implementation(libs.de.sven.jacobs.lorem.ipsum)
     implementation(libs.com.akuleshov7.ktoml.core)
     implementation(libs.com.akuleshov7.ktoml.file)
     implementation(libs.serialization.json)
