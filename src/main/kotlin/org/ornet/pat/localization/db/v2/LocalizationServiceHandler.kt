@@ -1,9 +1,8 @@
-package org.ornet.pat.localization.db.v1
+package org.ornet.pat.localization.db.v2
 
 import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.TomlIndentation
 import com.akuleshov7.ktoml.TomlOutputConfig
-import de.svenjacobs.loremipsum.LoremIpsum
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.somda.dsl.biceps.Mdib
@@ -55,8 +54,18 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                         )
                         localizedTexts.add(
                             localizedText.copy(
-                                language = "fr",
-                                value = LoremIpsum().getWords(localizedText.value.split(" ").count()),
+                                language = "el-GR",
+                                value = LoremIpsum(LoremIpsum.CharacterSet.GREEK).getWords(
+                                    localizedText.value.split(" ").count()
+                                ),
+                            )
+                        )
+                        localizedTexts.add(
+                            localizedText.copy(
+                                language = "zh_CN",
+                                value = LoremIpsum(LoremIpsum.CharacterSet.CHINESE).getWords(
+                                    localizedText.value.split(" ").count()
+                                ),
                             )
                         )
                     }
@@ -80,7 +89,7 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                 // indentation symbols for serialization, default 4 spaces
                 indentation = TomlIndentation.NONE,
             )
-        ).encodeToString(TomlModel(localizedTexts)).also {
+        ).encodeToString(LocalizedTextModel(localizedTexts)).also {
             directory.mkdirs()
             File(
                 directory,
@@ -100,7 +109,7 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
     private fun nextTextReference(): String = "text_ref_${refCount++}"
 
     private companion object {
-        const val FILE_NAME_SUFFIX = "LocalizedTextsV1"
+        const val FILE_NAME_SUFFIX = "LocalizedTextsV2"
         const val FILE_EXTENSION_SUFFIX_TOML = ".toml"
         const val FILE_EXTENSION_SUFFIX_JSON = ".json"
     }

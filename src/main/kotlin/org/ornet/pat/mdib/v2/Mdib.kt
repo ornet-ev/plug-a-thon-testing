@@ -1,6 +1,6 @@
 package org.ornet.pat.mdib.v2
 
-import org.ornet.pat.localization.db.v1.LocalizationServiceHandler
+import org.ornet.pat.localization.db.v2.LocalizationServiceHandler
 import org.ornet.pat.mdib.v2.resource.ACTIVATE_OPERATION_1
 import org.ornet.pat.mdib.v2.resource.ACTIVATE_OPERATION_ARGUMENT_1
 import org.ornet.pat.mdib.v2.resource.ACTIVATE_OPERATION_ARGUMENT_2
