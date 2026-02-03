@@ -8,6 +8,10 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+### Added
+
+- Non-latin pseudo translations (chinese, greek) to localization database. ([#27](https://github.com/ornet-ev/plug-a-thon-testing/issues/27))
+
 ## [2.3.0] - 2026-01-23
 
 ### Fixed
