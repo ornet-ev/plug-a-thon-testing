@@ -81,7 +81,7 @@ class LocalizationServiceHandler(private val directory: File) : MdibPostProcesso
                             createTranslation(
                                 localizedText,
                                 LoremIpsum.CharacterSet.CHINESE,
-                                "zh_CN"
+                                "zh-CN"
                             )
                         )
                     }
