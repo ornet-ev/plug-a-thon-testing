@@ -11,13 +11,13 @@
 # The site_name is shown in the page header and the browser window title
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_name
-site_name = "Plug-a-thon Testing"
+site_name = "SDC Plug-a-thon"
 
 # The site_description is included in the HTML head and should contain a
 # meaningful description of the site content for use by search engines.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "Documentation for the Plug-a-thon Testing project."
+site_description = "Documentation for the SDC Plug-a-thon project."
 
 # The site_author attribute. This is used in the HTML head element.
 #
@@ -47,14 +47,12 @@ repo_name = "plug-a-thon-testing"
 # can be defined using TOML syntax.
 #
 # Read more: https://zensical.org/docs/setup/navigation/
-#nav = [
-#  { "Home" = "index.md" },
-#  { "Specification" = [
-#       "specification/definitions.md",
-#       "specification/profiles.md"        
-#    ]},
-#  { "Nomenclature" = "nomenclature.md" },
-#]
+nav = [
+  { "Home" = "index.md" },
+  { "Nomenclature" = "nomenclature.md" },
+  { "Definitions" = "definitions.md" },
+  { "Profiles" = "profiles.md" }
+]
 
 # With the "extra_css" option you can add your own CSS styling to customize
 # your Zensical project according to your needs. You can add any number of
@@ -100,7 +98,10 @@ repo_name = "plug-a-thon-testing"
 # - https://zensical.org/docs/setup/logo-and-icons/#favicon
 # - https://developer.mozilla.org/en-US/docs/Glossary/Favicon
 #
-#favicon = "images/favicon.png"
+favicon = "images/pat_logo.svg"
+
+# https://zensical.org/docs/setup/logo-and-icons/?h=logog#logo
+logo = "images/pat_logo.svg"
 
 # Zensical supports more than 60 different languages. This means that the
 # labels and tooltips that Zensical's templates produce are translated.
@@ -129,13 +130,13 @@ features = [
     # will generate an edit button for the page. This works for common
     # repository hosting services.
     # https://zensical.org/docs/setup/repository/#content-actions
-    "content.action.edit",
+    # "content.action.edit",
 
     # If you have a repository configured and turn on this feature, Zensical
     # will generate a button that allows the user to view the Markdown
     # code for the current page.
     # https://zensical.org/docs/setup/repository/#content-actions
-    "content.action.view",
+    # "content.action.view",
 
     # Code annotations allow you to add an icon with a tooltip to your
     # code blocks to provide explanations at crucial points.
@@ -314,3 +315,7 @@ name = "OrNet e.V. on GitHub"
 [[project.extra.social]]
 icon = "fontawesome/brands/confluence"
 link = "https://confluence.hl7.org/spaces/GP/pages/90354468/PAT+-+IHE+Plugathon+Events"
+
+# https://zensical.org/docs/setup/offline/
+[project.plugins.offline]
+enabled = false # will be enabled when built in pr workflow

@@ -1,0 +1,21 @@
+name: Documentation
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/configure-pages@v5
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
+      - run: uvx --from=toml-cli toml set --toml-path=zensical.toml project.plugins.offline.enabled true  # enable offline mode for artifacts to work correctly
+      - run: uvx zensical build --clean
+      - uses: actions/upload-artifact@v6
+        with:
+          name: website
+          path: site/
+          retention-days: 5
