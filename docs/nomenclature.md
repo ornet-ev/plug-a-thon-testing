@@ -1,5 +1,5 @@
 ---
-icon: lucide/book
+icon: lucide/file-digit
 ---
 
 # Nomenclature

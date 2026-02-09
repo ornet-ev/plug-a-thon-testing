@@ -11,18 +11,18 @@
 # The site_name is shown in the page header and the browser window title
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_name
-site_name = "SDC Plug-a-thon"
+site_name = "OR.NET/IHE SDC Plug-a-thon"
 
 # The site_description is included in the HTML head and should contain a
 # meaningful description of the site content for use by search engines.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_description
-site_description = "Documentation for the SDC Plug-a-thon project."
+site_description = "Documentation resources of the OR.NET/IHE SDC Plug-a-thon events."
 
 # The site_author attribute. This is used in the HTML head element.
 #
 # Read more: https://zensical.org/docs/setup/basics/#site_author
-site_author = "OrNet e.V."
+site_author = "OR.NET e.V."
 
 # The site_url is the canonical URL for your site. When building online
 # documentation you should set this.
@@ -33,7 +33,7 @@ site_url = "https://ornet-ev.github.com/plug-a-thon-testing"
 # fragment.
 #
 # Read more: https://zensical.org/docs/setup/basics/#copyright
-copyright = """Copyright &copy; 2026 OrNet e.V."""
+copyright = """Copyright &copy; 2026 OR.NET e.V."""
 
 # https://zensical.org/docs/setup/repository/#repository-url
 repo_url = "https://github.com/ornet-ev/plug-a-thon-testing"
@@ -311,7 +311,7 @@ repo = "fontawesome/brands/github"
 [[project.extra.social]]
 icon = "fontawesome/brands/github"
 link = "https://github.com/ornet-ev"
-name = "OrNet e.V. on GitHub"
+name = "OR.NET e.V. on GitHub"
 [[project.extra.social]]
 icon = "fontawesome/brands/confluence"
 link = "https://confluence.hl7.org/spaces/GP/pages/90354468/PAT+-+IHE+Plugathon+Events"
