@@ -18,7 +18,7 @@ jobs:
       - name: Generate markdown
         run: |
           pushd .build/markdown
-          .gradlew run
+          ./gradlew run
           popd
       - name: Build site
         uses: astral-sh/setup-uv@v7
