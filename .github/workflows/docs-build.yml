@@ -3,8 +3,11 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened, ready_for_review ]
 jobs:
-  docs-build:
+  markdown-generation:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./.build/markdown
     steps:
       - name: Checkout branch
         uses: actions/checkout@v6
@@ -16,7 +19,10 @@ jobs:
       - name: Setup gradle
         uses: gradle/gradle-build-action@v3
       - name: Generate markdown
-        run: ./.build/markdown/gradlew run
+        run: ./gradlew run
+  docs-build:
+    runs-on: ubuntu-latest
+    steps:
       - name: Build site
         uses: astral-sh/setup-uv@v7
       - run: uvx --from=toml-cli toml set --toml-path=zensical.toml project.plugins.offline.enabled true  # enable offline mode for artifacts to work correctly
