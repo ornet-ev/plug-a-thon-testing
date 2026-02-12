@@ -1,0 +1,15 @@
+{
+  "id": "sdclibrary-dot-net-c-sharp",
+  "name": "SdcLibrary .Net C#",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "",
+  "available": "",
+  "features": [],
+  "manufacturer": "Philips",
+  "website": "",
+  "contact": [
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "canoe",
+  "name": "CANoe",
+  "roles": [
+    "consumer"
+  ],
+  "programmingLanguage": "unknown",
+  "available": "unknown",
+  "features": [],
+  "manufacturer": "Vector Informatik",
+  "website": "",
+  "contact": [
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "protosdc-rs",
+  "name": "protosdc-rs",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "unknown",
+  "available": "unknown",
+  "features": [],
+  "manufacturer": "Lukas Deichmann",
+  "website": "",
+  "contact": [
+    "https://gitlab.com/ldeichmann"
+  ]
+}

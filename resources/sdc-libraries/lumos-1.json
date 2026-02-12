@@ -1,0 +1,15 @@
+{
+  "id": "lumos-1",
+  "name": "Lumos *1",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "unknown",
+  "available": "unknown",
+  "features": [],
+  "manufacturer": "",
+  "website": "",
+  "contact": [
+  ]
+}
