@@ -25,7 +25,7 @@ jobs:
         uses: gradle/gradle-build-action@v3
       - name: Generate markdown
         run: |
-          pushd .build/markdown
+          pushd build/markdown
           ./gradlew run
           popd
       - name: Install uv
