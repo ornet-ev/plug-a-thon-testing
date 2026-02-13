@@ -1,0 +1,15 @@
+{
+  "id": "ascom",
+  "name": "Ascom",
+  "roles": [
+    "consumer"
+  ],
+  "programmingLanguage": "unknown",
+  "available": "unknown",
+  "features": [],
+  "manufacturer": "Ascom",
+  "website": "",
+  "contact": [
+    "Francesco Fabrini"
+  ]
+}

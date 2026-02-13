@@ -1,0 +1,16 @@
+{
+  "id": "sdc11073",
+  "name": "sdc11073",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "unknown",
+  "available": "unknown",
+  "features": [],
+  "manufacturer": "Dräger",
+  "website": "",
+  "contact": [
+    "Leon"
+  ]
+}

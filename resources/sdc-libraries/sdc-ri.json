@@ -1,0 +1,93 @@
+{
+  "id": "sdc-ri",
+  "name": "SDCri",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "Java/Kotlin (JVM)",
+  "available": "Open Source",
+  "features": [
+    {
+      "testCaseId": "1a"
+    },
+    {
+      "testCaseId": "1b"
+    },
+    {
+      "testCaseId": "1c"
+    },
+    {
+      "testCaseId": "1d"
+    },
+    {
+      "testCaseId": "2a"
+    },
+    {
+      "testCaseId": "2b"
+    },
+    {
+      "testCaseId": "5a"
+    },
+    {
+      "testCaseId": "5b"
+    },
+    {
+      "testCaseId": "6a"
+    },
+    {
+      "testCaseId": "6b"
+    },
+    {
+      "testCaseId": "6c"
+    },
+    {
+      "testCaseId": "6d"
+    },
+    {
+      "testCaseId": "6e"
+    },
+    {
+      "testCaseId": "6f"
+    },
+    {
+      "testCaseId": "3a"
+    },
+    {
+      "testCaseId": "3b"
+    },
+    {
+      "testCaseId": "4a"
+    },
+    {
+      "testCaseId": "4b"
+    },
+    {
+      "testCaseId": "4c"
+    },
+    {
+      "testCaseId": "4d"
+    },
+    {
+      "testCaseId": "4e"
+    },
+    {
+      "testCaseId": "4f"
+    },
+    {
+      "testCaseId": "4g"
+    },
+    {
+      "testCaseId": "4h"
+    },
+    {
+      "testCaseId": "4i"
+    }
+  ],
+  "manufacturer": "David Gregorczyk, Lukas Deichmann",
+  "website": "https://gitlab.com/sdc-suite/sdc-ri",
+  "contact": [
+    "https://gitlab.com/d.gregorczyk",
+    "https://gitlab.com/ldeichmann"
+  ]
+}

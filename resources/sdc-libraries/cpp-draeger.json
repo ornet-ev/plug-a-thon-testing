@@ -1,0 +1,15 @@
+{
+  "id": "cpp-draeger",
+  "name": "C++ Dräger",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "C++",
+  "available": "No commercial license",
+  "features": [],
+  "manufacturer": "Dräger",
+  "website": "",
+  "contact": [
+  ]
+}

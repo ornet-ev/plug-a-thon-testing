@@ -1,0 +1,36 @@
+{
+  "patNumber": 22,
+  "testResults": [
+    {
+      "consumerLibraryId": "sdc-ri",
+      "providerLibraryId": "sdc-ri",
+      "caseIds": [
+        "1a",
+        "1b",
+        "1c",
+        "1d",
+        "2a",
+        "2b",
+        "3a",
+        "3b",
+        "4a",
+        "4b",
+        "4c",
+        "4d",
+        "4e",
+        "4f",
+        "4g",
+        "4h",
+        "4i",
+        "5a",
+        "5b",
+        "6b",
+        "6c",
+        "6d",
+        "6e",
+        "6f"
+      ],
+      "verdict": "fail"
+    }
+  ]
+}
