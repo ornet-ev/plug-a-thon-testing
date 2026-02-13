@@ -2,6 +2,7 @@ name: Documentation
 on:
   pull_request:
     types: [ opened, synchronize, reopened, ready_for_review ]
+
 jobs:
   docs-build:
     runs-on: ubuntu-latest
@@ -14,10 +15,10 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Setup gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v5
       - name: Generate markdown
         run: |
-          pushd .build/markdown
+          pushd build/markdown
           ./gradlew run
           popd
       - name: Build site

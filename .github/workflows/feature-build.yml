@@ -1,6 +1,8 @@
 name: Feature Build
 
-on: [push]
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
 
 env:
   CI: true
@@ -25,10 +27,14 @@ jobs:
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+      - name: Setup gradle
+        uses: gradle/actions/setup-gradle@v5
+
       - name: Compile Kotlin MDIBs to XML MDIBs
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: run
+        run: |
+          pushd build/mdib
+          ./gradlew run
+          popd
 
       - name: Create artifacts folder and copy files
         run: ./.github/copy_artifacts.sh
