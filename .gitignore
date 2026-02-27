@@ -3,3 +3,4 @@ site/
 .idea
 .kotlin
 .venv
+docs/**/*.html
