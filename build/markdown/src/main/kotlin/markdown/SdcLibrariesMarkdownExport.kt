@@ -33,8 +33,8 @@ object SdcLibrariesMarkdownExport {
             val builder = StringBuilder()
             builder.appendLine(tableRow("Library ID:", "`${src.id}`"))
             builder.appendLine(tableRow("Name:", src.name))
-            if (src.manufacturer.isNotEmpty()) builder.appendLine(tableRow("Manufacturer:", src.manufacturer))
-            if (src.website.isNotEmpty()) builder.appendLine(tableRow("Website:", src.website))
+            if (src.provider.isNotEmpty()) builder.appendLine(tableRow("Provider:", src.provider))
+            if (src.website.isNotEmpty()) builder.appendLine(tableRow("Website:", link(src.website)))
             if (src.contact.isNotEmpty()) builder.appendLine(
                 tableRow(
                     "Contact:", multilineCell(
@@ -47,13 +47,13 @@ object SdcLibrariesMarkdownExport {
                     "Roles:",
                     src.roles.ifEmpty { listOf("None") }.map { roleNameFor(it) }.let { multilineCell(it) })
             )
-            if (src.programmingLanguage.isEmpty()) builder.appendLine(
+            if (src.programmingLanguage.isNotEmpty()) builder.appendLine(
                 tableRow(
                     "Programming Language:",
                     src.programmingLanguage
                 )
             )
-            src.available.ifEmpty { "None" }.also { builder.appendLine(tableRow("Availability", it)) }
+            src.license.ifEmpty { "Unknown" }.also { builder.appendLine(tableRow("License:", it)) }
             builder.toString()
         }
 

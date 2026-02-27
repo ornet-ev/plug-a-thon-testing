@@ -1,0 +1,13 @@
+{
+  "id": "vector-sdc-stack",
+  "version": "",
+  "roles": [
+    "provider"
+  ],
+  "bindings": [
+    "dpws"
+  ],
+  "features": [
+
+  ]
+}

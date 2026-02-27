@@ -2,7 +2,9 @@ package org.ornet.json
 
 import kotlinx.serialization.json.Json
 import org.ornet.PatEvent
+import org.ornet.SdcLibraries
 import org.ornet.SdcLibrary
+import org.ornet.SdcLibraryFeatures
 import org.ornet.TestResult
 import org.ornet.TestResults
 import org.ornet.TestSequence
@@ -13,7 +15,7 @@ class JsonResources(
     testResultsDir: File,
     sdcLibrariesDir: File,
 ) {
-    private val json = Json { prettyPrint = true }
+    val json = Json { prettyPrint = true }
 
     val testSequence = testSequenceFile.let { file ->
         file.readText().let {
@@ -22,10 +24,19 @@ class JsonResources(
     }
 
     val sdcLibraries = sdcLibrariesDir.let { dir ->
-        dir.listFiles()?.filter { it.extension.lowercase() == "json" }?.map {
+        dir.listFiles()!!.filter { it.extension.lowercase() == "json" }.map {
             json.decodeFromString<SdcLibrary>(it.readText())
         }
-    } ?: emptyList()
+    }
+
+    val sdcLibrariesPerPatEvent = testResultsDir.let { testResultsDir ->
+        testResultsDir.listFiles()!!.filter { it.isDirectory }.associate { patEventDir ->
+            val libs = File(patEventDir, "sdc-libraries").listFiles()!!.filter { it.isFile }.map {
+                json.decodeFromString<SdcLibraryFeatures>(it.readText())
+            }
+            patEventDir.name to libs
+        }
+    }
 
     val patEvents = testResultsDir.let { testResultsDir ->
         testResultsDir.listFiles()?.filter { it.isDirectory }?.map { patEventDir ->
@@ -38,9 +49,10 @@ class JsonResources(
 
             val patEvent = json.decodeFromString<PatEvent>(patEventFile.readText())
 
-            val testResults = patEventDir.listFiles()?.filterNot { it.name.lowercase() == metaFilename }?.associate {
-                it to json.decodeFromString<TestResults>(it.readText())
-            } ?: emptyMap()
+            val testResults = patEventDir.listFiles()!!
+                .filter { it.isFile }
+                .filterNot { it.name.lowercase() == metaFilename }
+                .associateWith { json.decodeFromString<TestResults>(it.readText()) }
 
             testResults.forEach {
                 require(it.value.patNumber == patEvent.patNumber) {

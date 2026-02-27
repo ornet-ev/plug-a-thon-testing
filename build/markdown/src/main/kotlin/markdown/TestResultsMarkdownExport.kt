@@ -1,16 +1,15 @@
 package org.ornet.markdown
 
+import org.ornet.Binding
+import org.ornet.InteroperabilityMatrix
 import org.ornet.PatEvent
-import org.ornet.ROLE_CONSUMER
-import org.ornet.ROLE_PROVIDER
+import org.ornet.Role
 import org.ornet.SdcLibrary
-import org.ornet.TestResult
+import org.ornet.SdcLibraryFeatures
 import org.ornet.TestSequence
-import org.ornet.deprecatedTestCases
-import org.ornet.resultsFor
-import org.ornet.supportsTestCaseFromConsumerSide
-import org.ornet.supportsTestCaseFromProviderSide
-import org.ornet.validTestCases
+import org.ornet.Verdict
+import org.ornet.createInteroperabilityMatrix
+
 
 object TestResultsMarkdownExport {
     fun indexMd(src: List<PatEvent>): String {
@@ -39,32 +38,48 @@ object TestResultsMarkdownExport {
         src: PatEvent,
         testSequence: TestSequence,
         libraries: List<SdcLibrary>,
+        libFeatures: List<SdcLibraryFeatures>,
     ): String {
-        val sortedLibs = libraries.sortedBy { it.name }
-        val interopMatrix = mutableListOf<MutableList<String>>()
-        interopMatrix.add(
+        val interopMatrix = createInteroperabilityMatrix(
+            src,
+            testSequence,
+            libFeatures
+        )
+
+        val libsForPat = libFeatures.map { it.id }
+        val versionMarkdown = libFeatures.associate { lib ->
+            lib.id to lib.version.let {
+                """ { title="Version: ${it.ifEmpty { "unknown" }}" }"""
+            }
+        }
+        val sortedLibs = libraries.sortedBy { it.name }.filter { it.id in libsForPat }
+
+        val markdownCells = mutableListOf<MutableList<String>>()
+        markdownCells.add(
             sortedLibs
                 .map { it }
-                .filter { ROLE_PROVIDER in it.roles }
-                .filterNot { it.deprecated }
-                .map { it.name }.toMutableList().apply {
+                .filter { Role.PROVIDER.json in it.roles }
+                .map { it.name + versionMarkdown[it.id]!! }
+                .toMutableList()
+                .apply {
                     add(0, "**Provider →**<br>**↓ Consumer**")
                 }
         )
 
-        val consumerLibs = sortedLibs.filter { ROLE_CONSUMER in it.roles }.filterNot { it.deprecated }
-        val providerLibs = sortedLibs.filter { ROLE_PROVIDER in it.roles }.filterNot { it.deprecated }
+        val consumerLibs = sortedLibs.filter { Role.CONSUMER.json in it.roles }
+        val providerLibs = sortedLibs.filter { Role.PROVIDER.json in it.roles }
 
         for (consumerLib in consumerLibs) {
-            val row = listOf("**${consumerLib.name}**").toMutableList().also {
-                interopMatrix.add(it)
+            val row = listOf("**${consumerLib.name}**${versionMarkdown[consumerLib.id]!!}").toMutableList().also {
+                markdownCells.add(it)
             }
 
             for (providerLib in providerLibs) {
-                val testResults = src.resultsFor(consumerLib.id, providerLib.id)
-                when (testResults.isEmpty()) {
-                    true -> row.add("&nbsp;")
-                    false -> row.add(testResultsFor(testResults, testSequence, consumerLib, providerLib))
+                val testResult = interopMatrix.cellFor(Binding.DPWS, consumerLib.id, providerLib.id)
+
+                when (testResult) {
+                    null -> row.add("&nbsp;")
+                    else -> row.add(markdownForTestResult(testResult))
                 }
             }
         }
@@ -82,13 +97,13 @@ object TestResultsMarkdownExport {
                     ${heading("Interoperability Matrix", 1)}
 
                     <a href="javascript:window.history.back()" class="md-button">:lucide-arrow-big-left: Back</a>
-                    <a href="javascript:window.alert('Not implemented yet')" class="md-button" title="Not implemented yet">:lucide-printer: Print Version</a>
-                    
-                    ${tableHeader(interopMatrix.first())}
+                    <a href="print.html" target="_blank" class="md-button" title="Print view in new window">:lucide-printer: Print Version</a>
+
+                    ${tableHeader(markdownCells.first())}
                 """
             )
 
-            for (row in interopMatrix.drop(1)) {
+            for (row in markdownCells.drop(1)) {
                 builder.appendLine(
                     Markdown.tableRow(row)
                 )
@@ -96,7 +111,7 @@ object TestResultsMarkdownExport {
 
             builder.toString()
         } + Markdown.generate(false) {
-                """
+            """
 ??? Legend
     - :lucide-check: all featured tests succeeded
     - :lucide-x: all featured tests failed
@@ -107,47 +122,27 @@ object TestResultsMarkdownExport {
         }
     }
 
-    private fun testResultsFor(
-        src: List<TestResult>,
-        testSequence: TestSequence,
-        consumerLibrary: SdcLibrary,
-        providerLibrary: SdcLibrary,
+    private fun markdownForTestResult(
+        src: InteroperabilityMatrix.Cell,
     ): String {
-        // find all tests that are not deprecated, and where there is potential
-        // support by consumer and provider side
-        val allFeaturedIds = testSequence
-            .validTestCases()
-            .map { it.id }
-            .filter {
-                supportsTestCaseFromConsumerSide(it, consumerLibrary) &&
-                        supportsTestCaseFromProviderSide(it, providerLibrary)
-            }
+        val failedList = src.failedList.sorted().joinToString(", ")
+        val missingResultList = src.missingList.sorted().joinToString(", ")
 
-        val deprecatedIds = testSequence.deprecatedTestCases().map { it.id }
-
-        val passedIds = src.filter { it.verdict == "pass" }.map { it.caseIds }.flatten().subtract(deprecatedIds)
-        val failedIds = src.filter { it.verdict == "fail" }.map { it.caseIds }.flatten().subtract(deprecatedIds)
-        val missingResult = (allFeaturedIds - passedIds - failedIds)
-
-        val failedList = failedIds.sorted().joinToString(", ")
-        val missingResultList = missingResult.sorted().joinToString(", ")
         return mutableListOf<String>().apply {
-            if (failedList.isNotEmpty()) {
-                if ((allFeaturedIds - failedIds).isEmpty()) {
+            if (src.failedList.isNotEmpty()) {
+                if (src.verdict == Verdict.FAIL) {
                     add(":lucide-x:")
                 } else {
                     add(":lucide-triangle-alert: $failedList")
                 }
             } else {
-                if (missingResult.isEmpty()) {
+                if (src.verdict == Verdict.PASS) {
                     add(":lucide-check:")
                 }
             }
 
-            if (missingResult.isNotEmpty()) {
-                if (allFeaturedIds != missingResult) {
-                    add(":lucide-circle-question-mark: $missingResultList")
-                }
+            if (src.missingList.isNotEmpty()) {
+                add(":lucide-circle-question-mark: $missingResultList")
             }
         }.joinToString("<br>")
     }

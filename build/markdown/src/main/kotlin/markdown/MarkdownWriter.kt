@@ -1,7 +1,9 @@
 package org.ornet.markdown
 
+import kotlinx.serialization.json.Json
 import org.ornet.PatEvent
 import org.ornet.SdcLibrary
+import org.ornet.SdcLibraryFeatures
 import org.ornet.TestSequence
 import org.ornet.sanitizedPath
 import java.io.File
@@ -43,13 +45,19 @@ class MarkdownWriter(
         patEvents: List<PatEvent>,
         testSequence: TestSequence,
         sdcLibraries: List<SdcLibrary>,
+        sdcLibraryFeatures: Map<String, List<SdcLibraryFeatures>>
     ) {
         File(testResultsDir, INDEX_FILENAME).writeText(TestResultsMarkdownExport.indexMd(patEvents))
 
         for (patEvent in patEvents) {
             val outputFilename = "pat-${patEvent.patNumber}"
             File(testResultsDir, mdFilename(outputFilename)).writeText(
-                TestResultsMarkdownExport.patEventMd(patEvent, testSequence, sdcLibraries)
+                TestResultsMarkdownExport.patEventMd(
+                    patEvent,
+                    testSequence,
+                    sdcLibraries,
+                    sdcLibraryFeatures[outputFilename] ?: emptyList()
+                )
             )
         }
     }

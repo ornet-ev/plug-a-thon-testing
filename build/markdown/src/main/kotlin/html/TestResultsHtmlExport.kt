@@ -1,0 +1,192 @@
+package org.ornet.html
+
+import org.ornet.Binding
+import org.ornet.InteroperabilityMatrix
+import org.ornet.PatEvent
+import org.ornet.Role
+import org.ornet.SdcLibrary
+import org.ornet.SdcLibraryFeatures
+import org.ornet.TestSequence
+import org.ornet.Verdict
+import org.ornet.createInteroperabilityMatrix
+
+object TestResultsHtmlExport {
+    fun patEventHtml(
+        src: PatEvent,
+        testSequence: TestSequence,
+        libraries: List<SdcLibrary>,
+        libFeatures: List<SdcLibraryFeatures>,
+    ): String {
+        val interopMatrix = createInteroperabilityMatrix(
+            src,
+            testSequence,
+            libFeatures
+        )
+
+        val libsForPat = libFeatures.map { it.id }
+        val versionHtml = libFeatures.associate { lib ->
+            lib.id to lib.version.let {
+                """<br/>Version: ${it.ifEmpty { "unknown" }}"""
+            }
+        }
+        val sortedLibs = libraries.sortedBy { it.name }.filter { it.id in libsForPat }
+
+        val htmlCells = mutableListOf<MutableList<String>>()
+        htmlCells.add(
+            sortedLibs
+                .map { it }
+                .filter { Role.PROVIDER.json in it.roles }
+                .map {
+                    """<th>${it.name}${versionHtml[it.id]!!}</th>"""
+                }
+                .toMutableList()
+        )
+
+        val consumerLibs = sortedLibs.filter { Role.CONSUMER.json in it.roles }
+        val providerLibs = sortedLibs.filter { Role.PROVIDER.json in it.roles }
+
+        for (consumerLib in consumerLibs) {
+            val row = listOf("<td>${consumerLib.name}${versionHtml[consumerLib.id]!!}</td>").toMutableList().also {
+                htmlCells.add(it)
+            }
+
+            for (providerLib in providerLibs) {
+                val testResult = interopMatrix.cellFor(Binding.DPWS, consumerLib.id, providerLib.id)
+                when (testResult) {
+                    null -> row.add("""<td class="result-cell none">&nbsp;</td>""")
+                    else -> row.add("""<td class="result-cell ${testResult.verdict.json}">${htmlForTestResult(testResult)}</td>""")
+                }
+            }
+        }
+
+        return """
+            <html lang="en">
+            <head>
+                <title>Interoperability matrix SDC Plug-a-thon #${src.patNumber}</title>
+                <style>
+                    * {
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+                    }
+
+                    html, body {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    body {
+                        display: flex;
+                        flex-direction: column;
+                        font-family: Arial, Helvetica, sans-serif;
+                        padding: 16px;
+                    }
+
+                    h1 {
+                        flex-shrink: 0;
+                    }
+
+                    table {
+                        width: 100%;
+                        flex: 1;
+                        border-collapse: collapse;
+                        table-layout: fixed;
+                    }
+
+                    th {
+                        text-align: center;
+                        vertical-align: bottom;
+                    }
+
+                    th, td:nth-child(1) {
+                        font-weight: bold;
+                        font-size: 15px;
+                        background: none;
+                        border: none;
+                        padding: 12px;
+                    }
+
+                    td:nth-child(1) {
+                        text-align: right;
+                        vertical-align: middle;
+                    }
+
+                    th:nth-child(1) {
+                        text-align: right;
+                        vertical-align: bottom;
+                    }
+
+                    .result-cell {
+                        vertical-align: top;
+                        border: 1px solid #444;
+                        padding: 12px;
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        color: #1a1a1a;
+                    }
+
+                    .pass {
+                        background-color: #a5d6a7;
+                        vertical-align: middle;
+                        text-align: center;
+                    }
+
+                    .partial {
+                        background-color: #fff176;
+                    }
+
+                    .fail {
+                        background-color: #ef9a9a;
+                        vertical-align: middle;
+                        text-align: center;
+                    }
+
+                    .none {
+                        background-color: #f0f0f0;
+                    }
+                </style>
+            </head>
+            <body>
+            <h1>Interoperability matrix SDC Plug-a-thon #${src.patNumber}</h1>
+            <table style="width:100%; height: 100%">
+                <thead>
+                <tr>
+                    <th>Provider&nbsp;→<br/>↓&nbsp;Consumer<span style="color: rgba(0,0,0,0);">&nbsp;→</span></th>
+                    ${htmlCells.first().joinToString("\n")}
+                </tr>
+                </thead>
+                <tbody>
+                ${htmlCells.drop(1).joinToString("\n") { it.joinToString("\n", prefix = "<tr>", postfix = "</tr>") }}
+                </tbody>
+            </table>
+            </body>
+            </html>
+        """.trimIndent()
+    }
+
+    private fun htmlForTestResult(
+        src: InteroperabilityMatrix.Cell,
+    ): String {
+        val failedList = src.failedList.sorted().joinToString(", ")
+        val missingResultList = src.missingList.sorted().joinToString(", ")
+
+        return mutableListOf<String>().apply {
+            if (src.failedList.isNotEmpty()) {
+                if (src.verdict == Verdict.FAIL) {
+                    add("""❌""")
+                } else {
+                    add("""⚠ $failedList""")
+                }
+            } else {
+                if (src.verdict == Verdict.PASS) {
+                    add("""✓""")
+                }
+            }
+
+            if (src.missingList.isNotEmpty()) {
+                add("""❓$missingResultList""")
+            }
+        }.joinToString("<br/>")
+    }
+
+}

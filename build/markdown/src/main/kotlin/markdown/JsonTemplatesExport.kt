@@ -47,13 +47,19 @@ $caseIds
     }
 
     private fun sdcLibrary(src: TestSequence): String {
-        val features = src.validTestCases().joinToString(",\n") {
+        val featuresFull = src.validTestCases().joinToString(",\n") {
             """    {
       "testCaseId": "${it.id}",
       "roles": [
         "consumer",
         "provider"
       ]
+    }"""
+        }
+
+        val featuresShort = src.validTestCases().joinToString(",\n") {
+            """    {
+      "testCaseId": "${it.id}"
     }"""
         }
 
@@ -69,6 +75,10 @@ $caseIds
 - `website`: a URL to guide people to more information
 - `contact`: list of contact information (e.g. just names or links)
 - `features`: list of all supported features; remove the ones you do not support (leave out `roles` property if the ones from above are both met, leave `roles` property empty, or omit the feature if no side implements the feature)
+
+### Individual roles assignments (full)
+
+Template for SDC implementations that support consumer and provider functionality only for certain features.
 
 ```json
 {
@@ -87,7 +97,33 @@ $caseIds
     "Jane Roe"
   ],
   "features": [
-$features
+$featuresFull
+  ]
+}
+```
+
+### No individual role assignments
+
+Template for SDC implementations that support consumer and provider functionality for all features.
+
+```json
+{
+  "id": "<LIBRARY_ID>",
+  "name": "<LIBRARY_NAME>",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "programmingLanguage": "",
+  "available": "e.g. `Open Source`, `Proprietary license`, ...",
+  "manufacturer": "<MANUFACTURER_NAME>",
+  "website": "<WEBSITE_URL>",
+  "contact": [
+    "[John Doe](http://example.com/contact/john.doe)",
+    "Jane Roe"
+  ],
+  "features": [
+$featuresShort
   ]
 }
 ```

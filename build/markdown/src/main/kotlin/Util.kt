@@ -40,30 +40,33 @@ fun sanitizedPath(src: String): String {
 
 // true if a test case is supported by a consumer, false otherwise
 fun supportsTestCaseFromConsumerSide(
+    sdcLibrary: SdcLibraryFeatures,
     testCaseId: String,
-    sdcLibrary: SdcLibrary,
+    binding: Binding,
 ): Boolean {
-    return supportsTestCase(testCaseId, sdcLibrary, ROLE_CONSUMER)
+    return supportsTestCase(sdcLibrary, testCaseId, Role.CONSUMER, binding)
 }
 
 // true if a test case is supported by a provider, false otherwise
 fun supportsTestCaseFromProviderSide(
+    sdcLibrary: SdcLibraryFeatures,
     testCaseId: String,
-    sdcLibrary: SdcLibrary,
+    binding: Binding,
 ): Boolean {
-    return supportsTestCase(testCaseId, sdcLibrary, ROLE_PROVIDER)
+    return supportsTestCase(sdcLibrary, testCaseId, Role.PROVIDER, binding)
 }
 
 private fun supportsTestCase(
+    sdcLibrary: SdcLibraryFeatures,
     testCaseId: String,
-    sdcLibrary: SdcLibrary,
-    role: String,
+    role: Role,
+    binding: Binding,
 ): Boolean {
     val potentialMatch = sdcLibrary.features.firstOrNull {
         it.testCaseId == testCaseId
     } ?: return false
 
     val effectiveRoles = potentialMatch.roles ?: sdcLibrary.roles
-
-    return role in effectiveRoles
+    val effectiveBindings = potentialMatch.bindings ?: sdcLibrary.bindings
+    return role.json in effectiveRoles && binding.json in effectiveBindings
 }

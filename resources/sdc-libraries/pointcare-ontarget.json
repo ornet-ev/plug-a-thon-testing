@@ -4,10 +4,10 @@
   "roles": [
     "consumer"
   ],
-  "programmingLanguage": "unknown",
-  "available": "unknown",
+  "programmingLanguage": "",
+  "license": "",
   "features": [],
-  "manufacturer": "",
+  "provider": "",
   "website": "",
   "contact": [
   ]

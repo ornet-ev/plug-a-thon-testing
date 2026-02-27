@@ -4,10 +4,10 @@
   "roles": [
     "consumer"
   ],
-  "programmingLanguage": "unknown",
-  "available": "unknown",
+  "programmingLanguage": "",
+  "license": "",
   "features": [],
-  "manufacturer": "Ascom",
+  "provider": "Ascom",
   "website": "",
   "contact": [
     "Francesco Fabrini"

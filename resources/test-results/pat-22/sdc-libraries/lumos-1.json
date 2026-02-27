@@ -1,0 +1,12 @@
+{
+  "id": "lumos-1",
+  "version": "",
+  "roles": [
+    "provider"
+  ],
+  "bindings": [
+    "dpws"
+  ],
+  "features": [
+  ]
+}

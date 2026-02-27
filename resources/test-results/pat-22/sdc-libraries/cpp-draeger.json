@@ -1,0 +1,16 @@
+{
+  "id": "cpp-draeger",
+  "version": "",
+  "roles": [
+    "consumer",
+    "provider"
+  ],
+  "bindings": [
+    "dpws"
+  ],
+  "features": [
+    {
+      "testCaseId": "1a"
+    }
+  ]
+}

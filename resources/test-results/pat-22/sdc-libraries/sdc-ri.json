@@ -1,12 +1,13 @@
 {
   "id": "sdc-ri",
-  "name": "SDCri",
+  "version": "6.1.0",
   "roles": [
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "Java/Kotlin (JVM)",
-  "license": "Open Source",
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -80,11 +81,5 @@
     {
       "testCaseId": "6f"
     }
-  ],
-  "provider": "David Gregorczyk, Lukas Deichmann",
-  "website": "https://gitlab.com/sdc-suite/sdc-ri",
-  "contact": [
-    "https://gitlab.com/d.gregorczyk",
-    "https://gitlab.com/ldeichmann"
   ]
 }

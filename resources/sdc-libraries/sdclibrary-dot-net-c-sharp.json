@@ -5,10 +5,10 @@
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "",
-  "available": "",
+  "programmingLanguage": "C#",
+  "license": "",
   "features": [],
-  "manufacturer": "Philips",
+  "provider": "Philips",
   "website": "",
   "contact": [
   ]

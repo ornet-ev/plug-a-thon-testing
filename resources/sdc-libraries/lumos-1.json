@@ -2,13 +2,12 @@
   "id": "lumos-1",
   "name": "Lumos *1",
   "roles": [
-    "consumer",
     "provider"
   ],
-  "programmingLanguage": "unknown",
-  "available": "unknown",
+  "programmingLanguage": "",
+  "license": "",
   "features": [],
-  "manufacturer": "",
+  "provider": "",
   "website": "",
   "contact": [
   ]

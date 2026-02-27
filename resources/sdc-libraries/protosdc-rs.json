@@ -5,12 +5,12 @@
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "unknown",
-  "available": "unknown",
+  "programmingLanguage": "Rust",
+  "license": "Open Source",
   "features": [],
-  "manufacturer": "Lukas Deichmann",
-  "website": "",
+  "provider": "Lukas Deichmann",
+  "website": "https://gitlab.com/sdc-suite/protosdc/protosdc-rs",
   "contact": [
-    "https://gitlab.com/ldeichmann"
+    "lukas:lucide-at-sign:protosdc.org"
   ]
 }

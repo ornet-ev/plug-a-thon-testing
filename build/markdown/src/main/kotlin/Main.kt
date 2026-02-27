@@ -1,6 +1,7 @@
 package org.ornet
 
 import org.ornet.json.JsonResources
+import org.ornet.html.HtmlWriter
 import org.ornet.markdown.MarkdownWriter
 import java.io.File
 
@@ -45,25 +46,35 @@ fun main() {
         testResultsDir = testResultsDir,
         testSequenceDir = testSequenceDir,
         sdcLibrariesDir = sdcLibrariesDir
-    ).let {
-        it.writeTestSequence(
+    ).let { mdWriter ->
+        mdWriter.writeTestSequence(
             testSequence = jsonResources.testSequence
         )
 
-        it.writePatEvents(
+        mdWriter.writePatEvents(
             patEvents = jsonResources.patEvents,
             testSequence = jsonResources.testSequence,
-            sdcLibraries = jsonResources.sdcLibraries
+            sdcLibraries = jsonResources.sdcLibraries,
+            sdcLibraryFeatures = jsonResources.sdcLibrariesPerPatEvent
         )
 
-        it.writeSdcLibraries(
+        mdWriter.writeSdcLibraries(
             sdcLibraries = jsonResources.sdcLibraries,
             testSequence = jsonResources.testSequence
         )
 
-        it.writeJsonTemplates(
+        mdWriter.writeJsonTemplates(
             testSequence = jsonResources.testSequence
         )
     }
+
+    HtmlWriter(
+        testResultsRootDir = testResultsDir
+    ).writePatEvents(
+        patEvents = jsonResources.patEvents,
+        testSequence = jsonResources.testSequence,
+        sdcLibraries = jsonResources.sdcLibraries,
+        sdcLibraryFeatures = jsonResources.sdcLibrariesPerPatEvent
+    )
 }
 

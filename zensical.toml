@@ -70,7 +70,7 @@ repo_name = "plug-a-thon-testing"
 # The path provided should be relative to the "docs_dir".
 #
 # Read more: https://zensical.org/docs/customization/#additional-javascript
-#extra_javascript = ["javascripts/extra.js"]
+# extra_javascript = ["javascripts/extra.js"]
 
 # ----------------------------------------------------------------------------
 # Section for configuring theme options
@@ -344,3 +344,5 @@ pygments_lang_class = true
 
 [project.markdown_extensions.admonition]
 [project.markdown_extensions.pymdownx.details]
+
+[project.markdown_extensions.abbr]

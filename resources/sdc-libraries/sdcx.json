@@ -1,14 +1,14 @@
 {
   "id": "sdcx",
-  "name": "sdcX (C++)",
+  "name": "sdcX",
   "roles": [
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "",
-  "available": "",
+  "programmingLanguage": "C++",
+  "license": "Commercial",
   "features": [],
-  "manufacturer": "SurgiTAIX",
+  "provider": "SurgiTAIX",
   "website": "",
   "contact": [
   ]

@@ -5,12 +5,12 @@
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "unknown",
-  "available": "unknown",
+  "programmingLanguage": "Python",
+  "license": "Open Source",
   "features": [],
-  "manufacturer": "Dräger",
-  "website": "",
+  "provider": "Dräger",
+  "website": "https://github.com/Draegerwerk/sdc11073",
   "contact": [
-    "Leon"
+    "Leon Budnick"
   ]
 }
