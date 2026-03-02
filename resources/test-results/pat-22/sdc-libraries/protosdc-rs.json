@@ -1,11 +1,13 @@
 {
-  "id": "vector-sdc-stack",
-  "name": "Vector SDC Stack",
+  "id": "protosdc-rs",
+  "version": "",
   "roles": [
+    "consumer",
     "provider"
   ],
-  "programmingLanguage": "",
-  "license": "",
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -79,9 +81,5 @@
     {
       "testCaseId": "6f"
     }
-  ],
-  "provider": "Vector Informatik",
-  "website": "",
-  "contact": [
   ]
 }

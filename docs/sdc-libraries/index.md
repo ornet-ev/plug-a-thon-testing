@@ -9,7 +9,6 @@ title: 'SDC Libraries'
 - [CANoe](canoe)
 - [C++ Dräger](cpp-draeger)
 - [Lumos *1](lumos-1)
-- [PointCaré - OnTarget](pointcare-ontarget)
 - [protosdc-rs](protosdc-rs)
 - [SDCri](sdc-ri)
 - [sdc11073](sdc11073)
