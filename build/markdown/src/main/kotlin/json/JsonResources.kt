@@ -1,8 +1,8 @@
 package org.ornet.json
 
 import kotlinx.serialization.json.Json
+import org.ornet.Nomenclature
 import org.ornet.PatEvent
-import org.ornet.SdcLibraries
 import org.ornet.SdcLibrary
 import org.ornet.SdcLibraryFeatures
 import org.ornet.TestResult
@@ -14,6 +14,7 @@ class JsonResources(
     testSequenceFile: File,
     testResultsDir: File,
     sdcLibrariesDir: File,
+    nomenclatureFile: File,
 ) {
     val json = Json { prettyPrint = true }
 
@@ -62,6 +63,12 @@ class JsonResources(
 
             mergeTestResults(patEvent, testResults.values.map { it.testResults }.flatten())
         } ?: emptyList()
+    }
+
+    val nomenclature = nomenclatureFile.let { file ->
+        file.readText().let {
+            json.decodeFromString<Nomenclature>(it)
+        }
     }
 
     private companion object {

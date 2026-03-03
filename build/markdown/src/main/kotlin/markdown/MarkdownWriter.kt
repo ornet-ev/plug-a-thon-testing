@@ -1,6 +1,7 @@
 package org.ornet.markdown
 
 import kotlinx.serialization.json.Json
+import org.ornet.Nomenclature
 import org.ornet.PatEvent
 import org.ornet.SdcLibrary
 import org.ornet.SdcLibraryFeatures
@@ -45,7 +46,7 @@ class MarkdownWriter(
         patEvents: List<PatEvent>,
         testSequence: TestSequence,
         sdcLibraries: List<SdcLibrary>,
-        sdcLibraryFeatures: Map<String, List<SdcLibraryFeatures>>
+        sdcLibraryFeatures: Map<String, List<SdcLibraryFeatures>>,
     ) {
         File(testResultsDir, INDEX_FILENAME).writeText(TestResultsMarkdownExport.indexMd(patEvents))
 
@@ -74,6 +75,12 @@ class MarkdownWriter(
                 SdcLibrariesMarkdownExport.sdcLibraryMd(lib, testSequence)
             )
         }
+    }
+
+    fun writeNomenclature(
+        nomenclature: Nomenclature,
+    ) {
+        File(rootDir, mdFilename("nomenclature")).writeText(NomenclatureExport.nomenclatureMd(nomenclature))
     }
 
     companion object {

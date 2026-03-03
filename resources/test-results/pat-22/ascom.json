@@ -2,7 +2,7 @@
   "patNumber": 22,
   "testResults": [
     {
-      "consumerLibraryId": "sdc-ri",
+      "consumerLibraryId": "ascom",
       "providerLibraryId": "lumos-1",
       "binding": "dpws",
       "caseIds": [
@@ -20,13 +20,26 @@
         "4d",
         "4e",
         "4g",
-        "4h",
-        "6b"
+        "4i",
+        "6b",
+        "6c",
+        "6d",
+        "6e",
+        "6f"
       ],
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "sdc-ri",
+      "consumerLibraryId": "ascom",
+      "providerLibraryId": "lumos-1",
+      "binding": "dpws",
+      "caseIds": [
+        "4h"
+      ],
+      "verdict": "fail"
+    },
+    {
+      "consumerLibraryId": "ascom",
       "providerLibraryId": "vector-sdc-stack",
       "binding": "dpws",
       "caseIds": [
@@ -58,7 +71,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "sdc-ri",
+      "consumerLibraryId": "ascom",
       "providerLibraryId": "protosdc-rs",
       "binding": "dpws",
       "caseIds": [
@@ -85,12 +98,15 @@
         "6c",
         "6d",
         "6e",
-        "6f"
+        "6f",
+        "7a",
+        "7b",
+        "7c"
       ],
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "sdc-ri",
+      "consumerLibraryId": "ascom",
       "providerLibraryId": "sdcx",
       "binding": "dpws",
       "caseIds": [
@@ -117,13 +133,51 @@
         "6c",
         "6d",
         "6e",
-        "6f"
+        "6f",
+        "7a",
+        "7b",
+        "7c"
       ],
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "sdc-ri",
+      "consumerLibraryId": "ascom",
       "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
+      "caseIds": [
+        "1a",
+        "1b",
+        "1c",
+        "1d",
+        "2a",
+        "2b",
+        "3a",
+        "3b",
+        "4a",
+        "4b",
+        "4c",
+        "4d",
+        "4e",
+        "4f",
+        "4g",
+        "4h",
+        "4i",
+        "5a",
+        "5b",
+        "6b",
+        "6c",
+        "6d",
+        "6e",
+        "6f",
+        "7a",
+        "7b",
+        "7c"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom",
+      "providerLibraryId": "sdc-ri",
       "binding": "dpws",
       "caseIds": [
         "1a",
@@ -154,8 +208,8 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "sdc-ri",
-      "providerLibraryId": "sdc-ri",
+      "consumerLibraryId": "ascom",
+      "providerLibraryId": "sdc11073",
       "binding": "dpws",
       "caseIds": [
         "1a",

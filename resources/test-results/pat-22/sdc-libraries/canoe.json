@@ -1,11 +1,12 @@
 {
-  "id": "vector-sdc-stack",
-  "name": "Vector SDC Stack",
+  "id": "canoe",
+  "version": "",
   "roles": [
-    "provider"
+    "consumer"
   ],
-  "programmingLanguage": "",
-  "license": "",
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -79,9 +80,5 @@
     {
       "testCaseId": "6f"
     }
-  ],
-  "provider": "Vector Informatik",
-  "website": "",
-  "contact": [
   ]
 }
