@@ -4,3 +4,9 @@ site/
 .kotlin
 .venv
 docs/**/*.html
+
+docs/sdc-libraries
+docs/test-results
+docs/test-sequence
+docs/json-templates.md
+docs/nomenclature.md
