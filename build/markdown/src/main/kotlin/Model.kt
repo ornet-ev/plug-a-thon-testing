@@ -2,13 +2,6 @@ package org.ornet
 
 import kotlinx.serialization.Serializable
 
-// Stack modeling
-
-@Serializable
-data class SdcLibraries(
-    val libraries: List<SdcLibrary>,
-)
-
 @Serializable
 data class SdcLibrary(
     val id: String,
@@ -40,8 +33,6 @@ data class Feature(
     val roles: List<String>? = null, // consumer, provider
 )
 
-// Test modeling
-
 @Serializable
 data class TestSequence(
     val testGroups: List<TestGroup>,
@@ -61,8 +52,6 @@ data class TestCase(
     val description: String, // markdown
     val deprecated: Boolean = false,
 )
-
-// Test result modeling
 
 @Serializable
 data class PatEvent(
@@ -88,8 +77,18 @@ data class TestResult(
     val verdict: String, // pass, fail, none
 )
 
-const val BINDING_DPWS = "dpws"
-const val BINDING_PROTOSDC = "protosdc"
+@Serializable
+data class Nomenclature(
+    val codingSystemId: String,
+    val contextFreeCodeOffset: Int,
+    val terms: List<Term>,
+) {
+    @Serializable
+    data class Term(
+        val contextSensitiveCode: Int,
+        val description: String,
+    )
+}
 
 enum class Role(val json: String, val humanReadableName: String) {
     CONSUMER("consumer", "SOMDS Consumer"),
@@ -130,7 +129,6 @@ data class InteroperabilityMatrix(
         val missingList: List<String>,
     )
 }
-
 
 enum class Verdict(val json: String) {
     PASS("pass"),

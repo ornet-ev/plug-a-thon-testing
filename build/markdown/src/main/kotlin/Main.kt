@@ -13,6 +13,7 @@ const val DOCS_TEST_RESULTS_FOLDER = "$DOCS_FOLDER/test-results"
 const val DOCS_TEST_SEQUENCE_FOLDER = "$DOCS_FOLDER/test-sequence"
 const val DOCS_SDC_LIBRARIES_FOLDER = "$DOCS_FOLDER/sdc-libraries"
 const val TEST_SEQUENCE = "test-sequence"
+const val NOMENCLATURE = "nomenclature"
 
 fun main() {
     // resolve input/output directories
@@ -37,7 +38,8 @@ fun main() {
     val jsonResources = JsonResources(
         testSequenceFile = File(dbDir, "$TEST_SEQUENCE.json"),
         testResultsDir = File(DB_TEST_RESULTS_FOLDER),
-        sdcLibrariesDir = File(DB_SDC_LIBRARIES_FOLDER)
+        sdcLibrariesDir = File(DB_SDC_LIBRARIES_FOLDER),
+        nomenclatureFile = File(dbDir, "$NOMENCLATURE.json"),
     )
 
     // write markdown files for site generation
@@ -66,6 +68,8 @@ fun main() {
         mdWriter.writeJsonTemplates(
             testSequence = jsonResources.testSequence
         )
+
+        mdWriter.writeNomenclature(jsonResources.nomenclature)
     }
 
     HtmlWriter(
