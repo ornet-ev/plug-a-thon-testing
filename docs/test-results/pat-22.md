@@ -30,13 +30,3 @@ hide:
 | **sdc11073** { title="Version: unknown" } | :lucide-triangle-alert:{ title="Failed tests: 2b" } |  |  |  |  |  |  |  |
 | **sdcX** { title="Version: unknown" } | :lucide-check:{ title="All tests passed" } | :lucide-circle-question-mark:{ title="Missing test results: 1c, 1d, 4f, 4i, 5a, 5b, 6c, 6d, 6e, 6f" } | :lucide-check:{ title="All tests passed" } |  | :lucide-check:{ title="All tests passed" } | :lucide-check:{ title="All tests passed" } | :lucide-check:{ title="All tests passed" } | :lucide-check:{ title="All tests passed" } |
 
-## Interoperability Matrix (protoSDC binding)
-
-<a href="javascript:window.history.back()" class="md-button">:lucide-arrow-big-left: Back</a>
-<a href="pat-22-protosdc.html" target="_blank" class="md-button" title="Print view in new window">:lucide-printer: Print Version</a>
-
-| **Provider →**<br>**↓ Consumer** | protosdc-rs { title="Version: unknown" } | sdcX { title="Version: unknown" } |
-| -------------------------------- | ---------------------------------------- | --------------------------------- |
-| **protosdc-rs** { title="Version: unknown" } |  |  |
-| **sdcX** { title="Version: unknown" } | :lucide-check:{ title="All tests passed" } |  |
-
