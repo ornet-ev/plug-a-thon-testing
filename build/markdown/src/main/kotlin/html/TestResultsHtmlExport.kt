@@ -9,6 +9,7 @@ import org.ornet.SdcLibraryFeatures
 import org.ornet.TestSequence
 import org.ornet.Verdict
 import org.ornet.createInteroperabilityMatrix
+import org.ornet.libFeaturesFor
 
 object TestResultsHtmlExport {
     fun patEventHtml(
@@ -16,6 +17,7 @@ object TestResultsHtmlExport {
         testSequence: TestSequence,
         libraries: List<SdcLibrary>,
         libFeatures: List<SdcLibraryFeatures>,
+        binding: Binding
     ): String {
         val interopMatrix = createInteroperabilityMatrix(
             src,
@@ -23,35 +25,37 @@ object TestResultsHtmlExport {
             libFeatures
         )
 
-        val libsForPat = libFeatures.map { it.id }
+        val libsForPat = libFeatures.associateBy { it.id }
         val versionHtml = libFeatures.associate { lib ->
             lib.id to lib.version.let {
                 """<div class="version-badge">${it.ifEmpty { "n/a" }}</div>"""
             }
         }
-        val sortedLibs = libraries.sortedBy { it.name }.filter { it.id in libsForPat }
+        val libNames = libraries.associate { it.id to it.name }
+        val sortedLibs = libraries.sortedBy { it.name }.map { libsForPat[it.id]!! }
 
         val htmlCells = mutableListOf<MutableList<String>>()
         htmlCells.add(
             sortedLibs
                 .map { it }
                 .filter { Role.PROVIDER.json in it.roles }
+                .filter { binding.json in it.bindings }
                 .map {
-                    """<th><div>${it.name}</div>${versionHtml[it.id]!!}</th>"""
+                    """<th><div>${libNames[it.id]!!}</div>${versionHtml[it.id]!!}</th>"""
                 }
                 .toMutableList()
         )
 
-        val consumerLibs = sortedLibs.filter { Role.CONSUMER.json in it.roles }
-        val providerLibs = sortedLibs.filter { Role.PROVIDER.json in it.roles }
+        val consumerLibs = libFeaturesFor(sortedLibs, Role.CONSUMER, binding)
+        val providerLibs = libFeaturesFor(sortedLibs, Role.PROVIDER, binding)
 
         for (consumerLib in consumerLibs) {
-            val row = listOf("<td><div>${consumerLib.name}</div>${versionHtml[consumerLib.id]!!}</td>").toMutableList().also {
+            val row = listOf("<td><div>${libNames[consumerLib.id]!!}</div>${versionHtml[consumerLib.id]!!}</td>").toMutableList().also {
                 htmlCells.add(it)
             }
 
             for (providerLib in providerLibs) {
-                val testResult = interopMatrix.cellFor(Binding.DPWS, consumerLib.id, providerLib.id)
+                val testResult = interopMatrix.cellFor(binding, consumerLib.id, providerLib.id)
                 when (testResult) {
                     null -> row.add("""<td class="result-cell none">&nbsp;</td>""")
                     else -> row.add("""<td class="result-cell ${testResult.verdict.json}">${htmlForTestResult(testResult)}</td>""")
@@ -59,10 +63,12 @@ object TestResultsHtmlExport {
             }
         }
 
+        val title = "PAT#${src.patNumber} Interoperability Matrix (${binding.humanReadableName} binding)"
+
         return """
             <html lang="en">
             <head>
-                <title>Interoperability matrix SDC Plug-a-thon #${src.patNumber}</title>
+                <title>$title</title>
                 <style>
                     * {
                         margin: 0;
@@ -184,7 +190,7 @@ object TestResultsHtmlExport {
                 </style>
             </head>
             <body>
-            <h1>Interoperability matrix SDC Plug-a-thon #${src.patNumber}</h1>
+            <h1>$title</h1>
             <table style="width:100%; height: 100%">
                 <thead>
                 <tr>

@@ -1,8 +1,5 @@
 package org.ornet.markdown
 
-import org.ornet.ROLE_CONSUMER
-import org.ornet.ROLE_PROVIDER
-
 // markdown generation utils
 object Markdown {
     fun heading(title: String, level: Int = 0): String {
@@ -100,14 +97,5 @@ object Markdown {
 
     fun frontMatter(vararg item: Pair<String, String>): String {
         return frontMatter(arrayOf(*item).associate { it.first to it.second })
-    }
-}
-
-// mapping of consumer/provider role to human-readable, official terms
-fun roleNameFor(name: String): String {
-    return when (name) {
-        ROLE_CONSUMER -> "SOMDS Consumer"
-        ROLE_PROVIDER -> "SOMDS Provider"
-        else -> error("Unknown role: $name")
     }
 }

@@ -1,5 +1,6 @@
 package org.ornet.markdown
 
+import org.ornet.Role
 import org.ornet.SdcLibrary
 import org.ornet.TestSequence
 import org.ornet.sanitizedPath
@@ -45,7 +46,7 @@ object SdcLibrariesMarkdownExport {
             builder.appendLine(
                 tableRow(
                     "Roles:",
-                    src.roles.ifEmpty { listOf("None") }.map { roleNameFor(it) }.let { multilineCell(it) })
+                    src.roles.ifEmpty { listOf("None") }.map { Role.fromJson(it).humanReadableName }.let { multilineCell(it) })
             )
             if (src.programmingLanguage.isNotEmpty()) builder.appendLine(
                 tableRow(
