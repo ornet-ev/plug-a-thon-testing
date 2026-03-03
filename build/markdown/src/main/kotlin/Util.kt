@@ -70,3 +70,11 @@ private fun supportsTestCase(
     val effectiveBindings = potentialMatch.bindings ?: sdcLibrary.bindings
     return role.json in effectiveRoles && binding.json in effectiveBindings
 }
+
+fun htmlFileNameInteropMatrix(patEvent: PatEvent, binding: Binding): String {
+    return "pat-${patEvent.patNumber}-${binding.json}.html"
+}
+
+fun libFeaturesFor(libFeatures: List<SdcLibraryFeatures>, role: Role, binding: Binding): List<SdcLibraryFeatures> {
+    return libFeatures.filter { role.json in it.roles }.filter { binding.json in it.bindings }
+}
