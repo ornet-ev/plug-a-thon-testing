@@ -32,7 +32,7 @@ class JsonResources(
 
     val sdcLibrariesPerPatEvent = testResultsDir.let { testResultsDir ->
         testResultsDir.listFiles()!!.filter { it.isDirectory }.associate { patEventDir ->
-            val libs = File(patEventDir, "sdc-libraries").listFiles()!!.filter { it.isFile }.map {
+            val libs = File(patEventDir, "participants").listFiles()!!.filter { it.isFile }.map {
                 json.decodeFromString<SdcLibraryFeatures>(it.readText())
             }
             patEventDir.name to libs
