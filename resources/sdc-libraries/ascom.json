@@ -1,88 +1,180 @@
 {
   "id": "ascom",
-  "name": "Ascom",
+  "name": "SDC Common Driver Library",
+  "programmingLanguage": "C# C++",
+  "license": "Proprietary license",
+  "website": "https://www.ascom.com/",
+  "contact": [
+    "[Francesco Fabrini](mailto:francesco.fabrini@ascom.com)"
+  ],
   "roles": [
     "consumer"
   ],
-  "programmingLanguage": "",
-  "license": "",
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
-      "testCaseId": "1a"
+      "testCaseId": "1a",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "1b"
+      "testCaseId": "1b",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "1c"
+      "testCaseId": "1c",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "1d"
+      "testCaseId": "1d",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "2a"
+      "testCaseId": "2a",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "2b"
+      "testCaseId": "2b",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "3a"
+      "testCaseId": "3a",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "3b"
+      "testCaseId": "3b",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4a"
+      "testCaseId": "4a",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4b"
+      "testCaseId": "4b",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4c"
+      "testCaseId": "4c",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4d"
+      "testCaseId": "4d",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4e"
+      "testCaseId": "4e",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4f"
+      "testCaseId": "4f",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4g"
+      "testCaseId": "4g",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4h"
+      "testCaseId": "4h",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "4i"
+      "testCaseId": "4i",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "5a"
+      "testCaseId": "5a",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "5b"
+      "testCaseId": "5b",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "6b"
+      "testCaseId": "6b",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "6c"
+      "testCaseId": "6c",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "6d"
+      "testCaseId": "6d",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "6e"
+      "testCaseId": "6e",
+      "roles": [
+        "consumer"
+        ]
     },
     {
-      "testCaseId": "6f"
+      "testCaseId": "6f",
+      "roles": [
+        "consumer"
+        ]
+    },
+    {
+      "testCaseId": "7a",
+      "roles": [
+        "consumer"
+      ]
+    },
+    {
+      "testCaseId": "7b",
+      "roles": [
+        "consumer"
+        ]
+    },
+    {
+      "testCaseId": "7c",
+      "roles": [
+        "consumer"
+      ]
     }
-  ],
-  "provider": "Ascom",
-  "website": "",
-  "contact": [
-    "Francesco Fabrini"
   ]
 }

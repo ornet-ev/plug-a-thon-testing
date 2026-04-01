@@ -29,6 +29,7 @@ data class SdcLibraryFeatures(
 @Serializable
 data class Feature(
     val testCaseId: String,
+    val supported: Boolean = true,
     val bindings: List<String>? = null, // dpws, protosdc
     val roles: List<String>? = null, // consumer, provider
 )

@@ -1,0 +1,136 @@
+{
+  "id": "lumos",
+  "name": "Lumos",
+  "programmingLanguage": "C++",
+  "license": "Not available",
+  "provider": "Fisher & Paykel Healthcare",
+  "contact": [
+    "[Yi Lin Huang](YiLin.Huang@fphcare.co.nz)",
+    "[Paul Martinsen](pmartinsen@blueleafsoftware.com)"
+  ],
+  "roles": [
+    "provider"
+  ],
+  "bindings": [
+    "dpws"
+  ],
+  "features": [
+    {
+      "testCaseId": "1a",
+      "description": "The provider sends hello messages in ad-hoc mode"
+    },
+    {
+      "testCaseId": "1b",
+      "description": "The provider answers to probe and resolve in ad-hoc mode"
+    },
+    {
+      "testCaseId": "1c",
+      "description": "The provider sends hello messages in managed mode"
+    },
+    {
+      "testCaseId": "1d",
+      "description": "The provider answers to probe and resolve in managed mode"
+    },
+    {
+      "testCaseId": "2a",
+      "description": "The provider answers to TransferGet"
+    },
+    {
+      "testCaseId": "2b",
+      "description": "The consumer established a subscription"
+    },
+    {
+      "testCaseId": "3a",
+      "description": "The provider answers to GetMdib"
+    },
+    {
+      "testCaseId": "3b",
+      "description": "The provider answers to GetContextStates with a location context"
+    },
+    {
+      "testCaseId": "4a",
+      "description": "The provider produces >= 5 numeric updates"
+    },
+    {
+      "testCaseId": "4b",
+      "description": "The provider produces >= 5 string updates"
+    },
+    {
+      "testCaseId": "4c",
+      "description": "The provider produces >= 5 alert condition updates"
+    },
+    {
+      "testCaseId": "4d",
+      "description": "The provider produces >= 5 alert signal updates"
+    },
+    {
+      "testCaseId": "4e",
+      "description": "The provider produces alert system self-checks"
+    },
+    {
+      "testCaseId": "4f",
+      "description": "The provider produces 3, 10 Hz waveforms"
+    },
+    {
+      "testCaseId": "4g",
+      "description": "The provider produces 5 clock or battery and 5 MDS or VMD updates"
+    },
+    {
+      "testCaseId": "4h",
+      "description": "The provider produces 5 operation state reports"
+    },
+    {
+      "testCaseId": "4i",
+      "description": "The provider produces 1, 2 Hz waveform"
+    },
+    {
+      "testCaseId": "5a",
+      "description": "The provider updates alert condition descriptor",
+      "supported": false
+    },
+    {
+      "testCaseId": "5b",
+      "description": "The provider inserts and deletes a descriptor",
+      "supported": false
+    },
+    {
+      "testCaseId": "6b",
+      "description": "The consumer adds 1 patient using SetContextState"
+    },
+    {
+      "testCaseId": "6c",
+      "description": "The consumer invokes SetValue & the provider responds synchronously",
+      "supported": false
+    },
+    {
+      "testCaseId": "6d",
+      "description": "The consumer invokes SetString & the provider responds asynchronously",
+      "supported": false
+    },
+    {
+      "testCaseId": "6e",
+      "description": "The consumer sets 2 metric states using SetMetricStates & the provider responds synchronously",
+      "supported": false
+    },
+    {
+      "testCaseId": "6f",
+      "description": "The consumer invokes Activate & the provider responds synchronously",
+      "supported": false
+    },
+    {
+      "testCaseId": "7a",
+      "description": "The consumer requests supported languages",
+      "supported": false
+    },
+    {
+      "testCaseId": "7b",
+      "description": "The consumer requests localized text for a supported language",
+      "supported": false
+    },
+    {
+      "testCaseId": "7c",
+      "description": "The consumer requests version 1 of localized text for a supported language",
+      "supported": false
+    }
+  ]
+}

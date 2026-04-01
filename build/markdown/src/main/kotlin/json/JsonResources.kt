@@ -16,7 +16,11 @@ class JsonResources(
     sdcLibrariesDir: File,
     nomenclatureFile: File,
 ) {
-    val json = Json { prettyPrint = true }
+    val json = Json {
+        prettyPrint = true
+        ignoreUnknownKeys = true
+        allowTrailingComma = true
+    }
 
     val testSequence = testSequenceFile.let { file ->
         file.readText().let {
