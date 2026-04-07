@@ -58,7 +58,7 @@ object SdcLibrariesMarkdownExport {
             builder.toString()
         }
 
-        val features = src.features.mapNotNull { feature ->
+        val features = src.features.filter { it.supported }.mapNotNull { feature ->
             testSequence.testGroupForTestCase(feature.testCaseId)?.let {
                 Markdown.generate {
                     listItem(

@@ -63,7 +63,7 @@ private fun supportsTestCase(
     binding: Binding,
 ): Boolean {
     val potentialMatch = sdcLibrary.features.firstOrNull {
-        it.testCaseId == testCaseId
+        it.testCaseId == testCaseId && it.supported
     } ?: return false
 
     val effectiveRoles = potentialMatch.roles ?: sdcLibrary.roles
