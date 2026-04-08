@@ -2,7 +2,7 @@
   "patNumber": 22,
   "testResults": [
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "lumos-1",
       "binding": "dpws",
       "caseIds": [
@@ -30,7 +30,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "lumos-1",
       "binding": "dpws",
       "caseIds": [
@@ -39,7 +39,7 @@
       "verdict": "fail"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "vector-sdc-stack",
       "binding": "dpws",
       "caseIds": [
@@ -71,7 +71,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "protosdc-rs",
       "binding": "dpws",
       "caseIds": [
@@ -106,7 +106,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "sdcx",
       "binding": "dpws",
       "caseIds": [
@@ -141,7 +141,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "cpp-draeger",
       "binding": "dpws",
       "caseIds": [
@@ -176,7 +176,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "sdc-ri",
       "binding": "dpws",
       "caseIds": [
@@ -208,7 +208,7 @@
       "verdict": "pass"
     },
     {
-      "consumerLibraryId": "ascom",
+      "consumerLibraryId": "sdc-common-driver-library",
       "providerLibraryId": "sdc11073",
       "binding": "dpws",
       "caseIds": [
