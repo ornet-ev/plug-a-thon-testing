@@ -1,5 +1,5 @@
 {
-  "id": "ascom",
+  "id": "sdc-common-driver-library",
   "version": "",
   "roles": [
     "consumer"

@@ -1,5 +1,5 @@
 {
-  "id": "ascom",
+  "id": "sdc-common-driver-library",
   "name": "SDC Common Driver Library",
   "programmingLanguage": "C# C++",
   "license": "Proprietary license",
