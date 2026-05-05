@@ -1,8 +1,8 @@
 {
   "testGroups": [
     {
-      "id": "discovery",
-      "name": "Discovery",
+      "id": "01-discovery",
+      "name": "01 Discovery",
       "testCases": [
         {
           "id": "1a",
@@ -27,8 +27,8 @@
       ]
     },
     {
-      "id": "biceps-services-discovery-and-binding",
-      "name": "BICEPS Services Discovery and binding",
+      "id": "02-biceps-services-discovery-and-binding",
+      "name": "02 BICEPS Services Discovery and binding",
       "testCases": [
         {
           "id": "2a",
@@ -43,8 +43,8 @@
       ]
     },
     {
-      "id": "request-response",
-      "name": "Request Response",
+      "id": "03-request-response",
+      "name": "03 Request Response",
       "testCases": [
         {
           "id": "3a",
@@ -59,8 +59,8 @@
       ]
     },
     {
-      "id": "state-reports",
-      "name": "State Reports",
+      "id": "04-state-reports",
+      "name": "04 State Reports",
       "testCases": [
         {
           "id": "4a",
@@ -110,8 +110,8 @@
       ]
     },
     {
-      "id": "description-modifications",
-      "name": "Description Modifications",
+      "id": "05-description-modifications",
+      "name": "05 Description Modifications",
       "testCases": [
         {
           "id": "5a",
@@ -126,8 +126,8 @@
       ]
     },
     {
-      "id": "operation-invocation",
-      "name": "Operation Invocation",
+      "id": "06-operation-invocation",
+      "name": "06 Operation Invocation",
       "testCases": [
         {
           "id": "6a",
@@ -163,8 +163,8 @@
       ]
     },
     {
-      "id": "localization-service",
-      "name": "Localization Service",
+      "id": "07-localization-service",
+      "name": "07 Localization Service",
       "testCases": [
         {
           "id": "7a",
