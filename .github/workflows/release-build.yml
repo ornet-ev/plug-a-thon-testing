@@ -54,6 +54,9 @@ jobs:
       - name: Create artifacts folder and copy files
         run: ./.github/copy_artifacts.sh
 
+      - name: Copy site
+        run: ./.github/copy_site.sh
+
       - name: Upload artifacts
         # if: success() && github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v4
@@ -66,5 +69,5 @@ jobs:
         with:
           name: "Release ${{ github.ref_name }}"
           makeLatest: true
-          body: "📋 [Documentation and Changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/README.adoc)"
+          body: "📋 [Documentation and Changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/README.md)"
           artifacts: "plug-a-thon-mdibs/*"
