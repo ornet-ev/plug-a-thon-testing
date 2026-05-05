@@ -28,16 +28,24 @@ class HtmlWriter(
                     continue
                 }
 
-                val outputFilename = htmlFileNameInteropMatrix(patEvent, binding)
-                File(outputDirectory, outputFilename).writeText(
-                    TestResultsHtmlExport.patEventHtml(
-                        patEvent,
-                        testSequence,
-                        sdcLibraries,
-                        sdcLibraryFeatures[outputDirectory.name] ?: emptyList(),
-                        binding
-                    )
+                val content = TestResultsHtmlExport.patEventHtml(
+                    patEvent,
+                    testSequence,
+                    sdcLibraries,
+                    sdcLibraryFeatures[outputDirectory.name] ?: emptyList(),
+                    binding
                 )
+
+                val outputFilename = htmlFileNameInteropMatrix(patEvent, binding)
+
+                val destinations = listOf(
+                    File(testResultsRootDir, outputFilename),
+                    File(outputDirectory, outputFilename)
+                )
+
+                destinations.forEach {
+                    it.writeText(content)
+                }
             }
         }
     }
