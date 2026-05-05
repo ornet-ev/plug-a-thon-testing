@@ -8,6 +8,8 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-05-05
+
 ### Changed
 
 - Test specification is now provided as a JSON as part of the release download.
