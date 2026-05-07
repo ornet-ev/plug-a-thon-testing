@@ -18,20 +18,18 @@ jobs:
 
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Extract branch name
         shell: bash
         run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
         id: extract_branch
 
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v5
         with:
-          java-version: '17'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          java-version: '21'
 
       - name: Setup gradle
         uses: gradle/actions/setup-gradle@v5
@@ -42,8 +40,22 @@ jobs:
           ./gradlew run
           popd
 
+      - name: Generate markdown
+        run: |
+          pushd build/markdown
+          ./gradlew run
+          popd
+
+      - name: Build offline site
+        uses: astral-sh/setup-uv@v7
+      - run: uvx --from=toml-cli toml set --toml-path=zensical.toml project.plugins.offline.enabled true  # enable offline mode for artifacts to work correctly
+      - run: uvx zensical build --clean
+
       - name: Create artifacts folder and copy files
         run: ./.github/copy_artifacts.sh
+
+      - name: Copy site
+        run: ./.github/copy_site.sh
 
       - name: Upload artifacts
         # if: success() && github.ref == 'refs/heads/main'
@@ -57,5 +69,5 @@ jobs:
         with:
           name: "Release ${{ github.ref_name }}"
           makeLatest: true
-          body: "📋 [Documentation and Changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/README.adoc)"
+          body: "📋 [Documentation and Changelog](https://github.com/ornet-ev/plug-a-thon-mdibs/blob/${{ github.ref_name }}/README.md)"
           artifacts: "plug-a-thon-mdibs/*"

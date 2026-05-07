@@ -8,14 +8,18 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-05-05
+
 ### Changed
 
-- Test specification is now provided as a JSON as part of the release download
+- Test specification is now provided as a JSON as part of the release download.
+- Offline site is now provided as part of the release download.
 
 ### Added
 
 - Non-latin pseudo translations (chinese, greek) to localization database. ([#27](https://github.com/ornet-ev/plug-a-thon-testing/issues/27))
 - Correct text width based on grapheme counting. ([#29](https://github.com/ornet-ev/plug-a-thon-testing/issues/29))
+- Localization test sequence.
 
 ### Fixed
 
