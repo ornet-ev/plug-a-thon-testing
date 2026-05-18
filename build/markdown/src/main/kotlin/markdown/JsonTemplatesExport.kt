@@ -24,6 +24,9 @@ object JsonTemplatesExport {
 
         return Markdown.generate(false) {
             """
+                
+<a href="/plug-a-thon-testing/forms/library-manifest-form.html" target="_blank" rel="noopener noreferrer" class="md-button" title="Open in new window">:lucide-external-link: Library Manifest Generator</a> <a href="/plug-a-thon-testing/forms/test-results-form.html" target="_blank" rel="noopener noreferrer" class="md-button" title="Open in new window">:lucide-external-link: Test Results Generator</a>
+
 ## Interoperability Matrix
 
 The interoperability matrix of a certain Plug-a-thon event is built from a set of JSON files, some containing test

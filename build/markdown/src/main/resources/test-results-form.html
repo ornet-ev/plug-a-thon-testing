@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Results Generator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0f14;
+      --surface: #16181f;
+      --surface2: #1e2029;
+      --border: #2a2d3a;
+      --accent: #5b6aff;
+      --accent2: #00d4a8;
+      --text: #e8eaf0;
+      --muted: #6b7080;
+      --danger: #ff5b6a;
+      --pass: #00d4a8;
+      --fail: #ff5b6a;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── Header ── */
+    header {
+      max-width: 960px;
+      margin: 0 auto 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      margin-top: 0.4rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-family: var(--mono);
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 680px) { .wrapper { grid-template-columns: 1fr; } }
+    .col-full { grid-column: 1 / -1; }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+    }
+    .card-title {
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Form fields ── */
+    label.field-label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: 0.35rem;
+      margin-top: 1rem;
+    }
+    label.field-label:first-of-type { margin-top: 0; }
+
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.55rem 0.75rem;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus { border-color: var(--accent); }
+    input::placeholder { color: var(--muted); opacity: 0.5; }
+
+    /* ── Verdict toggle ── */
+    .verdict-group {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.25rem;
+    }
+    .verdict-btn {
+      flex: 1;
+      padding: 0.55rem 0;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      user-select: none;
+    }
+    .verdict-btn:hover { border-color: var(--accent); }
+    .verdict-btn.pass.active {
+      border-color: var(--pass);
+      background: rgba(0, 212, 168, 0.12);
+      color: var(--pass);
+    }
+    .verdict-btn.fail.active {
+      border-color: var(--fail);
+      background: rgba(255, 91, 106, 0.12);
+      color: var(--fail);
+    }
+    .verdict-btn.binding-btn.active {
+      border-color: var(--accent);
+      background: rgba(91, 106, 255, 0.12);
+      color: var(--accent);
+    }
+
+    /* ── Test case grid ── */
+    .features-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .features-actions { display: flex; gap: 0.5rem; }
+
+    .btn-tiny {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-tiny:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 0.45rem;
+    }
+    .feat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.3rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .feat-item:hover { border-color: var(--accent); background: var(--surface2); }
+    .feat-item input[type="checkbox"] { display: none; }
+    .feat-item.checked {
+      border-color: var(--accent);
+      background: rgba(91, 106, 255, 0.1);
+      color: var(--accent);
+    }
+
+    /* ── Test result entries ── */
+    .results-list { display: flex; flex-direction: column; gap: 1rem; }
+
+    .result-entry {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      position: relative;
+    }
+    .result-entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+    .result-entry-num {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .entry-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 1rem;
+    }
+    @media (max-width: 500px) { .entry-fields { grid-template-columns: 1fr; } }
+
+    .entry-field label.field-label { margin-top: 0; }
+
+    .entry-verdict { grid-column: 1 / -1; }
+
+    .entry-cases { grid-column: 1 / -1; }
+    .entry-cases-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Output ── */
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    textarea#json-output {
+      width: 100%;
+      height: 340px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+      color: var(--accent2);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 0.75rem; margin-top: 0; flex-wrap: wrap; }
+    .btn {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.4rem;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), #7b8bff); color: #fff; }
+    .btn-secondary { background: linear-gradient(135deg, var(--accent2), #00b891); color: #0a0f0d; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-remove {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--muted);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .btn-remove:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* ── Status ── */
+    .status-msg {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent2);
+      opacity: 0;
+      transition: opacity 0.3s;
+      min-width: 180px;
+      text-align: right;
+    }
+    .status-msg.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem;">
+    <div>
+      <h1>Test Results Generator</h1>
+      <p>// Document plug-a-thon test results and export as JSON</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:0.6rem; padding-top:0.3rem;">
+      <span id="import-status" class="status-msg"></span>
+      <button class="btn btn-ghost" id="btn-import" style="padding:0.5rem 1.1rem;">Import JSON</button>
+      <input type="file" id="file-input" accept=".json,application/json" style="display:none;" />
+    </div>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- PAT Number -->
+  <div class="card col-full">
+    <div class="card-title">Event</div>
+    <label class="field-label" for="pat-number">patNumber</label>
+    <input type="number" id="pat-number" min="1" placeholder="e.g. 3" style="max-width:200px;" value="$PAT_NUMBER" />
+  </div>
+
+  <!-- Test Result Entries -->
+  <div class="card col-full">
+    <div class="features-header">
+      <div class="card-title" style="margin-bottom:0;">Test Results</div>
+      <button class="btn-tiny" id="btn-add-entry">+ add result</button>
+    </div>
+    <div class="results-list" id="results-list"></div>
+  </div>
+
+  <!-- Output -->
+  <div class="card col-full">
+    <div class="output-header">
+      <div class="card-title" style="margin-bottom:0;">Generated JSON</div>
+      <span id="copy-status" class="status-msg">✓ copied</span>
+    </div>
+    <textarea id="json-output" readonly spellcheck="false"></textarea>
+    <div class="btn-row" style="margin-top:0.9rem;">
+      <button class="btn btn-primary" id="btn-generate">Generate JSON</button>
+      <button class="btn btn-secondary" id="btn-download">Download .json</button>
+      <button class="btn btn-ghost" id="btn-copy">Copy to clipboard</button>
+      <button class="btn btn-ghost" id="btn-reset" style="margin-left:auto;border-color:#ff5b6a44;color:var(--danger);">Reset form</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const TEST_CASE_IDS = [
+    '$TEST_CASE_IDS'
+  ];
+
+  // ── Library ID pre-selections ─────────────────────────────────────────
+  // Add more entries here as needed; they will appear in the dropdowns.
+  const CONSUMER_LIBRARY_IDS = [
+    '$CONSUMER_IDS'
+  ];
+
+  const PROVIDER_LIBRARY_IDS = [
+    '$PROVIDER_IDS'
+  ];
+
+  let entryCount = 0;
+
+  // ── Build <datalist> options for a library ID field ──────────────────
+  function buildDatalistOptions(list) {
+    return list.map(id => `<option value="${esc(id)}"></option>`).join('');
+  }
+
+  // ── Create a result entry ─────────────────────────────────────────────
+  function createEntry(data = {}) {
+    entryCount++;
+    const idx = entryCount;
+    const div = document.createElement('div');
+    div.className = 'result-entry';
+    div.dataset.entry = idx;
+
+    const verdictPass = data.verdict === 'pass';
+    const verdictFail = data.verdict === 'fail';
+
+    div.innerHTML = `
+      <div class="result-entry-header">
+        <span class="result-entry-num">Result #<span class="entry-idx">${idx}</span></span>
+        <button class="btn-remove" title="Remove entry">×</button>
+      </div>
+      <div class="entry-fields">
+        <div class="entry-field">
+          <label class="field-label">consumerLibraryId</label>
+          <input type="text" class="consumer-id" placeholder="e.g. protosdc-rs"
+            list="consumer-list-${idx}" value="${esc(data.consumerLibraryId || '')}" autocomplete="off" />
+          <datalist id="consumer-list-${idx}">${buildDatalistOptions(CONSUMER_LIBRARY_IDS)}</datalist>
+        </div>
+        <div class="entry-field">
+          <label class="field-label">providerLibraryId</label>
+          <input type="text" class="provider-id" placeholder="e.g. com.example.mylib"
+            list="provider-list-${idx}" value="${esc(data.providerLibraryId || '')}" autocomplete="off" />
+          <datalist id="provider-list-${idx}">${buildDatalistOptions(PROVIDER_LIBRARY_IDS)}</datalist>
+        </div>
+        <div class="entry-field entry-field--full">
+          <label class="field-label">binding</label>
+          <div class="verdict-group">
+            <div class="verdict-btn binding-btn ${data.binding === 'dpws' ? 'active' : ''}" data-binding="dpws">dpws</div>
+            <div class="verdict-btn binding-btn ${data.binding === 'protosdc' ? 'active' : ''}" data-binding="protosdc">protosdc</div>
+          </div>
+        </div>
+        <div class="entry-verdict">
+          <label class="field-label">verdict</label>
+          <div class="verdict-group">
+            <div class="verdict-btn verdict-choice-btn pass ${verdictPass ? 'active' : ''}" data-verdict="pass">pass</div>
+            <div class="verdict-btn verdict-choice-btn fail ${verdictFail ? 'active' : ''}" data-verdict="fail">fail</div>
+          </div>
+        </div>
+        <div class="entry-cases">
+          <div class="entry-cases-header">
+            <label class="field-label" style="margin:0;">caseIds</label>
+            <div class="features-actions">
+              <button class="btn-tiny select-all-cases">Select all</button>
+              <button class="btn-tiny deselect-all-cases">Deselect all</button>
+            </div>
+          </div>
+          <div class="features-grid cases-grid"></div>
+        </div>
+      </div>
+    `;
+
+    // Build case checkboxes
+    const selectedIds = new Set(Array.isArray(data.caseIds) ? data.caseIds : TEST_CASE_IDS);
+    const casesGrid = div.querySelector('.cases-grid');
+    TEST_CASE_IDS.forEach(id => {
+      const lbl = document.createElement('label');
+      lbl.className = 'feat-item' + (selectedIds.has(id) ? ' checked' : '');
+      lbl.dataset.value = id;
+      lbl.innerHTML = `<input type="checkbox" ${selectedIds.has(id) ? 'checked' : ''} />${id}`;
+      lbl.addEventListener('click', (e) => {
+        e.preventDefault();
+        lbl.classList.toggle('checked');
+        lbl.querySelector('input').checked = lbl.classList.contains('checked');
+        updateOutput();
+      });
+      casesGrid.appendChild(lbl);
+    });
+
+    // Select / deselect all cases
+    div.querySelector('.select-all-cases').addEventListener('click', () => {
+      div.querySelectorAll('.feat-item').forEach(el => {
+        el.classList.add('checked');
+        el.querySelector('input').checked = true;
+      });
+      updateOutput();
+    });
+    div.querySelector('.deselect-all-cases').addEventListener('click', () => {
+      div.querySelectorAll('.feat-item').forEach(el => {
+        el.classList.remove('checked');
+        el.querySelector('input').checked = false;
+      });
+      updateOutput();
+    });
+
+    // Verdict buttons
+    div.querySelectorAll('.verdict-choice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        div.querySelectorAll('.verdict-choice-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateOutput();
+      });
+    });
+
+    // Binding buttons
+    div.querySelectorAll('.binding-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        div.querySelectorAll('.binding-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateOutput();
+      });
+    });
+
+    // Remove entry
+    div.querySelector('.btn-remove').addEventListener('click', () => {
+      div.remove();
+      renumberEntries();
+      updateOutput();
+    });
+
+    // Live update on text input
+    div.querySelectorAll('input[type="text"]').forEach(el => el.addEventListener('input', updateOutput));
+
+    return div;
+  }
+
+  function esc(str) {
+    return str.replace(/"/g, '&quot;');
+  }
+
+  function renumberEntries() {
+    document.querySelectorAll('.result-entry').forEach((el, i) => {
+      el.querySelector('.entry-idx').textContent = i + 1;
+    });
+  }
+
+  function addEntry(data = {}) {
+    const list = document.getElementById('results-list');
+    list.appendChild(createEntry(data));
+    updateOutput();
+  }
+
+  document.getElementById('btn-add-entry').addEventListener('click', () => addEntry());
+
+  // ── Build JSON ────────────────────────────────────────────────────────
+  function buildJSON() {
+    const patRaw = document.getElementById('pat-number').value.trim();
+    const patNumber = patRaw !== '' ? parseInt(patRaw, 10) : null;
+
+    const testResults = [];
+    document.querySelectorAll('.result-entry').forEach(entry => {
+      const consumerId = entry.querySelector('.consumer-id').value.trim();
+      const providerId = entry.querySelector('.provider-id').value.trim();
+      const bindingEl  = entry.querySelector('.binding-btn.active');
+      const binding    = bindingEl ? bindingEl.dataset.binding : null;
+      const verdictEl  = entry.querySelector('.verdict-choice-btn.active');
+      const verdict    = verdictEl ? verdictEl.dataset.verdict : null;
+      const caseIds    = [...entry.querySelectorAll('.feat-item.checked')]
+                          .map(el => el.dataset.value);
+
+      const result = {};
+      if (consumerId) result.consumerLibraryId = consumerId;
+      if (providerId) result.providerLibraryId = providerId;
+      if (binding)   result.binding = binding;
+      if (caseIds.length) result.caseIds = caseIds;
+      if (verdict)   result.verdict = verdict;
+      testResults.push(result);
+    });
+
+    const obj = {};
+    if (patNumber !== null && !isNaN(patNumber)) obj.patNumber = patNumber;
+    obj.testResults = testResults;
+    return obj;
+  }
+
+  const STORAGE_KEY = 'test-results-form-state';
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(buildJSON()));
+    } catch (e) { /* storage unavailable */ }
+  }
+
+  function updateOutput() {
+    document.getElementById('json-output').value = JSON.stringify(buildJSON(), null, 2);
+    saveState();
+  }
+
+  document.getElementById('pat-number').addEventListener('input', updateOutput);
+  document.getElementById('btn-generate').addEventListener('click', updateOutput);
+
+  // ── Download ──────────────────────────────────────────────────────────
+  document.getElementById('btn-download').addEventListener('click', () => {
+    updateOutput();
+    const content = document.getElementById('json-output').value;
+    const pat     = document.getElementById('pat-number').value.trim() || 'results';
+    const blob    = new Blob([content], { type: 'application/json' });
+    const url     = URL.createObjectURL(blob);
+    const a       = document.createElement('a');
+    a.href        = url;
+    a.download    = `pat${pat}-results.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── Copy ─────────────────────────────────────────────────────────────
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    const val = document.getElementById('json-output').value;
+    if (!val) return;
+    navigator.clipboard.writeText(val).then(() => {
+      const s = document.getElementById('copy-status');
+      s.classList.add('visible');
+      setTimeout(() => s.classList.remove('visible'), 2000);
+    });
+  });
+
+  // ── Import JSON ───────────────────────────────────────────────────────
+  document.getElementById('btn-import').addEventListener('click', () => {
+    document.getElementById('file-input').value = '';
+    document.getElementById('file-input').click();
+  });
+
+  document.getElementById('file-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        loadJSON(data);
+        showImportStatus('✓ loaded ' + file.name);
+      } catch {
+        showImportStatus('✗ invalid JSON');
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  function showImportStatus(msg) {
+    const el = document.getElementById('import-status');
+    el.textContent = msg;
+    el.classList.add('visible');
+    setTimeout(() => el.classList.remove('visible'), 3000);
+  }
+
+  function loadJSON(data) {
+    // PAT number
+    document.getElementById('pat-number').value =
+      (data.patNumber !== undefined && data.patNumber !== null) ? data.patNumber : '$PAT_NUMBER';
+
+    // Clear & rebuild entries
+    entryCount = 0;
+    document.getElementById('results-list').innerHTML = '';
+    const results = Array.isArray(data.testResults) ? data.testResults : [];
+    if (results.length === 0) {
+      addEntry();
+    } else {
+      results.forEach(r => addEntry(r));
+    }
+  }
+
+
+  // ── Reset ─────────────────────────────────────────────────────────────
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!confirm('Reset the form? All data will be cleared, including saved state.')) return;
+    try { localStorage.removeItem('test-results-form-state'); } catch(e) {}
+    document.getElementById('pat-number').value = '';
+    entryCount = 0;
+    document.getElementById('results-list').innerHTML = '';
+    addEntry();
+  });
+
+  // ── Init ─────────────────────────────────────────────────────────────
+  (function init() {
+    try {
+      const saved = localStorage.getItem('test-results-form-state');
+      if (saved) {
+        loadJSON(JSON.parse(saved));
+        return;
+      }
+    } catch (e) { /* storage unavailable */ }
+    addEntry();
+  })();
+</script>
+</body>
+</html>

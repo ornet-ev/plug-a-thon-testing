@@ -1,7 +1,7 @@
 package org.ornet
 
-import org.ornet.json.JsonResources
 import org.ornet.html.HtmlWriter
+import org.ornet.json.JsonResources
 import org.ornet.markdown.MarkdownWriter
 import java.io.File
 
@@ -12,6 +12,7 @@ const val DOCS_FOLDER = "../../docs"
 const val DOCS_TEST_RESULTS_FOLDER = "$DOCS_FOLDER/test-results"
 const val DOCS_TEST_SEQUENCE_FOLDER = "$DOCS_FOLDER/test-sequence"
 const val DOCS_SDC_LIBRARIES_FOLDER = "$DOCS_FOLDER/sdc-libraries"
+const val FORMS_FOLDER = "$DOCS_FOLDER/forms"
 const val TEST_SEQUENCE = "test-sequence"
 const val NOMENCLATURE = "nomenclature"
 
@@ -22,6 +23,10 @@ fun main() {
     }
     val rootDir = File(DOCS_FOLDER).also {
         require(it.exists()) { "Directory '$RESOURCES_FOLDER' not exists" }
+    }
+
+    val formsDir = File(FORMS_FOLDER).also {
+        it.mkdirs()
     }
 
     val testResultsDir = File(DOCS_TEST_RESULTS_FOLDER).also {
@@ -73,12 +78,21 @@ fun main() {
     }
 
     HtmlWriter(
-        testResultsRootDir = testResultsDir
-    ).writePatEvents(
-        patEvents = jsonResources.patEvents,
-        testSequence = jsonResources.testSequence,
-        sdcLibraries = jsonResources.sdcLibraries,
-        sdcLibraryFeatures = jsonResources.sdcLibrariesPerPatEvent
-    )
+        testResultsRootDir = testResultsDir,
+        formsDir = formsDir
+    ).apply {
+        writePatEvents(
+            patEvents = jsonResources.patEvents,
+            testSequence = jsonResources.testSequence,
+            sdcLibraries = jsonResources.sdcLibraries,
+            sdcLibraryFeatures = jsonResources.sdcLibrariesPerPatEvent
+        )
+
+        writeForms(
+            testSequence = jsonResources.testSequence,
+            patEvents = jsonResources.patEvents,
+            sdcLibraries = jsonResources.sdcLibraries,
+        )
+    }
 }
 
