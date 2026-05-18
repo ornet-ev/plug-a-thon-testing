@@ -5,12 +5,12 @@ import org.ornet.PatEvent
 import org.ornet.SdcLibrary
 import org.ornet.SdcLibraryFeatures
 import org.ornet.TestSequence
-import org.ornet.html.TestResultsHtmlExport
 import org.ornet.htmlFileNameInteropMatrix
 import java.io.File
 
 class HtmlWriter(
     private val testResultsRootDir: File,
+    private val formsDir: File,
 ) {
     fun writePatEvents(
         patEvents: List<PatEvent>,
@@ -48,5 +48,23 @@ class HtmlWriter(
                 }
             }
         }
+    }
+
+    fun writeForms(
+        patEvents: List<PatEvent>,
+        testSequence: TestSequence,
+        sdcLibraries: List<SdcLibrary>,
+    ) {
+        val outputDirectory = formsDir.also {
+            it.mkdirs()
+        }
+
+        File(outputDirectory, "library-manifest-form.html").writeText(
+            FormsHtmlExport.libraryManifestFormHtml(testSequence)
+        )
+
+        File(outputDirectory, "test-results-form.html").writeText(
+            FormsHtmlExport.testResultsFormHtml(testSequence, patEvents, sdcLibraries)
+        )
     }
 }

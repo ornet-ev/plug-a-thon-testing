@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Library Manifest Generator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0f14;
+      --surface: #16181f;
+      --surface2: #1e2029;
+      --border: #2a2d3a;
+      --accent: #5b6aff;
+      --accent2: #00d4a8;
+      --text: #e8eaf0;
+      --muted: #6b7080;
+      --danger: #ff5b6a;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    html { font-size: 15px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── Header ── */
+    header {
+      max-width: 860px;
+      margin: 0 auto 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      margin-top: 0.4rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-family: var(--mono);
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 680px) {
+      .wrapper { grid-template-columns: 1fr; }
+    }
+    .col-full { grid-column: 1 / -1; }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem 1.5rem;
+    }
+    .card-title {
+      font-size: 0.7rem;
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Form fields ── */
+    label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-bottom: 0.35rem;
+      margin-top: 1rem;
+    }
+    label:first-of-type { margin-top: 0; }
+
+    input[type="text"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.55rem 0.75rem;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+    input[type="text"]::placeholder { color: var(--muted); opacity: 0.5; }
+
+    /* ── Checkbox groups ── */
+    .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .check-item:hover { border-color: var(--accent); background: var(--surface2); }
+    .check-item input[type="checkbox"] { display: none; }
+    .check-item.checked {
+      border-color: var(--accent);
+      background: rgba(91, 106, 255, 0.12);
+      color: #a0aaff;
+    }
+
+    /* ── Features grid ── */
+    .features-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .features-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-tiny {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-tiny:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 0.45rem;
+    }
+    .feat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.3rem;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .feat-item:hover { border-color: var(--accent); background: var(--surface2); }
+    .feat-item input[type="checkbox"] { display: none; }
+    .feat-item.checked {
+      border-color: var(--accent2);
+      background: rgba(0, 212, 168, 0.1);
+      color: var(--accent2);
+    }
+
+    /* ── Output ── */
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    textarea#json-output {
+      width: 100%;
+      height: 340px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+      color: var(--accent2);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.4rem;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #7b8bff);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--accent2), #00b891);
+      color: #0a0f0d;
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Contact list ── */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-top: 0.25rem;
+    }
+    .contact-row {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .contact-row input[type="text"] { flex: 1; }
+    .btn-remove {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-remove:hover { border-color: var(--danger); color: var(--danger); }
+
+    /* ── Status chip ── */
+    #copy-status {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent2);
+      opacity: 0;
+      transition: opacity 0.3s;
+      align-self: center;
+    }
+    #copy-status.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.75rem;">
+    <div>
+      <h1>Library Manifest Generator</h1>
+      <p>// Generate a conformance manifest JSON for your library implementation</p>
+    </div>
+    <div style="display:flex; align-items:center; gap:0.6rem; padding-top:0.3rem;">
+      <span id="import-status" style="font-family:var(--mono);font-size:0.72rem;color:var(--accent2);opacity:0;transition:opacity 0.3s;min-width:180px;text-align:right;"></span>
+      <button class="btn btn-ghost" id="btn-import" style="padding:0.5rem 1.1rem;">Import JSON</button>
+      <input type="file" id="file-input" accept=".json,application/json" style="display:none;" />
+    </div>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- Identity -->
+  <div class="card">
+    <div class="card-title">Identity</div>
+    <label for="lib-id">id</label>
+    <input type="text" id="lib-id" placeholder="e.g. protosdc-rs" />
+    <label for="lib-name">name</label>
+    <input type="text" id="lib-name" placeholder="e.g. protosdc-rs" />
+    <label for="lib-version">version</label>
+    <input type="text" id="lib-version" placeholder="e.g. 1.0.0" />
+    <label for="lib-lang">programmingLanguage</label>
+    <input type="text" id="lib-lang" placeholder="e.g. Rust" />
+    <label for="lib-license">license</label>
+    <input type="text" id="lib-license" placeholder="e.g. MIT, Open Source" />
+  </div>
+
+  <!-- Provider & Contact -->
+  <div class="card">
+    <div class="card-title">Provider &amp; Contact</div>
+    <label for="lib-provider">provider</label>
+    <input type="text" id="lib-provider" placeholder="e.g. Lukas Deichmann" />
+    <label for="lib-website">website</label>
+    <input type="text" id="lib-website" placeholder="e.g. https://example.com" />
+    <label>contact</label>
+    <div class="contact-list" id="contact-list">
+      <div class="contact-row">
+        <input type="text" placeholder="e.g. name@example.org" />
+        <button class="btn-remove" title="Remove" onclick="removeContact(this)">×</button>
+      </div>
+    </div>
+    <button class="btn-tiny" id="add-contact" style="margin-top:0.55rem;">+ add entry</button>
+  </div>
+
+  <!-- Roles -->
+  <div class="card">
+    <div class="card-title">Roles</div>
+    <div class="check-group" id="roles-group">
+      <label class="check-item checked" data-value="consumer">
+        <input type="checkbox" checked /> consumer
+      </label>
+      <label class="check-item checked" data-value="provider">
+        <input type="checkbox" checked /> provider
+      </label>
+    </div>
+
+    <div class="card-title" style="margin-top:1.2rem;">Bindings</div>
+    <div class="check-group" id="bindings-group">
+      <label class="check-item checked" data-value="dpws">
+        <input type="checkbox" checked /> dpws
+      </label>
+      <label class="check-item checked" data-value="protosdc">
+        <input type="checkbox" checked /> protosdc
+      </label>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="card col-full">
+    <div class="features-header">
+      <div class="card-title" style="margin-bottom:0;">Features / Test Cases</div>
+      <div class="features-actions">
+        <button class="btn-tiny" id="select-all">Select all</button>
+        <button class="btn-tiny" id="deselect-all">Deselect all</button>
+      </div>
+    </div>
+    <div class="features-grid" id="features-grid"></div>
+  </div>
+
+  <!-- Output -->
+  <div class="card col-full">
+    <div class="output-header">
+      <div class="card-title" style="margin-bottom:0;">Generated JSON</div>
+      <span id="copy-status">✓ copied</span>
+    </div>
+    <textarea id="json-output" readonly spellcheck="false"></textarea>
+    <div class="btn-row" style="margin-top:0.9rem;">
+      <button class="btn btn-primary" id="btn-generate">Generate JSON</button>
+      <button class="btn btn-secondary" id="btn-download">Download .json</button>
+      <button class="btn btn-ghost" id="btn-copy">Copy to clipboard</button>
+      <button class="btn btn-ghost btn-danger" id="btn-reset" style="margin-left:auto;border-color:#ff5b6a44;color:var(--danger);">Reset form</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Data ──────────────────────────────────────────────────────────────
+  const TEST_CASE_IDS = [
+    '$TEST_CASE_IDS'
+  ];
+
+  // ── Build features checkboxes ─────────────────────────────────────────
+  const grid = document.getElementById('features-grid');
+  TEST_CASE_IDS.forEach(id => {
+    const label = document.createElement('label');
+    label.className = 'feat-item checked';
+    label.dataset.value = id;
+    label.innerHTML = `<input type="checkbox" checked />${id}`;
+    label.addEventListener('click', (e) => {
+      e.preventDefault();
+      label.classList.toggle('checked');
+      label.querySelector('input').checked = label.classList.contains('checked');
+      updateOutput();
+    });
+    grid.appendChild(label);
+  });
+
+  // ── Toggle helpers ────────────────────────────────────────────────────
+  function setupToggleGroup(groupId) {
+    const items = document.querySelectorAll(`#${groupId} .check-item`);
+    items.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        item.classList.toggle('checked');
+        item.querySelector('input').checked = item.classList.contains('checked');
+        updateOutput();
+      });
+    });
+  }
+  setupToggleGroup('roles-group');
+  setupToggleGroup('bindings-group');
+
+  document.getElementById('select-all').addEventListener('click', () => {
+    document.querySelectorAll('#features-grid .feat-item').forEach(el => {
+      el.classList.add('checked');
+      el.querySelector('input').checked = true;
+    });
+    updateOutput();
+  });
+  document.getElementById('deselect-all').addEventListener('click', () => {
+    document.querySelectorAll('#features-grid .feat-item').forEach(el => {
+      el.classList.remove('checked');
+      el.querySelector('input').checked = false;
+    });
+    updateOutput();
+  });
+
+  // ── Contact list ──────────────────────────────────────────────────────
+  function removeContact(btn) {
+    const list = document.getElementById('contact-list');
+    if (list.children.length > 1) {
+      btn.closest('.contact-row').remove();
+    } else {
+      btn.closest('.contact-row').querySelector('input').value = '';
+    }
+    updateOutput();
+  }
+
+  document.getElementById('add-contact').addEventListener('click', () => {
+    const list = document.getElementById('contact-list');
+    const row = document.createElement('div');
+    row.className = 'contact-row';
+    row.innerHTML = `<input type="text" placeholder="e.g. name@example.org" /><button class="btn-remove" title="Remove" onclick="removeContact(this)">×</button>`;
+    row.querySelector('input').addEventListener('input', updateOutput);
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  });
+
+  // ── Live update on text input ─────────────────────────────────────────
+  document.querySelectorAll('input[type="text"]').forEach(el => {
+    el.addEventListener('input', updateOutput);
+  });
+
+  // Also catch dynamically added contact inputs via delegation
+  document.getElementById('contact-list').addEventListener('input', updateOutput);
+
+  // ── Build JSON ────────────────────────────────────────────────────────
+  function buildJSON() {
+    const id       = document.getElementById('lib-id').value.trim();
+    const name     = document.getElementById('lib-name').value.trim();
+    const version  = document.getElementById('lib-version').value.trim();
+    const lang     = document.getElementById('lib-lang').value.trim();
+    const license  = document.getElementById('lib-license').value.trim();
+    const provider = document.getElementById('lib-provider').value.trim();
+    const website  = document.getElementById('lib-website').value.trim();
+
+    const roles = [...document.querySelectorAll('#roles-group .check-item.checked')]
+                    .map(el => el.dataset.value);
+    const bindings = [...document.querySelectorAll('#bindings-group .check-item.checked')]
+                    .map(el => el.dataset.value);
+    const features = [...document.querySelectorAll('#features-grid .feat-item.checked')]
+                    .map(el => ({ testCaseId: el.dataset.value }));
+
+    const contact = [...document.querySelectorAll('#contact-list .contact-row input')]
+                    .map(el => el.value.trim())
+                    .filter(Boolean);
+
+    const obj = {};
+    if (id)       obj.id = id;
+    if (name)     obj.name = name;
+    if (version)  obj.version = version;
+    if (roles.length)    obj.roles = roles;
+    if (lang)     obj.programmingLanguage = lang;
+    if (license)  obj.license = license;
+    if (features.length) obj.features = features;
+    if (bindings.length) obj.bindings = bindings;
+    if (provider) obj.provider = provider;
+    if (website)  obj.website = website;
+    if (contact.length)  obj.contact = contact;
+
+    return obj;
+  }
+
+  const STORAGE_KEY = 'library-manifest-form-state';
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(buildJSON()));
+    } catch (e) { /* storage unavailable */ }
+  }
+
+  function updateOutput() {
+    const obj = buildJSON();
+    document.getElementById('json-output').value = JSON.stringify(obj, null, 2);
+    saveState();
+  }
+
+  document.getElementById('btn-generate').addEventListener('click', updateOutput);
+
+  // ── Download ──────────────────────────────────────────────────────────
+  document.getElementById('btn-download').addEventListener('click', () => {
+    updateOutput();
+    const content = document.getElementById('json-output').value;
+    const libId   = document.getElementById('lib-id').value.trim() || 'manifest';
+    const blob    = new Blob([content], { type: 'application/json' });
+    const url     = URL.createObjectURL(blob);
+    const a       = document.createElement('a');
+    a.href        = url;
+    a.download    = `${libId}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── Copy ──────────────────────────────────────────────────────────────
+  document.getElementById('btn-copy').addEventListener('click', () => {
+    const val = document.getElementById('json-output').value;
+    if (!val) return;
+    navigator.clipboard.writeText(val).then(() => {
+      const s = document.getElementById('copy-status');
+      s.classList.add('visible');
+      setTimeout(() => s.classList.remove('visible'), 2000);
+    });
+  });
+
+  // ── Import JSON ───────────────────────────────────────────────────────
+  document.getElementById('btn-import').addEventListener('click', () => {
+    document.getElementById('file-input').value = '';
+    document.getElementById('file-input').click();
+  });
+
+  document.getElementById('file-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        loadJSON(data);
+        showImportStatus('✓ loaded ' + file.name);
+      } catch {
+        showImportStatus('✗ invalid JSON');
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  function showImportStatus(msg) {
+    const el = document.getElementById('import-status');
+    el.textContent = msg;
+    el.style.opacity = 1;
+    setTimeout(() => { el.style.opacity = 0; }, 3000);
+  }
+
+  function setToggle(groupSelector, values) {
+    document.querySelectorAll(groupSelector).forEach(el => {
+      const on = Array.isArray(values) && values.includes(el.dataset.value);
+      el.classList.toggle('checked', on);
+      el.querySelector('input').checked = on;
+    });
+  }
+
+  function loadJSON(data) {
+    // Text fields
+    document.getElementById('lib-id').value       = data.id                  || '';
+    document.getElementById('lib-name').value      = data.name                || '';
+    document.getElementById('lib-version').value   = data.version             || '';
+    document.getElementById('lib-lang').value      = data.programmingLanguage || '';
+    document.getElementById('lib-license').value   = data.license             || '';
+    document.getElementById('lib-provider').value  = data.provider            || '';
+    document.getElementById('lib-website').value   = data.website             || '';
+
+    // Roles & Bindings
+    setToggle('#roles-group .check-item',    data.roles);
+    setToggle('#bindings-group .check-item', data.bindings);
+
+    // Features
+    const selectedIds = new Set((data.features || []).map(f => f.testCaseId));
+    document.querySelectorAll('#features-grid .feat-item').forEach(el => {
+      const on = selectedIds.has(el.dataset.value);
+      el.classList.toggle('checked', on);
+      el.querySelector('input').checked = on;
+    });
+
+    // Contact list
+    const contacts = Array.isArray(data.contact) ? data.contact : [];
+    const list = document.getElementById('contact-list');
+    list.innerHTML = '';
+    const entries = contacts.length > 0 ? contacts : [''];
+    entries.forEach(val => {
+      const row = document.createElement('div');
+      row.className = 'contact-row';
+      row.innerHTML = `<input type="text" placeholder="e.g. name@example.org" /><button class="btn-remove" title="Remove" onclick="removeContact(this)">×</button>`;
+      row.querySelector('input').value = val;
+      row.querySelector('input').addEventListener('input', updateOutput);
+      list.appendChild(row);
+    });
+
+    updateOutput();
+  }
+
+
+  // ── Reset ─────────────────────────────────────────────────────────────
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!confirm('Reset the form? All data will be cleared, including saved state.')) return;
+    try { localStorage.removeItem('library-manifest-form-state'); } catch(e) {}
+    // Clear text fields
+    ['lib-id','lib-name','lib-version','lib-lang','lib-license','lib-provider','lib-website'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    // Reset roles & bindings to all checked
+    document.querySelectorAll('#roles-group .check-item, #bindings-group .check-item').forEach(el => {
+      el.classList.add('checked');
+      el.querySelector('input').checked = true;
+    });
+    // Reset features to all checked
+    document.querySelectorAll('#features-grid .feat-item').forEach(el => {
+      el.classList.add('checked');
+      el.querySelector('input').checked = true;
+    });
+    // Reset contact list to single empty entry
+    const list = document.getElementById('contact-list');
+    list.innerHTML = '';
+    const row = document.createElement('div');
+    row.className = 'contact-row';
+    row.innerHTML = '<input type="text" placeholder="e.g. name@example.org" /><button class="btn-remove" title="Remove" onclick="removeContact(this)">×</button>';
+    row.querySelector('input').addEventListener('input', updateOutput);
+    list.appendChild(row);
+    updateOutput();
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────────
+  (function init() {
+    try {
+      const saved = localStorage.getItem('library-manifest-form-state');
+      if (saved) {
+        loadJSON(JSON.parse(saved));
+        return;
+      }
+    } catch (e) { /* storage unavailable */ }
+    updateOutput();
+  })();
+</script>
+</body>
+</html>
