@@ -62,7 +62,7 @@ object TestResultsMarkdownExport {
         }
 
         val libNames = libraries.associate { it.id to it.name }
-        val sortedLibs = libraries.sortedBy { it.name }.map { libsForPat[it.id]!! }
+        val sortedLibs = libraries.sortedBy { it.name }.mapNotNull { libsForPat[it.id] }
 
         val header = Markdown.generate {
             val icon = "icon" to "lucide/circle-check-big"
