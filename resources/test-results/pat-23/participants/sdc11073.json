@@ -1,12 +1,13 @@
 {
   "id": "sdc11073",
-  "name": "sdc11073",
+  "version": "f376b9f50e37cfb9cd524d2dbaf8a8bec53b9447",
   "roles": [
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "Python",
-  "license": "Open Source",
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -89,10 +90,5 @@
     {
       "testCaseId": "7c"
     }
-  ],
-  "provider": "Dräger",
-  "website": "https://github.com/Draegerwerk/sdc11073",
-  "contact": [
-    "[Leon Budnick](mailto:leon.budnick@draeger.com)"
   ]
 }
