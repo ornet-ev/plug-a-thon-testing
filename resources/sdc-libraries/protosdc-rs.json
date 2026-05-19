@@ -5,6 +5,10 @@
     "consumer",
     "provider"
   ],
+  "bindings": [
+    "dpws",
+    "protosdc"
+  ],
   "programmingLanguage": "Rust",
   "license": "Open Source",
   "features": [
@@ -79,6 +83,15 @@
     },
     {
       "testCaseId": "6f"
+    },
+    {
+      "testCaseId": "7a"
+    },
+    {
+      "testCaseId": "7b"
+    },
+    {
+      "testCaseId": "7c"
     }
   ],
   "provider": "Lukas Deichmann",
