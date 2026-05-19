@@ -1,5 +1,6 @@
 package org.ornet.markdown
 
+import org.ornet.Binding
 import org.ornet.Role
 import org.ornet.SdcLibrary
 import org.ornet.TestSequence
@@ -43,10 +44,26 @@ object SdcLibrariesMarkdownExport {
                     )
                 )
             )
+
             builder.appendLine(
                 tableRow(
                     "Roles:",
-                    src.roles.ifEmpty { listOf("None") }.map { Role.fromJson(it).humanReadableName }.let { multilineCell(it) })
+                    if (src.roles.isNotEmpty()) {
+                        src.roles.map { Role.fromJson(it).humanReadableName }.let { multilineCell(it) }
+                    } else {
+                        "None"
+                    }
+                )
+            )
+            builder.appendLine(
+                tableRow(
+                    "Bindings:",
+                    if (src.bindings.isNotEmpty()) {
+                        src.bindings.map { Binding.fromJson(it).humanReadableName }.let { multilineCell(it) }
+                    } else {
+                        "None"
+                    }
+                )
             )
             if (src.programmingLanguage.isNotEmpty()) builder.appendLine(
                 tableRow(
