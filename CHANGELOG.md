@@ -8,6 +8,10 @@ Each section shall contain a list of action items of the following format: `<bri
 
 ## [Unreleased]
 
+### Added
+
+- MDS Lang attribute set to `en-US` for MDS states. ([#56](https://github.com/ornet-ev/plug-a-thon-testing/issues/56))
+
 ## [2.4.0] - 2026-05-05
 
 ### Changed
