@@ -38,7 +38,7 @@ object FormsHtmlExport {
         }.map { it.id }
 
         return createHtmlWithTestCases(testSequence, testResultsFormHtml)
-            .replace("\$PAT_NUMBER", patEvents.maxOf { it.patNumber + 1 }.toString())
+            .replace("\$PAT_NUMBER", patEvents.maxOf { it.patNumber }.toString())
             .replace("'\$CONSUMER_IDS'", consumerIds.joinToString(separator = "', '", prefix = "'", postfix = "'"))
             .replace("'\$PROVIDER_IDS'", providerIds.joinToString(separator = "', '", prefix = "'", postfix = "'"))
     }
