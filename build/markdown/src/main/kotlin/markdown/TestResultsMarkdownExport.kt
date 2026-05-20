@@ -78,10 +78,11 @@ object TestResultsMarkdownExport {
         val legend = Markdown.generate(false) {
             """
 ??? Legend
-    - :lucide-check: all featured tests succeeded
-    - :lucide-x: all featured tests failed
-    - :lucide-triangle-alert: some tests failed
+    - :lucide-circle-check: all featured tests succeeded
+    - :lucide-circle-x: all featured tests failed
+    - :lucide-circle-alert: some tests failed
     - :lucide-circle-question-mark: missing test results
+    - :lucide-circle-dot: tests not implemented (either provider or consumer side)
     - empty: no tests executed
                 """.trimIndent()
         }
@@ -155,13 +156,13 @@ object TestResultsMarkdownExport {
         return mutableListOf<String>().apply {
             if (src.failedList.isNotEmpty()) {
                 if (src.verdict == Verdict.FAIL) {
-                    add(""":lucide-x-circle:{ title="All implemented tests failed: $failedList" }""")
+                    add(""":lucide-circle-x:{ title="All implemented tests failed: $failedList" }""")
                 } else {
-                    add(""":lucide-triangle-alert:{ title="Failed tests: $failedList" }""")
+                    add(""":lucide-circle-alert:{ title="Failed tests: $failedList" }""")
                 }
             } else {
                 if (src.verdict == Verdict.PASS) {
-                    add(""":lucide-check-circle:{ title="All implemented tests passed: $passedList" }""")
+                    add(""":lucide-circle-check:{ title="All implemented tests passed: $passedList" }""")
                 }
             }
 

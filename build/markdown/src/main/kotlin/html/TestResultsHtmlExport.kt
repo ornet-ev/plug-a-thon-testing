@@ -194,7 +194,7 @@ object TestResultsHtmlExport {
             </head>
             <body>
             <h1>$title</h1>
-            <table style="width:100%; height: 100%">
+            <table style="width:100%; height: 98%">
                 <thead>
                 <tr>
                     <th>Provider&nbsp;→<br/>↓&nbsp;Consumer<span style="color: rgba(0,0,0,0);">&nbsp;→</span></th>
@@ -213,24 +213,30 @@ object TestResultsHtmlExport {
     private fun htmlForTestResult(
         src: InteroperabilityMatrix.Cell,
     ): String {
+        val passedList = src.passedList.sorted().joinToString(", ")
         val failedList = src.failedList.sorted().joinToString(", ")
         val missingResultList = src.missingList.sorted().joinToString(", ")
+        val notImplementedList = src.noneList.sorted().joinToString(", ")
 
         return mutableListOf<String>().apply {
             if (src.failedList.isNotEmpty()) {
                 if (src.verdict == Verdict.FAIL) {
-                    add("""<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-x result-icon" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg>""")
+                    add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></div>$failedList</div>""")
                 } else {
-                    add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-triangle-alert result-icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4M12 17h.01"></path></svg></div><div>$failedList</div></div>""")
+                    add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></div>$failedList</div>""")
                 }
             } else {
                 if (src.verdict == Verdict.PASS) {
-                    add("""<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check result-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>""")
+                    add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>$passedList</div>""")
                 }
             }
 
             if (src.missingList.isNotEmpty()) {
-                add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-question-mark result-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg></div><div>$missingResultList</div></div>""")
+                add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-question-mark result-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg></div>$missingResultList</div>""")
+            }
+
+            if (src.noneList.isNotEmpty()) {
+                add("""<div class="translucent-box"><div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dot-icon lucide-circle-dot"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/></svg></div>$notImplementedList</div>""")
             }
         }.joinToString("")
     }
@@ -240,6 +246,4 @@ object TestResultsHtmlExport {
             it.chunked(1).joinToString("\u200B")
         }
     }
-
-
 }
