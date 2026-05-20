@@ -78,7 +78,7 @@ object TestResultsMarkdownExport {
         val legend = Markdown.generate(false) {
             """
 ??? Legend
-    - :lucide-circle-check: all featured tests succeeded
+    - :lucide-circle-check: featured tests succeeded
     - :lucide-circle-x: all featured tests failed
     - :lucide-circle-alert: some tests failed
     - :lucide-circle-question-mark: missing test results
