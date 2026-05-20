@@ -128,6 +128,8 @@ data class InteroperabilityMatrix(
         val verdict: Verdict,
         val failedList: List<String>,
         val missingList: List<String>,
+        val passedList: List<String>,
+        val noneList: List<String>
     )
 }
 
@@ -135,8 +137,7 @@ enum class Verdict(val json: String) {
     PASS("pass"),
     FAIL("fail"),
     PARTIAL("partial"),
-    NONE("none"),
-    ;
+    NONE("none");
 
     companion object {
         fun fromJson(value: String) = Verdict.entries.first { it.json == value }
