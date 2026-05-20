@@ -1,6 +1,6 @@
 {
   "id": "sdc-common-driver-library",
-  "name": "SDC Common Driver Library",
+  "name": "ascom SDC Consumer",
   "programmingLanguage": "C# C++",
   "license": "Proprietary license",
   "website": "https://www.ascom.com/",
