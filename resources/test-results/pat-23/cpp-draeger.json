@@ -1,0 +1,211 @@
+{
+  "patNumber": 23,
+    "testResults": [
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "cpp-draeger",
+            "binding": "dpws",
+            "caseIds": [
+                "1b",
+                "2a",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4e",
+                "4f",
+                "4g",
+                "4h",
+                "4i",
+                "5a",
+                "5b",
+                "6b",
+                "6c",
+                "6d",
+                "6e",
+                "6f",
+                "7a",
+                "7b",
+                "7c"
+            ],
+            "verdict": "pass"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "sdcx",
+            "binding": "dpws",
+            "caseIds": [
+                "1b",
+                "2a",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4e",
+                "4f",
+                "4g",
+                "4h",
+                "4i",
+                "5a",
+                "5b",
+                "6b",
+                "6c",
+                "6d",
+                "6e",
+                "6f",
+                "7a",
+                "7b",
+                "7c"
+            ],
+            "verdict": "pass"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "sdc-ri",
+            "binding": "dpws",
+            "caseIds": [
+                "1b",
+                "2a",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4e",
+                "4f",
+                "4g",
+                "4h",
+                "5a",
+                "5b",
+                "6b",
+                "6c",
+                "6d",
+                "6e",
+                "6f",
+                "7a",
+                "7b",
+                "7c"
+            ],
+            "verdict": "pass"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "sdc11073",
+            "binding": "dpws",
+            "caseIds": [
+                "1b",
+                "2a",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4g",
+                "4h",
+                "4i",
+                "5b",
+                "6c",
+                "6d",
+                "6e",
+                "6f",
+                "7a",
+                "7b",
+                "7c",
+                "8"
+            ],
+            "verdict": "pass"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "sdc11073",
+            "binding": "dpws",
+            "caseIds": [
+                "4e",
+                "4f",
+                "5a",
+                "6b"
+            ],
+            "verdict": "fail"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "protosdc-rs",
+            "binding": "dpws",
+            "caseIds": [
+                "1b",
+                "2a",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4e",
+                "4f",
+                "4g",
+                "4h",
+                "5a",
+                "5b",
+                "6b",
+                "6c",
+                "6d",
+                "6e",
+                "6f",
+                "7a",
+                "8"
+            ],
+            "verdict": "pass"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "protosdc-rs",
+            "binding": "dpws",
+            "caseIds": [
+                "4i",
+                "7b",
+                "7c"
+            ],
+            "verdict": "fail"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "lumos-1",
+            "binding": "dpws",
+            "caseIds": [
+                "1b",
+                "2a",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4e",
+                "4g",
+                "8"
+            ],
+            "verdict": "pass"
+        },
+        {
+            "consumerLibraryId": "cpp-draeger",
+            "providerLibraryId": "lumos-1",
+            "binding": "dpws",
+            "caseIds": [
+                "4f",
+                "4h",
+                "4i",
+                "5a",
+                "5b",
+                "6b",
+                "6c",
+                "6d",
+                "6e",
+                "6f",
+                "7a",
+                "7b",
+                "7c"
+            ],
+            "verdict": "fail"
+        }
+    ]
+}
