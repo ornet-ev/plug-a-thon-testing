@@ -59,6 +59,7 @@ import org.somda.dsl.ieee.nomenclature.MDC_DIM_X_VOLT
 import org.somda.dsl.ieee.nomenclature.MDC_FLOW_FLUID_PUMP
 import org.somda.dsl.sdpi.codedAttributes
 import java.io.File
+import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -75,6 +76,10 @@ fun patMdibV2(localizedTextOutputDir: File): Mdib {
                         value = "equipment-label"
                     )
                 }
+            }
+
+            state {
+                language(Locale.US)
             }
 
             type(SAMPLE_MDS_1) {
@@ -445,6 +450,10 @@ fun patMdibV2(localizedTextOutputDir: File): Mdib {
         }
 
         mds(Handles.MDS_1) {
+            state {
+                language(Locale.US)
+            }
+
             type(SAMPLE_MDS_2) {
                 conceptDescription(EN_US) {
                     "SDPi Test MDS used for description modification reports. This MDS periodically inserts and " +
