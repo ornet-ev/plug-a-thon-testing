@@ -79,6 +79,15 @@
     },
     {
       "testCaseId": "6f"
+    },
+    {
+      "testCaseId": "7a"
+    },
+    {
+      "testCaseId": "7b"
+    },
+    {
+      "testCaseId": "7c"
     }
   ],
   "provider": "David Gregorczyk, Lukas Deichmann",
