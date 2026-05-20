@@ -165,7 +165,9 @@ object TestResultsMarkdownExport {
                 if (src.verdict == Verdict.PASS) {
                     add(""":lucide-circle-check:{ title="All implemented tests passed: $passedList" }""")
                 } else {
-                    add(""":lucide-circle-check:{ title="Tests passed: $passedList" }""")
+                    if (src.passedList.isNotEmpty()) {
+                        add(""":lucide-circle-check:{ title="Tests passed: $passedList" }""")
+                    }
                 }
             }
 
