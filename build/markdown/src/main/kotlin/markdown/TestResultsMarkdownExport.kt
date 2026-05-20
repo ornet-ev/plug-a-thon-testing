@@ -164,6 +164,8 @@ object TestResultsMarkdownExport {
             } else {
                 if (src.verdict == Verdict.PASS) {
                     add(""":lucide-circle-check:{ title="All implemented tests passed: $passedList" }""")
+                } else {
+                    add(""":lucide-circle-check:{ title="Tests passed: $passedList" }""")
                 }
             }
 
