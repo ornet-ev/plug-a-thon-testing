@@ -1,6 +1,12 @@
 {
-  "id": "sdc-common-driver-library",
-  "version": "",
+  "id": "ascom-sdc-driver-library",
+  "name": "Ascom SDC Consumer",
+  "programmingLanguage": "C# C++",
+  "license": "Proprietary license",
+  "website": "https://www.ascom.com/",
+  "contact": [
+    "[Francesco Fabrini](mailto:francesco.fabrini@ascom.com)"
+  ],
   "roles": [
     "consumer"
   ],
