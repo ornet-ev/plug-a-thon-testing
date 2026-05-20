@@ -55,9 +55,10 @@ object TestResultsMarkdownExport {
         )
 
         val libsForPat = libFeatures.associateBy { it.id }
-        val versionMarkdown = libFeatures.associate { lib ->
+        val tooltipMarkdown = libFeatures.associate { lib ->
+            val features = lib.features.joinToString(", ") { it.testCaseId }
             lib.id to lib.version.let {
-                """ { title="Version: ${it.ifEmpty { "unknown" }}" }"""
+                """ { title="Version: ${it.ifEmpty { "unknown" }}<br/>Features: $features" }"""
             }
         }
 
@@ -94,7 +95,7 @@ object TestResultsMarkdownExport {
                     .map { it }
                     .filter { Role.PROVIDER.json in it.roles }
                     .filter { binding.json in it.bindings }
-                    .map { libNames[it.id]!! + versionMarkdown[it.id]!! }
+                    .map { libNames[it.id]!! + tooltipMarkdown[it.id]!! }
                     .toMutableList()
                     .apply {
                         add(0, "**Provider →**<br>**↓ Consumer**")
@@ -105,7 +106,7 @@ object TestResultsMarkdownExport {
             val providerLibs = libFeaturesFor(sortedLibs, Role.PROVIDER, binding)
 
             for (consumerLib in consumerLibs) {
-                val row = listOf("**${libNames[consumerLib.id]!!}**${versionMarkdown[consumerLib.id]!!}").toMutableList().also {
+                val row = listOf("**${libNames[consumerLib.id]!!}**${tooltipMarkdown[consumerLib.id]!!}").toMutableList().also {
                     markdownCells.add(it)
                 }
 
@@ -146,25 +147,33 @@ object TestResultsMarkdownExport {
     private fun markdownForTestResult(
         src: InteroperabilityMatrix.Cell,
     ): String {
+        val passedList = src.passedList.sorted().joinToString(", ")
         val failedList = src.failedList.sorted().joinToString(", ")
         val missingResultList = src.missingList.sorted().joinToString(", ")
+        val notImplementedList = src.noneList.sorted().joinToString(", ")
 
         return mutableListOf<String>().apply {
             if (src.failedList.isNotEmpty()) {
                 if (src.verdict == Verdict.FAIL) {
-                    add(""":lucide-x:{ title="All tests failed" }""")
+                    add(""":lucide-x-circle:{ title="All implemented tests failed: $failedList" }""")
                 } else {
                     add(""":lucide-triangle-alert:{ title="Failed tests: $failedList" }""")
                 }
             } else {
                 if (src.verdict == Verdict.PASS) {
-                    add(""":lucide-check:{ title="All tests passed" }""")
+                    add(""":lucide-check-circle:{ title="All implemented tests passed: $passedList" }""")
                 }
             }
 
             if (src.missingList.isNotEmpty()) {
                 add(""":lucide-circle-question-mark:{ title="Missing test results: $missingResultList" }""")
             }
+
+            if (src.noneList.isNotEmpty()) {
+                add(""":lucide-circle-dot:{ title="Not implemented: $notImplementedList" }""")
+            }
+
+
         }.joinToString(" ")
     }
 }

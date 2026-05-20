@@ -61,6 +61,8 @@ fun createInteroperabilityMatrixCell(
         .flatten()
         .subtract(deprecatedIds)
 
+    val notImplementedIds = testSequence.validTestCases().map { it.id } - allFeaturedIds
+
     val missingResultIds = (allFeaturedIds - passedIds - failedIds)
 
     var verdict = Verdict.NONE
@@ -88,64 +90,8 @@ fun createInteroperabilityMatrixCell(
         binding,
         verdict,
         failedIds.toList(),
-        if (allFeaturedIds != missingResultIds) missingResultIds else listOf()
+        if (allFeaturedIds != missingResultIds) missingResultIds else listOf(),
+        passedIds.toList(),
+        notImplementedIds
     )
 }
-
-//
-//fun testResultsFor(
-//    src: List<TestResult>,
-//    testSequence: TestSequence,
-//    consumerLibrary: SdcLibraryFeatures,
-//    providerLibrary: SdcLibraryFeatures,
-//): Pair<MarkdownText, HtmlTestResult> {
-//    // find all tests that are not deprecated, and where there is potential
-//    // support by consumer and provider side
-//    val allFeaturedIds = testSequence
-//        .validTestCases()
-//        .map { it.id }
-//        .filter {
-//            supportsTestCaseFromConsumerSide(it, consumerLibrary) &&
-//                    supportsTestCaseFromProviderSide(it, providerLibrary)
-//        }
-//
-//    val deprecatedIds = testSequence.deprecatedTestCases().map { it.id }
-//
-//    val passedIds =
-//        src.filter { Verdict.fromJson(it.verdict) == Verdict.PASS }.map { it.caseIds }.flatten().subtract(deprecatedIds)
-//    val failedIds = src.filter { it.verdict == "fail" }.map { it.caseIds }.flatten().subtract(deprecatedIds)
-//    val missingResult = (allFeaturedIds - passedIds - failedIds)
-//
-//    val failedList = failedIds.sorted().joinToString(", ")
-//    val missingResultList = missingResult.sorted().joinToString(", ")
-//    val htmlResult = mutableListOf<String>()
-//    var verdict = "none"
-//
-//    return mutableListOf<String>().apply {
-//        if (failedList.isNotEmpty()) {
-//            if ((allFeaturedIds - failedIds).isEmpty()) {
-//                add(":lucide-x:")
-//                htmlResult.add("""❌""")
-//                verdict = "fail"
-//            } else {
-//                add(":lucide-triangle-alert: $failedList")
-//                htmlResult.add("""⚠ $failedList""")
-//                verdict = "partial"
-//            }
-//        } else {
-//            if (missingResult.isEmpty()) {
-//                add(":lucide-check:")
-//                htmlResult.add("""✓""")
-//                verdict = "pass"
-//            }
-//        }
-//
-//        if (missingResult.isNotEmpty()) {
-//            if (allFeaturedIds != missingResult) {
-//                add(":lucide-circle-question-mark: $missingResultList")
-//                htmlResult.add("""❓$missingResultList""")
-//                verdict = "partial"
-//            }
-//        }
-//    }.joinToString("<br>") to HtmlTestResult(verdict, htmlResult.joinToString("<br/>"))
-//}
