@@ -1,12 +1,13 @@
 {
-  "id": "sdc11073",
-  "version": "f376b9f50e37cfb9cd524d2dbaf8a8bec53b9447",
+  "id": "protosdc-rs",
+  "version": "",
   "roles": [
     "consumer",
     "provider"
   ],
   "bindings": [
-    "dpws"
+    "dpws",
+    "protosdc"
   ],
   "features": [
     {
@@ -14,6 +15,12 @@
     },
     {
       "testCaseId": "1b"
+    },
+    {
+      "testCaseId": "1c"
+    },
+    {
+      "testCaseId": "1d"
     },
     {
       "testCaseId": "2a"
