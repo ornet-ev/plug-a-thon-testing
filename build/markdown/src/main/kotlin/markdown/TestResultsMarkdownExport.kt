@@ -158,6 +158,7 @@ object TestResultsMarkdownExport {
                 if (src.verdict == Verdict.FAIL) {
                     add(""":lucide-circle-x:{ title="All implemented tests failed: $failedList" }""")
                 } else {
+                    add(""":lucide-circle-check:{ title="Tests passed: $passedList" }""")
                     add(""":lucide-circle-alert:{ title="Failed tests: $failedList" }""")
                 }
             } else {
