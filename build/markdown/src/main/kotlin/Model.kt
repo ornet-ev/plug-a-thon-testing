@@ -20,7 +20,7 @@ data class SdcLibrary(
 @Serializable
 data class SdcLibraryFeatures(
     val id: String,
-    val version: String,
+    val version: String = "",
     val roles: List<String> = listOf(), // consumer, provider
     val bindings: List<String> = listOf(), // dpws, protosdc
     val features: List<Feature>,
