@@ -79,10 +79,20 @@
     },
     {
       "testCaseId": "6f"
+    },
+    {
+      "testCaseId": "7a"
+    },
+    {
+      "testCaseId": "7b"
+    },
+    {
+      "testCaseId": "7c"
     }
   ],
   "provider": "SurgiTAIX",
-  "website": "",
+  "website": "https://surgitaix.com",
   "contact": [
+        "[Benjamin Hohlmann](mailto:hohlmann@surgitaix.com)"
   ]
 }
