@@ -1,12 +1,12 @@
 {
   "id": "sdcx",
-  "name": "sdcX",
   "roles": [
     "consumer",
     "provider"
   ],
-  "programmingLanguage": "C++",
-  "license": "Commercial",
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -89,10 +89,5 @@
     {
       "testCaseId": "7c"
     }
-  ],
-  "provider": "SurgiTAIX",
-  "website": "https://surgitaix.com",
-  "contact": [
-        "[Benjamin Hohlmann](mailto:hohlmann@surgitaix.com)"
   ]
 }
