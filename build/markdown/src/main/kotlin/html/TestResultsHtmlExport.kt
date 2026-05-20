@@ -17,7 +17,7 @@ object TestResultsHtmlExport {
         testSequence: TestSequence,
         libraries: List<SdcLibrary>,
         libFeatures: List<SdcLibraryFeatures>,
-        binding: Binding
+        binding: Binding,
     ): String {
         val interopMatrix = createInteroperabilityMatrix(
             src,
@@ -28,7 +28,8 @@ object TestResultsHtmlExport {
         val libsForPat = libFeatures.associateBy { it.id }
         val versionHtml = libFeatures.associate { lib ->
             lib.id to lib.version.let {
-                """<div class="version-badge">${it.ifEmpty { "n/a" }}</div>"""
+                val zwAdded = addZeroWidthSpace(it)
+                """<div class="version-badge">${zwAdded.ifEmpty { "n/a" }}</div>"""
             }
         }
         val libNames = libraries.associate { it.id to it.name }
@@ -50,9 +51,11 @@ object TestResultsHtmlExport {
         val providerLibs = libFeaturesFor(sortedLibs, Role.PROVIDER, binding)
 
         for (consumerLib in consumerLibs) {
-            val row = listOf("<td><div>${libNames[consumerLib.id]!!}</div>${versionHtml[consumerLib.id]!!}</td>").toMutableList().also {
-                htmlCells.add(it)
-            }
+            val row =
+                listOf("<td><div>${libNames[consumerLib.id]!!}</div>${versionHtml[consumerLib.id]!!}</td>").toMutableList()
+                    .also {
+                        htmlCells.add(it)
+                    }
 
             for (providerLib in providerLibs) {
                 val testResult = interopMatrix.cellFor(binding, consumerLib.id, providerLib.id)
@@ -231,5 +234,12 @@ object TestResultsHtmlExport {
             }
         }.joinToString("")
     }
+
+    private fun addZeroWidthSpace(text: String): String {
+        return text.split(" ").joinToString(" ") {
+            it.chunked(1).joinToString("\u200B")
+        }
+    }
+
 
 }
