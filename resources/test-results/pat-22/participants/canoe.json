@@ -1,12 +1,11 @@
 {
   "id": "canoe",
-  "version": "",
+  "name": "Vector CANoe",
   "roles": [
     "consumer"
   ],
-  "bindings": [
-    "dpws"
-  ],
+  "programmingLanguage": "C++",
+  "license": "Proprietary License",
   "features": [
     {
       "testCaseId": "1a"
@@ -80,5 +79,16 @@
     {
       "testCaseId": "6f"
     }
+  ],
+  "bindings": [
+    "dpws"
+  ],
+  "provider": "Vector Informatik GmbH",
+  "website": "https://www.vector.com/int/en/products/products-a-z/software/canoe/sdc/#",
+  "contact": [
+    "[Tobias Viehmann](mailto:tobias.viehmann@vector.com)",
+    "[Tobias Kliesch](mailto:tobias.kliesch@vector.com)",
+    "[Christian Reiser](mailto:christian.reiser@vector.com)",
+    "[Christian Heinigk](mailto:christian.heinigk@vector.com)"
   ]
 }
