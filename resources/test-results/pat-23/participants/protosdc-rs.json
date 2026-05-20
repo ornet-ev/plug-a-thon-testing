@@ -6,8 +6,7 @@
     "provider"
   ],
   "bindings": [
-    "dpws",
-    "protosdc"
+    "dpws"
   ],
   "features": [
     {
