@@ -169,18 +169,10 @@
         "6e",
         "6f",
         "7a",
-        "7b"
-      ],
-      "verdict": "pass"
-    },
-    {
-      "consumerLibraryId": "canoe",
-      "providerLibraryId": "sdcx",
-      "binding": "dpws",
-      "caseIds": [
+        "7b",
         "7c"
       ],
-      "verdict": "fail"
+      "verdict": "pass"
     }
   ]
 }
