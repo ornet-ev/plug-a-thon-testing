@@ -25,7 +25,8 @@
         "7a",
         "7b",
         "7c"
-      ]
+      ],
+      "verdict": "pass"
     },
     {
       "consumerLibraryId": "ascom-sdc-driver-library",
