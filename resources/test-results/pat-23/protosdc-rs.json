@@ -136,6 +136,38 @@
         "7c"
       ],
       "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "protosdc-rs",
+      "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
+      "caseIds": [
+        "1b",
+        "2a",
+        "2b",
+        "3a",
+        "3b",
+        "4a",
+        "4b",
+        "4c",
+        "4d",
+        "4e",
+        "4f",
+        "4g",
+        "4h",
+        "4i",
+        "5a",
+        "5b",
+        "6b",
+        "6c",
+        "6d",
+        "6e",
+        "6f",
+        "7a",
+        "7b",
+        "7c"
+      ],
+      "verdict": "pass"
     }
   ]
 }
