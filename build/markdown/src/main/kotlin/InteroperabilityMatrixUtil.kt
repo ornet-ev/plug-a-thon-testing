@@ -3,12 +3,39 @@ package org.ornet
 fun createInteroperabilityMatrix(
     src: PatEvent,
     testSequence: TestSequence,
+    libraries: List<SdcLibrary>,
     libFeatures: List<SdcLibraryFeatures>,
 ): InteroperabilityMatrix {
     val interopMatrixCells = mutableListOf<InteroperabilityMatrix.Cell>()
 
-    val consumerLibs = libFeatures.filter { Role.CONSUMER.json in it.roles }
-    val providerLibs = libFeatures.filter { Role.PROVIDER.json in it.roles }
+    val libNameMap = libraries.associate { it.id to it.name}
+
+    val consumerLibs = libFeatures.filter { Role.CONSUMER.json in it.roles }.sortedBy { libNameMap[it.id] }.map { lib ->
+        lib.copy(
+            features = lib.features.filter {
+                it.supported
+            }.map {
+                it.copy(
+                    roles = it.roles ?: lib.roles
+                )
+            }.filter {
+                Role.CONSUMER.json in (it.roles!!)
+            },
+        )
+    }
+    val providerLibs = libFeatures.filter { Role.PROVIDER.json in it.roles }.sortedBy { libNameMap[it.id] }.map { lib ->
+        lib.copy(
+            features = lib.features.filter {
+                it.supported
+            }.map {
+                it.copy(
+                    roles = it.roles ?: lib.roles
+                )
+            }.filter {
+                Role.PROVIDER.json in (it.roles!!)
+            }
+        )
+    }
 
     for (binding in Binding.entries) {
         for (consumerLib in consumerLibs) {
@@ -27,7 +54,7 @@ fun createInteroperabilityMatrix(
         }
     }
 
-    return InteroperabilityMatrix(interopMatrixCells)
+    return InteroperabilityMatrix(providerLibs, consumerLibs, interopMatrixCells)
 }
 
 fun createInteroperabilityMatrixCell(
