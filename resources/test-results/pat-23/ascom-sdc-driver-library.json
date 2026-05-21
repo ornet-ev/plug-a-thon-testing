@@ -1,0 +1,106 @@
+{
+  "patNumber": 23,
+  "testResults": [
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
+      "caseIds": [
+        "1b","1d","2a","2b","3a","3b","4a","4b","4c","4d","4e","4g","4h","4i","5a","5b","7a","7b","7c"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
+      "caseIds": ["4f"],
+      "verdict": "fail"
+    },
+
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "sdcx",
+      "binding": "dpws",
+      "caseIds": [
+        "1b","1d","2a","2b","3a","3b","4a","4b","4d","4e","4g","4h","4i","5a","5b","7a","7b","7c"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "sdcx",
+      "binding": "dpws",
+      "caseIds": ["4c","4h"],
+      "verdict": "fail"
+    },
+
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "protosdc-rs",
+      "binding": "dpws",
+      "caseIds": [
+        "1b","1d","2a","2b","3a","3b","4a","4b","4c","4d","4e","4g","4i","5a","5b","7a","7b","7c"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "protosdc-rs",
+      "binding": "dpws",
+      "caseIds": ["4f","4h"],
+      "verdict": "fail"
+    },
+
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "lumos",
+      "binding": "dpws",
+      "caseIds": [
+        "1b","1d","2a","2b","3a","3b","4a"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "lumos",
+      "binding": "dpws",
+      "caseIds": ["4b","4c","4d","4e","4f","4g","4h","4i","5a","5b","7a","7b","7c"],
+      "verdict": "fail"
+    },
+
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "sdc-ri",
+      "binding": "dpws",
+      "caseIds": [
+        "1b","1d","2a","2b","3a","3b","4a","4b","4c","4d","4e","4g","4h","4i","5a","5b","7a","7b","7c"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "sdc-ri",
+      "binding": "dpws",
+      "caseIds": ["4f"],
+      "verdict": "fail"
+    },
+
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "sdc11073",
+      "binding": "dpws",
+      "caseIds": [
+        "1b","1d","2a","2b","3a","3b","4a","4b","4c","4d","4e","4g","4h","4i","5a","5b","7a","7b","7c"
+      ],
+      "verdict": "pass"
+    },
+    {
+      "consumerLibraryId": "ascom-sdc-driver-library",
+      "providerLibraryId": "sdc11073",
+      "binding": "dpws",
+      "caseIds": ["4f"],
+      "verdict": "fail"
+    }
+  ]
+}
