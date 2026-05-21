@@ -73,7 +73,7 @@
     },
     {
       "consumerLibraryId": "sdcx",
-      "providerLibraryId": "pySDC",
+      "providerLibraryId": "sdc11073",
       "binding": "dpws",
       "caseIds": [
         "1a",
