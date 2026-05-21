@@ -171,7 +171,7 @@ object TestResultsHtmlExport {
                         letter-spacing: 0.05em;
                     }
                     
-                    .translucent-box {
+                    div.translucent-box {
                         background-color: rgba(255, 255, 255, 0.5); /* subtle dark overlay */
                         margin: 3px;
                         padding: 2px 4px;
@@ -181,24 +181,60 @@ object TestResultsHtmlExport {
                         gap: 5px;
                     }
                     
-                    .translucent-box svg {
+                    div.translucent-box svg {
                         width: 1.2em;
                         height: 1.2em;
                         flex-shrink: 0;
                     }
                     
-                    .translucent-box:nth-child(1) {
+                    div.translucent-box:nth-child(1) {
                         flex: 0 0 30px; /* fixed width */
                     }
 
-                    .translucent-box:nth-child(2) {
+                    div.translucent-box:nth-child(2) {
                         flex: 1; /* takes remaining space */
                     }
-                    
+                   
                     .result-icon {
                       width: 1em;
                       height: 1em;
                       vertical-align: -0.125em;
+                    }
+                    
+                    .legend {
+                        margin-top: 24px;
+                        padding: 12px 16px;
+                        border: 1px solid #ccc;
+                        border-radius: 6px;
+                        display: inline-block;
+                        background: #fafafa;
+                    }
+            
+                    .legend-title {
+                        display: block;
+                        margin-bottom: 10px;
+                        font-size: 0.85rem;
+                        font-weight: bold;
+                    }
+            
+                    .legend-list {
+                        list-style: none;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 6px;
+                    }
+            
+                    .legend-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        font-size: 0.85rem;
+                    }
+            
+                    .legend-item svg {
+                        flex-shrink: 0;
+                        width: 1.2em;
+                        height: 1.2em;
                     }
                 </style>
             </head>
@@ -215,6 +251,35 @@ object TestResultsHtmlExport {
                 ${htmlCells.drop(1).joinToString("\n") { it.joinToString("\n", prefix = "<tr>", postfix = "</tr>") }}
                 </tbody>
             </table>
+            <div class="legend">
+                <strong class="legend-title">Legend</strong>
+                <ul class="legend-list">
+                    <li class="legend-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                        <span>Featured tests succeeded</span>
+                    </li>
+                    <li class="legend-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                        <span>All featured tests failed</span>
+                    </li>
+                    <li class="legend-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                        <span>Some tests failed</span>
+                    </li>
+                    <li class="legend-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg>
+                        <span>Missing test results</span>
+                    </li>
+                    <li class="legend-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                        <span>Tests not implemented (either provider or consumer side)</span>
+                    </li>
+                    <li class="legend-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/><path d="M13.9 21.818a10 10 0 0 1-3.8 0"/><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/><path d="M2.182 13.9a10 10 0 0 1 0-3.8"/><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/><path d="M21.818 10.1a10 10 0 0 1 0 3.8"/><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></svg>
+                        <span>No tests executed</span>
+                    </li>
+                </ul>
+            </div>
             </body>
             </html>
         """.trimIndent()
@@ -229,6 +294,9 @@ object TestResultsHtmlExport {
         val notImplementedList = src.noneList.sorted().joinToString(", ")
 
         return mutableListOf<String>().apply {
+            if (src.failedList.isEmpty() && src.missingList.isEmpty() && src.passedList.isEmpty()) {
+                add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dashed-icon lucide-circle-dashed"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/><path d="M13.9 21.818a10 10 0 0 1-3.8 0"/><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/><path d="M2.182 13.9a10 10 0 0 1 0-3.8"/><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/><path d="M21.818 10.1a10 10 0 0 1 0 3.8"/><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></svg><div></div></div>""")
+            }
             if (src.failedList.isNotEmpty()) {
                 if (src.verdict == Verdict.FAIL) {
                     add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg><div>$failedList</div></div>""")
@@ -247,7 +315,7 @@ object TestResultsHtmlExport {
             }
 
             if (src.noneList.isNotEmpty()) {
-                add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dot-icon lucide-circle-dot"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="1"/></svg><div>$notImplementedList</div></div>""")
+                add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg><div>$notImplementedList</div></div>""")
             }
         }.joinToString("")
     }

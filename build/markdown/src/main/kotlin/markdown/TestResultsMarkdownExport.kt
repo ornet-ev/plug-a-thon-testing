@@ -82,8 +82,8 @@ object TestResultsMarkdownExport {
     - :lucide-circle-x: all featured tests failed
     - :lucide-circle-alert: some tests failed
     - :lucide-circle-question-mark: missing test results
-    - :lucide-circle-dot: tests not implemented (either provider or consumer side)
-    - empty: no tests executed
+    - :lucide-circle-minus: tests not implemented (either provider or consumer side)
+    - :lucide-circle-dashed: no tests executed
                 """.trimIndent()
         }
 
@@ -154,6 +154,10 @@ object TestResultsMarkdownExport {
         val notImplementedList = src.noneList.sorted().joinToString(", ")
 
         return mutableListOf<String>().apply {
+            if (src.failedList.isEmpty() && src.missingList.isEmpty() && src.passedList.isEmpty()) {
+                add(""":lucide-circle-dashed:{ title="No tests executed" }""")
+            }
+
             if (src.failedList.isNotEmpty()) {
                 if (src.verdict == Verdict.FAIL) {
                     add(""":lucide-circle-x:{ title="All implemented tests failed: $failedList" }""")
@@ -176,10 +180,8 @@ object TestResultsMarkdownExport {
             }
 
             if (src.noneList.isNotEmpty()) {
-                add(""":lucide-circle-dot:{ title="Not implemented: $notImplementedList" }""")
+                add(""":lucide-circle-minus:{ title="Not implemented: $notImplementedList" }""")
             }
-
-
         }.joinToString(" ")
     }
 }
