@@ -15,19 +15,7 @@
   ],
   "features": [
     {
-      "testCaseId": "1a",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
       "testCaseId": "1b",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
-      "testCaseId": "1c",
       "roles": [
         "consumer"
         ]
@@ -124,36 +112,6 @@
     },
     {
       "testCaseId": "5b",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
-      "testCaseId": "6b",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
-      "testCaseId": "6c",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
-      "testCaseId": "6d",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
-      "testCaseId": "6e",
-      "roles": [
-        "consumer"
-        ]
-    },
-    {
-      "testCaseId": "6f",
       "roles": [
         "consumer"
         ]

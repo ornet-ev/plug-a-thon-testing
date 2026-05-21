@@ -6,13 +6,7 @@
   ],
   "features": [
     {
-      "testCaseId": "1a"
-    },
-    {
       "testCaseId": "1b"
-    },
-    {
-      "testCaseId": "1c"
     },
     {
       "testCaseId": "1d"
@@ -73,7 +67,6 @@
     }
   ],
   "bindings": [
-    "dpws",
-    "protosdc"
+    "dpws"
   ]
 }
