@@ -99,9 +99,10 @@
                 "2a",
                 "3a",
                 "4a",
-                "4b",
                 "4c",
                 "4d",
+                "4e",
+                "4f",
                 "4g",
                 "4h",
                 "4i",
@@ -122,8 +123,7 @@
             "providerLibraryId": "sdc11073",
             "binding": "dpws",
             "caseIds": [
-                "4e",
-                "4f",
+                "4b",
                 "5a",
                 "6b"
             ],
@@ -193,7 +193,7 @@
             "caseIds": [
                 "4h",
                 "4i",
-                "6b",
+                "6b"
             ],
             "verdict": "fail"
         }
