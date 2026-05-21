@@ -170,7 +170,7 @@
         },
         {
             "consumerLibraryId": "cpp-draeger",
-            "providerLibraryId": "lumos-1",
+            "providerLibraryId": "lumos",
             "binding": "dpws",
             "caseIds": [
                 "1b",
@@ -188,22 +188,12 @@
         },
         {
             "consumerLibraryId": "cpp-draeger",
-            "providerLibraryId": "lumos-1",
+            "providerLibraryId": "lumos",
             "binding": "dpws",
             "caseIds": [
-                "4f",
                 "4h",
                 "4i",
-                "5a",
-                "5b",
                 "6b",
-                "6c",
-                "6d",
-                "6e",
-                "6f",
-                "7a",
-                "7b",
-                "7c"
             ],
             "verdict": "fail"
         }
