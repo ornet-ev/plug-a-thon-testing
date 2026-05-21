@@ -28,7 +28,7 @@ object TestResultsHtmlExport {
         val libNames = libraries.associate { it.id to it.name }
 
         val implementedFeaturesList = libFeatures.map { lib ->
-            val features = lib.features.joinToString(", ") { it.testCaseId }
+            val features = lib.features.filter { it.supported }.joinToString(", ") { it.testCaseId }
             """<span class="lib-name">${libNames[lib.id]}:</span> <span class="features">$features</span>"""
         }.joinToString(separator = "\n") {
             implementedFeaturesListItem(it)
