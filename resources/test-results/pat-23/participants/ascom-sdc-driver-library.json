@@ -1,11 +1,9 @@
 {
   "id": "ascom-sdc-driver-library",
-  "name": "ascom SDC library",
   "version": "1.3.0",
   "roles": [
     "consumer"
   ],
-  "programmingLanguage": "C++ C#",
   "features": [
     {
       "testCaseId": "1a"
@@ -77,10 +75,5 @@
   "bindings": [
     "dpws",
     "protosdc"
-  ],
-  "provider": "Francesco Fabrini",
-  "website": "www.ascom.com",
-  "contact": [
-    "francesco.fabrini@ascom.com"
   ]
 }
