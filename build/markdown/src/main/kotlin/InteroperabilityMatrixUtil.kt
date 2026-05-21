@@ -55,13 +55,14 @@ fun createInteroperabilityMatrixCell(
         .filter { Verdict.fromJson(it.verdict) == Verdict.PASS }
         .map { it.caseIds }.flatten().subtract(deprecatedIds)
 
+    val notImplementedIds = testSequence.validTestCases().map { it.id } - allFeaturedIds
+
     val failedIds = testResults
         .filter { Verdict.fromJson(it.verdict) == Verdict.FAIL }
         .map { it.caseIds }
         .flatten()
         .subtract(deprecatedIds)
-
-    val notImplementedIds = testSequence.validTestCases().map { it.id } - allFeaturedIds
+        .subtract(notImplementedIds)
 
     val missingResultIds = (allFeaturedIds - passedIds - failedIds)
 

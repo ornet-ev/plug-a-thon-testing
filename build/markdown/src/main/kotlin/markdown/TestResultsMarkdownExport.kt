@@ -56,7 +56,7 @@ object TestResultsMarkdownExport {
 
         val libsForPat = libFeatures.associateBy { it.id }
         val tooltipMarkdown = libFeatures.associate { lib ->
-            val features = lib.features.joinToString(", ") { it.testCaseId }
+            val features = lib.features.filter { it.supported }.joinToString(", ") { it.testCaseId }
             lib.id to lib.version.let {
                 """ { title="Version: ${it.ifEmpty { "unknown" }}<br/>Features: $features" }"""
             }
