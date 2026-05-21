@@ -10,6 +10,7 @@ import org.ornet.TestSequence
 import org.ornet.Verdict
 import org.ornet.createInteroperabilityMatrix
 import org.ornet.libFeaturesFor
+import org.ornet.sortAndConcatenate
 
 object TestResultsHtmlExport {
     fun patEventHtml(
@@ -22,15 +23,38 @@ object TestResultsHtmlExport {
         val interopMatrix = createInteroperabilityMatrix(
             src,
             testSequence,
+            libraries,
             libFeatures
         )
 
         val libNames = libraries.associate { it.id to it.name }
 
-        val implementedFeaturesList = libFeatures.map { lib ->
-            val features = lib.features.filter { it.supported }.joinToString(", ") { it.testCaseId }
-            """<span class="lib-name">${libNames[lib.id]}:</span> <span class="features">$features</span>"""
-        }.joinToString(separator = "\n") {
+        val consumerLibsMap = interopMatrix.consumers.associateBy { it.id }
+        val providerLibsMap = interopMatrix.providers.associateBy { it.id }
+
+        val implementedFeatures = libFeatures.map { it.id }.associateWith { consumerLibsMap[it] to providerLibsMap[it] }
+        val implementedFeaturesList = implementedFeatures.map { lib ->
+            val consumerFeatures =
+                sortAndConcatenate(lib.value.first?.features?.filter { it.roles!!.isNotEmpty() }
+                    ?.map { it.testCaseId }).let {
+                    if (it.isNotEmpty()) {
+                        """<span class="lib-name">${libNames[lib.key]} Consumer:</span> <span class="features">$it</span>"""
+                    } else {
+                        ""
+                    }
+                }
+            val providerFeatures =
+                sortAndConcatenate(lib.value.second?.features?.filter { it.roles!!.isNotEmpty() }
+                    ?.map { it.testCaseId }).let {
+                    if (it.isNotEmpty()) {
+                        """<span class="lib-name">${libNames[lib.key]} Provider:</span> <span class="features">$it</span>"""
+                    } else {
+                        ""
+                    }
+                }
+
+            listOf(consumerFeatures, providerFeatures).filterNot { it.isEmpty() }.joinToString(separator = "<br/>\n")
+        }.joinToString(separator = "<br/>\n") {
             implementedFeaturesListItem(it)
         }
 
@@ -268,34 +292,30 @@ object TestResultsHtmlExport {
                 <strong class="adjunct-list-title">Legend</strong>
                 <ul class="adjunct-list-list">
                     <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                        ${SvgIcons.PASSED}
                         <span>Featured tests succeeded</span>
                     </li>
                     <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-                        <span>All featured tests failed</span>
+                        ${SvgIcons.FAILED}
+                        <span>Featured tests failed</span>
                     </li>
                     <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                        <span>Some tests failed</span>
-                    </li>
-                    <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg>
+                        ${SvgIcons.MISSING}
                         <span>Missing test results</span>
                     </li>
                     <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+                        ${SvgIcons.NOT_IMPLEMENTED}
                         <span>Tests not implemented (either provider or consumer side)</span>
                     </li>
                     <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/><path d="M13.9 21.818a10 10 0 0 1-3.8 0"/><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/><path d="M2.182 13.9a10 10 0 0 1 0-3.8"/><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/><path d="M21.818 10.1a10 10 0 0 1 0 3.8"/><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></svg>
+                        ${SvgIcons.NO_TESTS_EXECUTED}
                         <span>No tests executed</span>
                     </li>
                 </ul>
             </div>
             <div class="adjunct-list">
                 <strong class="adjunct-list-title">Implemented features</strong>
-                ${implementedFeaturesList}
+                $implementedFeaturesList
             </div>
             </body>
             </html>
@@ -305,34 +325,34 @@ object TestResultsHtmlExport {
     private fun htmlForTestResult(
         src: InteroperabilityMatrix.Cell,
     ): String {
-        val passedList = src.passedList.sorted().joinToString(", ")
-        val failedList = src.failedList.sorted().joinToString(", ")
-        val missingResultList = src.missingList.sorted().joinToString(", ")
-        val notImplementedList = src.noneList.sorted().joinToString(", ")
+        val passedList = sortAndConcatenate(src.passedList)
+        val failedList = sortAndConcatenate(src.failedList)
+        val missingResultList = sortAndConcatenate(src.missingList)
+        val notImplementedList = sortAndConcatenate(src.noneList)
 
         return mutableListOf<String>().apply {
             if (src.failedList.isEmpty() && src.missingList.isEmpty() && src.passedList.isEmpty()) {
-                add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dashed-icon lucide-circle-dashed"><path d="M10.1 2.182a10 10 0 0 1 3.8 0"/><path d="M13.9 21.818a10 10 0 0 1-3.8 0"/><path d="M17.609 3.721a10 10 0 0 1 2.69 2.7"/><path d="M2.182 13.9a10 10 0 0 1 0-3.8"/><path d="M20.279 17.609a10 10 0 0 1-2.7 2.69"/><path d="M21.818 10.1a10 10 0 0 1 0 3.8"/><path d="M3.721 6.391a10 10 0 0 1 2.7-2.69"/><path d="M6.391 20.279a10 10 0 0 1-2.69-2.7"/></svg><div></div></div>""")
+                add("""<div class="translucent-box">${SvgIcons.NO_TESTS_EXECUTED}<div></div></div>""")
             }
             if (src.failedList.isNotEmpty()) {
                 if (src.verdict == Verdict.FAIL) {
-                    add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg><div>$failedList</div></div>""")
+                    add("""<div class="translucent-box">${SvgIcons.FAILED}<div>$failedList</div></div>""")
                 } else {
-                    add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><div>$passedList</div></div>""")
-                    add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert-icon lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg><div>$failedList</div></div>""")
+                    add("""<div class="translucent-box">${SvgIcons.PASSED}<div>$passedList</div></div>""")
+                    add("""<div class="translucent-box">${SvgIcons.FAILED}<div>$failedList</div></div>""")
                 }
             } else {
                 if (passedList.isNotEmpty()) {
-                    add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><div>$passedList</div></div>""")
+                    add("""<div class="translucent-box">${SvgIcons.PASSED}<div>$passedList</div></div>""")
                 }
             }
 
             if (src.missingList.isNotEmpty()) {
-                add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-question-mark result-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"></path></svg><div>$missingResultList</div></div>""")
+                add("""<div class="translucent-box">${SvgIcons.MISSING}<div>$missingResultList</div></div>""")
             }
 
             if (src.noneList.isNotEmpty()) {
-                add("""<div class="translucent-box"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-minus-icon lucide-circle-minus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg><div>$notImplementedList</div></div>""")
+                add("""<div class="translucent-box">${SvgIcons.NOT_IMPLEMENTED}<div>$notImplementedList</div></div>""")
             }
         }.joinToString("")
     }
@@ -346,7 +366,7 @@ object TestResultsHtmlExport {
     private fun implementedFeaturesListItem(text: String) = """
                 <ul class="adjunct-list-list">
                     <li class="adjunct-list-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+                        ${SvgIcons.FEATURES}
                         <span>$text</span>
                     </li>
                 </ul>

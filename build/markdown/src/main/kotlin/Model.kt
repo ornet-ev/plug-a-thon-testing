@@ -21,7 +21,7 @@ data class SdcLibrary(
 data class SdcLibraryFeatures(
     val id: String,
     val version: String = "",
-    val roles: List<String> = listOf(), // consumer, provider
+    val roles: List<String> = Role.entries.map { it.json }, // consumer, provider
     val bindings: List<String> = listOf(), // dpws, protosdc
     val features: List<Feature>,
 )
@@ -110,6 +110,8 @@ enum class Binding(val json: String, val humanReadableName: String) {
 }
 
 data class InteroperabilityMatrix(
+    val providers: List<SdcLibraryFeatures>,
+    val consumers: List<SdcLibraryFeatures>,
     val cells: List<Cell>,
 ) {
 

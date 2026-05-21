@@ -11,6 +11,7 @@ import org.ornet.Verdict
 import org.ornet.createInteroperabilityMatrix
 import org.ornet.htmlFileNameInteropMatrix
 import org.ornet.libFeaturesFor
+import org.ornet.sortAndConcatenate
 
 
 object TestResultsMarkdownExport {
@@ -51,19 +52,11 @@ object TestResultsMarkdownExport {
         val interopMatrix = createInteroperabilityMatrix(
             src,
             testSequence,
+            libraries,
             libFeatures
         )
 
-        val libsForPat = libFeatures.associateBy { it.id }
-        val tooltipMarkdown = libFeatures.associate { lib ->
-            val features = lib.features.filter { it.supported }.joinToString(", ") { it.testCaseId }
-            lib.id to lib.version.let {
-                """ { title="Version: ${it.ifEmpty { "unknown" }}<br/>Features: $features" }"""
-            }
-        }
-
         val libNames = libraries.associate { it.id to it.name }
-        val sortedLibs = libraries.sortedBy { it.name }.mapNotNull { libsForPat[it.id] }
 
         val header = Markdown.generate {
             val icon = "icon" to "lucide/circle-check-big"
@@ -79,8 +72,7 @@ object TestResultsMarkdownExport {
             """
 ??? Legend
     - :lucide-circle-check: featured tests succeeded
-    - :lucide-circle-x: all featured tests failed
-    - :lucide-circle-alert: some tests failed
+    - :lucide-circle-x: featured tests failed
     - :lucide-circle-question-mark: missing test results
     - :lucide-circle-minus: tests not implemented (either provider or consumer side)
     - :lucide-circle-dashed: no tests executed
@@ -92,26 +84,26 @@ object TestResultsMarkdownExport {
         for (binding in bindings) {
             val markdownCells = mutableListOf<MutableList<String>>()
             markdownCells.add(
-                sortedLibs
-                    .map { it }
-                    .filter { Role.PROVIDER.json in it.roles }
+                interopMatrix.providers
                     .filter { binding.json in it.bindings }
-                    .map { libNames[it.id]!! + tooltipMarkdown[it.id]!! }
+                    .map { libNames[it.id]!! + createTooltip(it) }
                     .toMutableList()
                     .apply {
                         add(0, "**Provider →**<br>**↓ Consumer**")
                     }
             )
 
-            val consumerLibs = libFeaturesFor(sortedLibs, Role.CONSUMER, binding)
-            val providerLibs = libFeaturesFor(sortedLibs, Role.PROVIDER, binding)
+//            val consumerLibs = libFeaturesFor(sortedLibs, Role.CONSUMER, binding)
+//            val providerLibs = libFeaturesFor(sortedLibs, Role.PROVIDER, binding)
 
-            for (consumerLib in consumerLibs) {
-                val row = listOf("**${libNames[consumerLib.id]!!}**${tooltipMarkdown[consumerLib.id]!!}").toMutableList().also {
-                    markdownCells.add(it)
-                }
+            for (consumerLib in interopMatrix.consumers) {
+                val row =
+                    listOf("**${libNames[consumerLib.id]!!}**${createTooltip(consumerLib)}").toMutableList()
+                        .also {
+                            markdownCells.add(it)
+                        }
 
-                for (providerLib in providerLibs) {
+                for (providerLib in interopMatrix.providers) {
                     val testResult = interopMatrix.cellFor(binding, consumerLib.id, providerLib.id)
 
                     when (testResult) {
@@ -127,7 +119,12 @@ object TestResultsMarkdownExport {
                         ${heading("Interoperability Matrix (${binding.humanReadableName} binding)", 1)}
 
                         <a href="javascript:window.history.back()" class="md-button">:lucide-arrow-big-left: Back</a>
-                        <a href="${htmlFileNameInteropMatrix(src, binding)}" target="_blank" class="md-button" title="Print view in new window">:lucide-printer: Print Version</a>
+                        <a href="${
+                        htmlFileNameInteropMatrix(
+                            src,
+                            binding
+                        )
+                    }" target="_blank" class="md-button" title="Print view in new window">:lucide-printer: Print Version</a>
 
                         ${tableHeader(markdownCells.first())}
                     """
@@ -148,10 +145,10 @@ object TestResultsMarkdownExport {
     private fun markdownForTestResult(
         src: InteroperabilityMatrix.Cell,
     ): String {
-        val passedList = src.passedList.sorted().joinToString(", ")
-        val failedList = src.failedList.sorted().joinToString(", ")
-        val missingResultList = src.missingList.sorted().joinToString(", ")
-        val notImplementedList = src.noneList.sorted().joinToString(", ")
+        val passedList = sortAndConcatenate(src.passedList)
+        val failedList = sortAndConcatenate(src.failedList)
+        val missingResultList = sortAndConcatenate(src.missingList)
+        val notImplementedList = sortAndConcatenate(src.noneList)
 
         return mutableListOf<String>().apply {
             if (src.failedList.isEmpty() && src.missingList.isEmpty() && src.passedList.isEmpty()) {
@@ -163,7 +160,7 @@ object TestResultsMarkdownExport {
                     add(""":lucide-circle-x:{ title="All implemented tests failed: $failedList" }""")
                 } else {
                     add(""":lucide-circle-check:{ title="Tests passed: $passedList" }""")
-                    add(""":lucide-circle-alert:{ title="Failed tests: $failedList" }""")
+                    add(""":lucide-circle-x:{ title="Failed tests: $failedList" }""")
                 }
             } else {
                 if (src.verdict == Verdict.PASS) {
@@ -183,5 +180,10 @@ object TestResultsMarkdownExport {
                 add(""":lucide-circle-minus:{ title="Not implemented: $notImplementedList" }""")
             }
         }.joinToString(" ")
+    }
+
+    private fun createTooltip(lib: SdcLibraryFeatures): String {
+        val features = sortAndConcatenate(lib.features.map { it.testCaseId })
+        return """ { title="Version: ${lib.version.ifEmpty { "unknown" }}<br/>Features: $features" }"""
     }
 }

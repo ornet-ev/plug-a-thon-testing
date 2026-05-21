@@ -78,3 +78,15 @@ fun htmlFileNameInteropMatrix(patEvent: PatEvent, binding: Binding): String {
 fun libFeaturesFor(libFeatures: List<SdcLibraryFeatures>, role: Role, binding: Binding): List<SdcLibraryFeatures> {
     return libFeatures.filter { role.json in it.roles }.filter { binding.json in it.bindings }
 }
+
+fun sortAndConcatenate(strings: List<String>?): String {
+    strings ?: return ""
+    return strings
+        .map { s ->
+            val match = Regex("^(\\d+)([a-zA-Z0-9]+)$").matchEntire(s)
+                ?: error("Invalid format: '$s' does not match <int><alphanumeric>")
+            Triple(s, match.groupValues[1].toInt(), match.groupValues[2])
+        }
+        .sortedWith(compareBy({ it.second }, { it.third }))
+        .joinToString(", ") { it.first }
+}
