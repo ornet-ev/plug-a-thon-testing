@@ -10,28 +10,37 @@
   ],
   "features": [
     {
-      "testCaseId": "1a"
+      "testCaseId": "1a",
+      "roles": [
+        "provider"
+      ]
     },
     {
       "testCaseId": "1b"
     },
     {
-      "testCaseId": "1c"
+      "testCaseId": "1c",
+      "roles": [
+        "provider"
+      ]
     },
     {
-      "testCaseId": "1d"
+      "testCaseId": "1d",
+      "roles": [
+        "provider"
+      ]
     },
     {
       "testCaseId": "2a"
     },
     {
-      "testCaseId": "2b"
-    },
-    {
       "testCaseId": "3a"
     },
     {
-      "testCaseId": "3b"
+      "testCaseId": "3b",
+      "roles": [
+        "provider"
+      ]
     },
     {
       "testCaseId": "4a"
