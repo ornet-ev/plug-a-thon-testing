@@ -1,7 +1,6 @@
 {
   "id": "canoe",
   "version": "",
-  "name": "Vector CANoe",
   "roles": [
     "consumer"
   ],

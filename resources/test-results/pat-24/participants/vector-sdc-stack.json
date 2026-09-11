@@ -1,9 +1,8 @@
 {
-  "id": "canoe",
+  "id": "vector-sdc-stack",
   "version": "",
-  "name": "Vector CANoe",
   "roles": [
-    "consumer"
+    "provider"
   ],
   "features": [
     {
@@ -77,26 +76,13 @@
     },
     {
       "testCaseId": "6f"
-    },
-    {
-      "testCaseId": "7a"
-    },
-    {
-      "testCaseId": "7b"
-    },
-    {
-      "testCaseId": "7c"
     }
   ],
-  "bindings": [
-    "dpws"
-  ],
   "provider": "Vector Informatik GmbH",
-  "website": "https://www.vector.com/int/en/products/products-a-z/software/canoe/sdc/#",
+  "website": "https://www.vector.com/int/en/products/products-a-z/embedded-software/ieee11073sdc/",
   "contact": [
-    "[Tobias Viehmann](mailto:tobias.viehmann@vector.com)",
-    "[Tobias Kliesch](mailto:tobias.kliesch@vector.com)",
+    "[Christian Heinigk](mailto:christian.heinigk@vector.com)",
     "[Christian Reiser](mailto:christian.reiser@vector.com)",
-    "[Christian Heinigk](mailto:christian.heinigk@vector.com)"
+    "[Tobias Viehmann](mailto:tobias.viehmann@vector.com)"
   ]
 }

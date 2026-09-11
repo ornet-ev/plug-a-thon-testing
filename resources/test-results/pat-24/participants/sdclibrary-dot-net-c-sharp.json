@@ -1,9 +1,8 @@
 {
-  "id": "canoe",
-  "version": "",
-  "name": "Vector CANoe",
+  "id": "sdclibrary-dot-net-c-sharp",
   "roles": [
-    "consumer"
+    "consumer",
+    "provider"
   ],
   "features": [
     {
@@ -77,26 +76,10 @@
     },
     {
       "testCaseId": "6f"
-    },
-    {
-      "testCaseId": "7a"
-    },
-    {
-      "testCaseId": "7b"
-    },
-    {
-      "testCaseId": "7c"
     }
   ],
-  "bindings": [
-    "dpws"
-  ],
-  "provider": "Vector Informatik GmbH",
-  "website": "https://www.vector.com/int/en/products/products-a-z/software/canoe/sdc/#",
+  "provider": "Philips",
+  "website": "",
   "contact": [
-    "[Tobias Viehmann](mailto:tobias.viehmann@vector.com)",
-    "[Tobias Kliesch](mailto:tobias.kliesch@vector.com)",
-    "[Christian Reiser](mailto:christian.reiser@vector.com)",
-    "[Christian Heinigk](mailto:christian.heinigk@vector.com)"
   ]
 }
