@@ -3,14 +3,12 @@ package org.ornet.markdown
 import org.ornet.Binding
 import org.ornet.InteroperabilityMatrix
 import org.ornet.PatEvent
-import org.ornet.Role
 import org.ornet.SdcLibrary
 import org.ornet.SdcLibraryFeatures
 import org.ornet.TestSequence
 import org.ornet.Verdict
 import org.ornet.createInteroperabilityMatrix
 import org.ornet.htmlFileNameInteropMatrix
-import org.ornet.libFeaturesFor
 import org.ornet.sortAndConcatenate
 
 
@@ -164,7 +162,9 @@ object TestResultsMarkdownExport {
                 }
             } else {
                 if (src.verdict == Verdict.PASS) {
-                    add(""":lucide-circle-check:{ title="All implemented tests passed: $passedList" }""")
+                    if (src.passedList.isNotEmpty()) {
+                        add(""":lucide-circle-check:{ title="All implemented tests passed: $passedList" }""")
+                    }
                 } else {
                     if (src.passedList.isNotEmpty()) {
                         add(""":lucide-circle-check:{ title="Tests passed: $passedList" }""")
