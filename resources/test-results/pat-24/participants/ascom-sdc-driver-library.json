@@ -1,0 +1,72 @@
+{
+  "id": "ascom-sdc-driver-library",
+  "version": "1.4.0",
+  "roles": [
+    "consumer"
+  ],
+  "features": [
+    {
+      "testCaseId": "1b"
+    },
+    {
+      "testCaseId": "1d"
+    },
+    {
+      "testCaseId": "2a"
+    },
+    {
+      "testCaseId": "2b"
+    },
+    {
+      "testCaseId": "3a"
+    },
+    {
+      "testCaseId": "3b"
+    },
+    {
+      "testCaseId": "4a"
+    },
+    {
+      "testCaseId": "4b"
+    },
+    {
+      "testCaseId": "4c"
+    },
+    {
+      "testCaseId": "4d"
+    },
+    {
+      "testCaseId": "4e"
+    },
+    {
+      "testCaseId": "4f"
+    },
+    {
+      "testCaseId": "4g"
+    },
+    {
+      "testCaseId": "4h"
+    },
+    {
+      "testCaseId": "4i"
+    },
+    {
+      "testCaseId": "5a"
+    },
+    {
+      "testCaseId": "5b"
+    },
+    {
+      "testCaseId": "7a"
+    },
+    {
+      "testCaseId": "7b"
+    },
+    {
+      "testCaseId": "7c"
+    }
+  ],
+  "bindings": [
+    "dpws"
+  ]
+}
