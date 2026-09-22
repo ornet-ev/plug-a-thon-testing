@@ -4,6 +4,9 @@
     "consumer",
     "provider"
   ],
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -77,9 +80,5 @@
     {
       "testCaseId": "6f"
     }
-  ],
-  "provider": "Philips",
-  "website": "",
-  "contact": [
   ]
 }

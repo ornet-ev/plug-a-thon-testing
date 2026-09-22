@@ -4,6 +4,9 @@
   "roles": [
     "provider"
   ],
+  "bindings": [
+    "dpws"
+  ],
   "features": [
     {
       "testCaseId": "1a"
@@ -77,12 +80,5 @@
     {
       "testCaseId": "6f"
     }
-  ],
-  "provider": "Vector Informatik GmbH",
-  "website": "https://www.vector.com/int/en/products/products-a-z/embedded-software/ieee11073sdc/",
-  "contact": [
-    "[Christian Heinigk](mailto:christian.heinigk@vector.com)",
-    "[Christian Reiser](mailto:christian.reiser@vector.com)",
-    "[Tobias Viehmann](mailto:tobias.viehmann@vector.com)"
   ]
 }
