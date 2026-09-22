@@ -23,7 +23,7 @@ jobs:
           popd
       - name: Build site
         uses: astral-sh/setup-uv@v7
-      - run: uvx --from=toml-cli toml set --toml-path=zensical.toml project.plugins.offline.enabled true  # enable offline mode for artifacts to work correctly
+      - run: uvx --from=tomcli --with=tomlkit tomcli set zensical.toml true 'project.plugins.offline.enabled'  # enable offline mode for artifacts to work correctly
       - run: uvx zensical build --clean
       - uses: actions/upload-artifact@v6
         with:
