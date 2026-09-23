@@ -1,8 +1,9 @@
 {
   "id": "canoe",
-  "version": "",
+  "version": "21.0",
   "roles": [
-    "consumer"
+    "consumer",
+    "provider"
   ],
   "features": [
     {
