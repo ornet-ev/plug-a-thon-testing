@@ -38,7 +38,7 @@
     },
     {
       "consumerLibraryId": "sdcx",
-      "providerLibraryId": "sdcX",
+      "providerLibraryId": "sdcx",
       "binding": "dpws",
       "caseIds": [
         "1a",
