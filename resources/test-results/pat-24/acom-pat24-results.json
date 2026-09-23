@@ -109,7 +109,7 @@
     {
       "consumerLibraryId": "ascom-sdc-driver-library",
       "providerLibraryId": "sdc-ri",
-      "binding": "",
+      "binding": "dpws",
       "caseIds": [
         "1b",
         "1d",
@@ -136,7 +136,7 @@
     {
       "consumerLibraryId": "ascom-sdc-driver-library",
       "providerLibraryId": "sdc-ri",
-      "binding": "",
+      "binding": "dpws",
       "caseIds": [ "4f" ],
       "verdict": "fail"
     }
