@@ -176,7 +176,7 @@
 
     {
       "consumerLibraryId": "ascom-sdc-driver-library",
-      "providerLibraryId": "vector-sdc-stack",
+      "providerLibraryId": "canoe",
       "binding": "dpws",
       "caseIds": [
         "1b",
