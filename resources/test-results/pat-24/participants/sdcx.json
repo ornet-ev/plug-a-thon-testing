@@ -1,6 +1,6 @@
 {
   "id": "sdcx",
-  "version": "1.11",
+  "version": "1.12",
   "roles": [
     "consumer",
     "provider"
