@@ -4,6 +4,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
       "caseIds": [
         "1a",
         "1b",
@@ -37,6 +38,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
       "caseIds": [
         "6f"
       ],
@@ -45,6 +47,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdcx",
+      "binding": "dpws",
       "caseIds": [
         "1a",
         "1b",
@@ -78,6 +81,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdcx",
+      "binding": "dpws",
       "caseIds": [
         "6f"
       ],
@@ -86,6 +90,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdc11073",
+      "binding": "dpws",
       "caseIds": [
         "1a",
         "1b",
@@ -100,6 +105,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdc11073",
+      "binding": "dpws",
       "caseIds": [
         "3b",
         "4a",
@@ -127,6 +133,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "cpp-draeger",
+      "binding": "dpws",
       "caseIds": [
         "6f"
       ],
@@ -135,6 +142,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdc-ri",
+      "binding": "dpws",
       "caseIds": [
         "1a",
         "1b",
@@ -176,6 +184,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "protosdc-rs",
+      "binding": "dpws",
       "caseIds": [
         "1a",
         "1b",
@@ -209,6 +218,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "protosdc-rs",
+      "binding": "dpws",
       "caseIds": [
         "6f"
       ],
@@ -217,6 +227,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "canoe",
+      "binding": "dpws",
       "caseIds": [
         "1a",
         "1b",
@@ -235,6 +246,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "canoe",
+      "binding": "dpws",
       "caseIds": [
         "4a",
         "4b",
