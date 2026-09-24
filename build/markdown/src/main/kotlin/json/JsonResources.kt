@@ -30,14 +30,28 @@ class JsonResources(
 
     val sdcLibraries = sdcLibrariesDir.let { dir ->
         dir.listFiles()!!.filter { it.extension.lowercase() == "json" }.map {
-            json.decodeFromString<SdcLibrary>(it.readText())
+            val lib = json.decodeFromString<SdcLibrary>(it.readText())
+            if (lib.id != it.nameWithoutExtension) {
+                error(
+                    "File name of library and library identifier need to match in '${it.absolutePath}'. " +
+                            "Id: ${lib.id} <> File name: ${it.nameWithoutExtension}"
+                )
+            }
+            lib
         }
     }
 
     val sdcLibrariesPerPatEvent = testResultsDir.let { testResultsDir ->
         testResultsDir.listFiles()!!.filter { it.isDirectory }.associate { patEventDir ->
             val libs = File(patEventDir, "participants").listFiles()!!.filter { it.isFile }.map {
-                json.decodeFromString<SdcLibraryFeatures>(it.readText())
+                val lib = json.decodeFromString<SdcLibraryFeatures>(it.readText())
+                if (lib.id != it.nameWithoutExtension) {
+                    error(
+                        "File name of library and library identifier need to match in '${it.absolutePath}'. " +
+                                "Id: ${lib.id} <> File name: ${it.nameWithoutExtension}"
+                    )
+                }
+                lib
             }
             patEventDir.name to libs
         }
