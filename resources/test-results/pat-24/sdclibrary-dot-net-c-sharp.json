@@ -132,7 +132,7 @@
     },
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
-      "providerLibraryId": "cpp-draeger",
+      "providerLibraryId": "cpp-sdc11073",
       "binding": "dpws",
       "caseIds": [
         "6f"
