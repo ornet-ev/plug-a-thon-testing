@@ -10,13 +10,19 @@
   ],
   "features": [
     {
-      "testCaseId": "1a"
+      "testCaseId": "1a",
+      "roles": [
+        "provider"
+      ]
     },
     {
       "testCaseId": "1b"
     },
     {
-      "testCaseId": "1c"
+      "testCaseId": "1c",
+      "roles": [
+        "provider"
+      ]
     },
     {
       "testCaseId": "1d"
@@ -56,9 +62,6 @@
     },
     {
       "testCaseId": "4h"
-    },
-    {
-      "testCaseId": "4i"
     },
     {
       "testCaseId": "5a"
