@@ -1,8 +1,8 @@
 {
   "id": "sdclibrary-dot-net-c-sharp",
+  "version": "9.3.1",
   "roles": [
-    "consumer",
-    "provider"
+    "consumer"
   ],
   "bindings": [
     "dpws"
@@ -79,6 +79,15 @@
     },
     {
       "testCaseId": "6f"
+    },
+    {
+      "testCaseId": "7a"
+    },
+    {
+      "testCaseId": "7b"
+    },
+    {
+      "testCaseId": "7c"
     }
   ]
 }
