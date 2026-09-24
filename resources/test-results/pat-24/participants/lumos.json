@@ -1,6 +1,6 @@
 {
   "id": "lumos",
-  "version": "0.26.05.19",
+  "version": "0.26.09.22",
   "roles": [
     "provider"
   ],
@@ -62,7 +62,8 @@
     },
     {
       "testCaseId": "4f",
-      "description": "The provider produces 3, 10 Hz waveforms"
+      "description": "The provider produces 3, 10 Hz waveforms",
+      "supported": false
     },
     {
       "testCaseId": "4g",
@@ -74,7 +75,8 @@
     },
     {
       "testCaseId": "4i",
-      "description": "The provider produces 1, 2 Hz waveform"
+      "description": "The provider produces 1, 2 Hz waveform",
+      "supported": false
     },
     {
       "testCaseId": "5a",
