@@ -65,7 +65,7 @@ class JsonResources(
                 }
             }
 
-            mergeTestResults(patEvent, testResults.values.map { it.testResults }.flatten())
+            mergeTestResults(patEvent, testResults.values.flatMap { it.testResults })
         } ?: emptyList()
     }
 
@@ -80,15 +80,19 @@ class JsonResources(
         // all results; duplicates will cause the merge to fail
         fun mergeTestResults(event: PatEvent, testResults: List<TestResult>): PatEvent {
             val all = event.testResults + testResults
-            val allIds = all.map { res ->
+            val allIds = all.flatMap { res ->
                 res.caseIds.map {
                     "${res.consumerLibraryId} -> ${res.providerLibraryId}: $it"
                 }
-            }.flatten()
-            val distinctIds = allIds.distinct()
-            val duplicates = allIds - distinctIds
+            }
+
+            val duplicates: Set<String> = allIds
+                .groupingBy { it }
+                .eachCount()
+                .filterValues { it > 1 }
+                .keys
             require(duplicates.isEmpty()) {
-                "Found duplicated test results for \n\n${duplicates.joinToString("\n- ")}\n"
+                "Found duplicated test results at PAT#${event.patNumber} for \n\n- ${duplicates.joinToString("\n- ")}\n"
             }
 
             return event.copy(
