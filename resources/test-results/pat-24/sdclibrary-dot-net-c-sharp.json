@@ -132,15 +132,6 @@
     },
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
-      "providerLibraryId": "cpp-sdc11073",
-      "binding": "dpws",
-      "caseIds": [
-        "6f"
-      ],
-      "verdict": "fail"
-    },
-    {
-      "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdc-ri",
       "binding": "dpws",
       "caseIds": [
