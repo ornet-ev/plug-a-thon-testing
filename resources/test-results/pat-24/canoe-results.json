@@ -219,6 +219,7 @@
         "4d",
         "4e",
         "4g",
+        "4h",
         "6b"
       ],
       "verdict": "pass"
@@ -229,7 +230,6 @@
       "binding": "dpws",
       "caseIds": [
         "4f",
-        "4h",
         "4i"
       ],
       "verdict": "fail"
