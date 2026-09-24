@@ -118,7 +118,7 @@
       "providerLibraryId": "lumos",
       "binding": "dpws",
       "caseIds": [
-        "1b","1d","2a","2b","3a","3b","4a"
+        "1b","1d","2a","2b","3a","3b","4a","4b","4c","4d","4e","4g","4h",
       ],
       "verdict": "pass"
     },
@@ -126,7 +126,7 @@
       "consumerLibraryId": "ascom-sdc-driver-library",
       "providerLibraryId": "lumos",
       "binding": "dpws",
-      "caseIds": ["4b","4c","4d","4e","4g","4h","4i","5a","5b","7a","7b","7c"],
+      "caseIds": ["4i","5a","5b","7a","7b","7c"],
       "verdict": "fail"
     },
 
@@ -197,3 +197,4 @@
     }    
  ]
 }
+
