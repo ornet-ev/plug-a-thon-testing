@@ -3,6 +3,7 @@ package org.ornet.json
 import kotlinx.serialization.json.Json
 import org.ornet.Nomenclature
 import org.ornet.PatEvent
+import org.ornet.Role
 import org.ornet.SdcLibrary
 import org.ornet.SdcLibraryFeatures
 import org.ornet.TestResult
@@ -57,6 +58,16 @@ class JsonResources(
         }
     }
 
+    val validLibIdsPerPatEvent = sdcLibrariesPerPatEvent.entries.associate { patEvent ->
+        patEvent.key to patEvent.value.mapNotNull {
+            if (it.roles.contains(Role.CONSUMER.json)) {
+                it.id
+            } else {
+                null
+            }
+        }
+    }
+
     val patEvents = testResultsDir.let { testResultsDir ->
         testResultsDir.listFiles()?.filter { it.isDirectory }?.map { patEventDir ->
             val metaFilename = "${patEventDir.name}.meta.json"
@@ -73,10 +84,22 @@ class JsonResources(
                 .filterNot { it.name.lowercase() == metaFilename }
                 .associateWith { json.decodeFromString<TestResults>(it.readText()) }
 
-            testResults.forEach {
-                require(it.value.patNumber == patEvent.patNumber) {
-                    "Found event mismatch between PAT number in '${patEventFile.absolutePath}' (${patEvent.patNumber}) and '${it.key.absolutePath}' (${it.value.patNumber})"
+            val validLibIds = validLibIdsPerPatEvent.getOrDefault(patEventDir.name, emptyList())
+
+            testResults.forEach { testResults ->
+                require(testResults.value.patNumber == patEvent.patNumber) {
+                    "Found event mismatch between PAT number in '${patEventFile.absolutePath}' (${patEvent.patNumber}) " +
+                            "and '${testResults.key.absolutePath}' (${testResults.value.patNumber})"
                 }
+
+                require(testResults.key.nameWithoutExtension in validLibIds) {
+                    "PAT#${patEvent.patNumber}: Each test results file name must match a valid consumer library identifier. " +
+                            "Found ${testResults.key.nameWithoutExtension}, which could not be found in ${validLibIds.joinToString(", ")}"
+                }
+
+                require(testResults.value.testResults.all {
+                    it.consumerLibraryId == testResults.key.nameWithoutExtension
+                })
             }
 
             mergeTestResults(patEvent, testResults.values.flatMap { it.testResults })
