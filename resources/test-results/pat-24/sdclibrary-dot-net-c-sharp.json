@@ -176,6 +176,7 @@
     {
       "consumerLibraryId": "sdclibrary-dot-net-c-sharp",
       "providerLibraryId": "sdc-ri",
+      "binding": "dpws",
       "caseIds": [
         "6f"
       ],
